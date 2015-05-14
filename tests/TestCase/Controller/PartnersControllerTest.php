@@ -18,7 +18,6 @@ class PartnersControllerTest extends IntegrationTestCase
     public $fixtures = [
         'app.partners',
         'app.users',
-        'app.locations',
         'app.students'
     ];
 

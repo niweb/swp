@@ -24,9 +24,20 @@ class LocationsTable extends Table
         $this->table('locations');
         $this->displayField('name');
         $this->primaryKey('location_id');
-        $this->belongsTo('Locations', [
-            'foreignKey' => 'location_id',
-            'joinType' => 'INNER'
+        $this->hasMany('Partners', [
+            'foreignKey' => 'location_id'
+        ]);
+        $this->hasMany('Schooltypes', [
+            'foreignKey' => 'location_id'
+        ]);
+        $this->hasMany('Students', [
+            'foreignKey' => 'location_id'
+        ]);
+        $this->hasMany('Subjects', [
+            'foreignKey' => 'location_id'
+        ]);
+        $this->hasMany('Users', [
+            'foreignKey' => 'location_id'
         ]);
     }
 
@@ -39,22 +50,13 @@ class LocationsTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
+            ->add('id', 'valid', ['rule' => 'numeric'])
+            ->allowEmpty('id', 'create');
+            
+        $validator
             ->requirePresence('name', 'create')
             ->notEmpty('name');
 
         return $validator;
-    }
-
-    /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules)
-    {
-        $rules->add($rules->existsIn(['location_id'], 'Locations'));
-        return $rules;
     }
 }

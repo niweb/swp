@@ -4,6 +4,8 @@
         <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('List Locations'), ['controller' => 'Locations', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Location'), ['controller' => 'Locations', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Types'), ['controller' => 'Types', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Type'), ['controller' => 'Types', 'action' => 'add']) ?> </li>
     </ul>
 </div>
 <div class="users form large-10 medium-9 columns">
@@ -11,10 +13,11 @@
     <fieldset>
         <legend><?= __('Add User') ?></legend>
         <?php
-            echo $this->Form->input('location_id', ['options' => $locations, 'empty' => true]);
-            echo $this->Form->input('type');
-            echo $this->Form->input('mail');
+            echo $this->Form->input('id');
+            echo $this->Form->input('email');
             echo $this->Form->input('password');
+            echo $this->Form->input('type_id');
+            echo $this->Form->input('location_id', ['options' => $locations]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

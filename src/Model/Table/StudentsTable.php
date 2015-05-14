@@ -24,22 +24,13 @@ class StudentsTable extends Table
         $this->table('students');
         $this->displayField('student_id');
         $this->primaryKey('student_id');
-        $this->belongsTo('Students', [
-            'foreignKey' => 'student_id',
-            'joinType' => 'INNER'
-        ]);
-        
-        /*
-        //Associations between the Tables
         $this->belongsTo('Locations', [
             'foreignKey' => 'location_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsTo('Partners', [
-            'foreignKey' => 'partner_id',
-            'joinType' => 'INNER'
+        $this->hasMany('Tandems', [
+            'foreignKey' => 'student_id'
         ]);
-        */
     }
 
     /**
@@ -51,16 +42,23 @@ class StudentsTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->requirePresence('vorname', 'create')
-            ->notEmpty('vorname');
+            ->add('id', 'valid', ['rule' => 'numeric'])
+            ->allowEmpty('id', 'create');
             
         $validator
-            ->requirePresence('nachname', 'create')
-            ->notEmpty('nachname');
+            ->requirePresence('name', 'create')
+            ->notEmpty('name');
             
         $validator
-            ->requirePresence('telefon', 'create')
-            ->notEmpty('telefon');
+            ->requirePresence('lastname', 'create')
+            ->notEmpty('lastname');
+            
+        $validator
+            ->requirePresence('telephone', 'create')
+            ->notEmpty('telephone');
+            
+        $validator
+            ->allowEmpty('mobile');
 
         return $validator;
     }
@@ -74,7 +72,6 @@ class StudentsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['student_id'], 'Students'));
         $rules->add($rules->existsIn(['location_id'], 'Locations'));
         return $rules;
     }

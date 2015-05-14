@@ -2,32 +2,30 @@
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
         <li><?= $this->Html->link(__('New Student'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Locations'), ['controller' => 'Locations', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Location'), ['controller' => 'Locations', 'action' => 'add']) ?> </li>
     </ul>
 </div>
 <div class="students index large-10 medium-9 columns">
     <table cellpadding="0" cellspacing="0">
     <thead>
         <tr>
-            <th><?= $this->Paginator->sort('student_id') ?></th>
+            <th><?= $this->Paginator->sort('id') ?></th>
+            <th><?= $this->Paginator->sort('name') ?></th>
+            <th><?= $this->Paginator->sort('lastname') ?></th>
+            <th><?= $this->Paginator->sort('telephone') ?></th>
+            <th><?= $this->Paginator->sort('mobile') ?></th>
             <th><?= $this->Paginator->sort('location_id') ?></th>
-            <th><?= $this->Paginator->sort('vorname') ?></th>
-            <th><?= $this->Paginator->sort('nachname') ?></th>
-            <th><?= $this->Paginator->sort('telefon') ?></th>
             <th class="actions"><?= __('Actions') ?></th>
         </tr>
     </thead>
     <tbody>
     <?php foreach ($students as $student): ?>
         <tr>
-            <td><?= $this->Number->format($student->student_id) ?></td>
-            <td>
-                <?= $student->has('location') ? $this->Html->link($student->location->name, ['controller' => 'Locations', 'action' => 'view', $student->location->location_id]) : '' ?>
-            </td>
-            <td><?= h($student->vorname) ?></td>
-            <td><?= h($student->nachname) ?></td>
-            <td><?= h($student->telefon) ?></td>
+            <td><?= $this->Number->format($student->id) ?></td>
+            <td><?= h($student->name) ?></td>
+            <td><?= h($student->lastname) ?></td>
+            <td><?= h($student->telephone) ?></td>
+            <td><?= h($student->mobile) ?></td>
+            <td><?= $this->Number->format($student->location_id) ?></td>
             <td class="actions">
                 <?= $this->Html->link(__('View'), ['action' => 'view', $student->student_id]) ?>
                 <?= $this->Html->link(__('Edit'), ['action' => 'edit', $student->student_id]) ?>

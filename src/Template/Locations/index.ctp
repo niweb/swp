@@ -8,7 +8,7 @@
     <table cellpadding="0" cellspacing="0">
     <thead>
         <tr>
-            <th><?= $this->Paginator->sort('location_id') ?></th>
+            <th><?= $this->Paginator->sort('id') ?></th>
             <th><?= $this->Paginator->sort('name') ?></th>
             <th class="actions"><?= __('Actions') ?></th>
         </tr>
@@ -16,7 +16,7 @@
     <tbody>
     <?php foreach ($locations as $location): ?>
         <tr>
-            <td><?= $this->Number->format($location->location_id) ?></td>
+            <td><?= $this->Number->format($location->id) ?></td>
             <td><?= h($location->name) ?></td>
             <td class="actions">
                 <?= $this->Html->link(__('View'), ['action' => 'view', $location->location_id]) ?>

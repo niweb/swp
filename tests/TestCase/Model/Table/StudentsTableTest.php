@@ -17,8 +17,7 @@ class StudentsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.students',
-        'app.locations'
+        'app.students'
     ];
 
     /**

@@ -15,11 +15,13 @@ class User extends Entity
      * @var array
      */
     protected $_accessible = [
-        'location_id' => true,
-        'type' => true,
-        'mail' => true,
+        'id' => true,
+        'email' => true,
         'password' => true,
+        'type_id' => true,
+        'location_id' => true,
         'user' => true,
         'location' => true,
+        'type' => true,
     ];
 }

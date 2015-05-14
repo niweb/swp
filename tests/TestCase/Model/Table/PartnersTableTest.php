@@ -19,7 +19,6 @@ class PartnersTableTest extends TestCase
     public $fixtures = [
         'app.partners',
         'app.users',
-        'app.locations',
         'app.students'
     ];
 

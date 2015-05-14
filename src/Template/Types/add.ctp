@@ -9,6 +9,7 @@
     <fieldset>
         <legend><?= __('Add Type') ?></legend>
         <?php
+            echo $this->Form->input('id');
             echo $this->Form->input('name');
         ?>
     </fieldset>

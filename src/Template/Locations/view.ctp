@@ -15,8 +15,8 @@
             <p><?= h($location->name) ?></p>
         </div>
         <div class="large-2 columns numbers end">
-            <h6 class="subheader"><?= __('Location Id') ?></h6>
-            <p><?= $this->Number->format($location->location_id) ?></p>
+            <h6 class="subheader"><?= __('Id') ?></h6>
+            <p><?= $this->Number->format($location->id) ?></p>
         </div>
     </div>
 </div>

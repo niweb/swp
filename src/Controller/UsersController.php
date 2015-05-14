@@ -19,7 +19,7 @@ class UsersController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Users', 'Locations']
+            'contain' => ['Users', 'Locations', 'Types']
         ];
         $this->set('users', $this->paginate($this->Users));
         $this->set('_serialize', ['users']);
@@ -35,7 +35,7 @@ class UsersController extends AppController
     public function view($id = null)
     {
         $user = $this->Users->get($id, [
-            'contain' => ['Users', 'Locations']
+            'contain' => ['Users', 'Locations', 'Types']
         ]);
         $this->set('user', $user);
         $this->set('_serialize', ['user']);
@@ -60,7 +60,8 @@ class UsersController extends AppController
         }
         $users = $this->Users->Users->find('list', ['limit' => 200]);
         $locations = $this->Users->Locations->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'users', 'locations'));
+        $types = $this->Users->Types->find('list', ['limit' => 200]);
+        $this->set(compact('user', 'users', 'locations', 'types'));
         $this->set('_serialize', ['user']);
     }
 
@@ -87,7 +88,8 @@ class UsersController extends AppController
         }
         $users = $this->Users->Users->find('list', ['limit' => 200]);
         $locations = $this->Users->Locations->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'users', 'locations'));
+        $types = $this->Users->Types->find('list', ['limit' => 200]);
+        $this->set(compact('user', 'users', 'locations', 'types'));
         $this->set('_serialize', ['user']);
     }
 

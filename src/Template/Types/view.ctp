@@ -15,8 +15,8 @@
             <p><?= h($type->name) ?></p>
         </div>
         <div class="large-2 columns numbers end">
-            <h6 class="subheader"><?= __('Type Id') ?></h6>
-            <p><?= $this->Number->format($type->type_id) ?></p>
+            <h6 class="subheader"><?= __('Id') ?></h6>
+            <p><?= $this->Number->format($type->id) ?></p>
         </div>
     </div>
 </div>

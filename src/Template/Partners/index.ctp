@@ -2,38 +2,32 @@
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
         <li><?= $this->Html->link(__('New Partner'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Students'), ['controller' => 'Students', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Student'), ['controller' => 'Students', 'action' => 'add']) ?> </li>
     </ul>
 </div>
 <div class="partners index large-10 medium-9 columns">
     <table cellpadding="0" cellspacing="0">
     <thead>
         <tr>
-            <th><?= $this->Paginator->sort('partner_id') ?></th>
-            <th><?= $this->Paginator->sort('user_id') ?></th>
-            <th><?= $this->Paginator->sort('student_id') ?></th>
-            <th><?= $this->Paginator->sort('vorname') ?></th>
-            <th><?= $this->Paginator->sort('nachname') ?></th>
-            <th><?= $this->Paginator->sort('telefon') ?></th>
+            <th><?= $this->Paginator->sort('id') ?></th>
+            <th><?= $this->Paginator->sort('name') ?></th>
+            <th><?= $this->Paginator->sort('lastname') ?></th>
+            <th><?= $this->Paginator->sort('age') ?></th>
+            <th><?= $this->Paginator->sort('sex') ?></th>
+            <th><?= $this->Paginator->sort('degree_course') ?></th>
+            <th><?= $this->Paginator->sort('job') ?></th>
             <th class="actions"><?= __('Actions') ?></th>
         </tr>
     </thead>
     <tbody>
     <?php foreach ($partners as $partner): ?>
         <tr>
-            <td><?= $this->Number->format($partner->partner_id) ?></td>
-            <td>
-                <?= $partner->has('user') ? $this->Html->link($partner->user->user_id, ['controller' => 'Users', 'action' => 'view', $partner->user->user_id]) : '' ?>
-            </td>
-            <td>
-                <?= $partner->has('student') ? $this->Html->link($partner->student->student_id, ['controller' => 'Students', 'action' => 'view', $partner->student->student_id]) : '' ?>
-            </td>
-            <td><?= h($partner->vorname) ?></td>
-            <td><?= h($partner->nachname) ?></td>
-            <td><?= h($partner->telefon) ?></td>
+            <td><?= $this->Number->format($partner->id) ?></td>
+            <td><?= h($partner->name) ?></td>
+            <td><?= h($partner->lastname) ?></td>
+            <td><?= $this->Number->format($partner->age) ?></td>
+            <td><?= h($partner->sex) ?></td>
+            <td><?= h($partner->degree_course) ?></td>
+            <td><?= h($partner->job) ?></td>
             <td class="actions">
                 <?= $this->Html->link(__('View'), ['action' => 'view', $partner->partner_id]) ?>
                 <?= $this->Html->link(__('Edit'), ['action' => 'edit', $partner->partner_id]) ?>

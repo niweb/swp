@@ -2,8 +2,6 @@
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
         <li><?= $this->Html->link(__('List Students'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Locations'), ['controller' => 'Locations', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Location'), ['controller' => 'Locations', 'action' => 'add']) ?> </li>
     </ul>
 </div>
 <div class="students form large-10 medium-9 columns">
@@ -11,10 +9,12 @@
     <fieldset>
         <legend><?= __('Add Student') ?></legend>
         <?php
-            echo $this->Form->input('location_id', ['options' => $locations]);
-            echo $this->Form->input('vorname');
-            echo $this->Form->input('nachname');
-            echo $this->Form->input('telefon');
+            echo $this->Form->input('id');
+            echo $this->Form->input('name');
+            echo $this->Form->input('lastname');
+            echo $this->Form->input('telephone');
+            echo $this->Form->input('mobile');
+            echo $this->Form->input('location_id');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

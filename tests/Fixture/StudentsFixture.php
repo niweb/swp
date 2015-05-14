@@ -17,17 +17,15 @@ class StudentsFixture extends TestFixture
      */
     // @codingStandardsIgnoreStart
     public $fields = [
-        'student_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
-        'location_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'vorname' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
-        'nachname' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
-        'telefon' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
+        'id' => ['type' => 'integer', 'length' => 10, 'autoIncrement' => true, 'default' => null, 'null' => false, 'comment' => null, 'precision' => null, 'unsigned' => null],
+        'name' => ['type' => 'string', 'length' => 255, 'default' => null, 'null' => false, 'comment' => null, 'precision' => null, 'fixed' => null],
+        'lastname' => ['type' => 'string', 'length' => 255, 'default' => null, 'null' => false, 'comment' => null, 'precision' => null, 'fixed' => null],
+        'telephone' => ['type' => 'string', 'length' => 255, 'default' => null, 'null' => false, 'comment' => null, 'precision' => null, 'fixed' => null],
+        'mobile' => ['type' => 'string', 'length' => 255, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'fixed' => null],
+        'location_id' => ['type' => 'integer', 'length' => 10, 'autoIncrement' => true, 'default' => null, 'null' => false, 'comment' => null, 'precision' => null, 'unsigned' => null],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['student_id'], 'length' => []],
-        ],
-        '_options' => [
-            'engine' => 'InnoDB',
-            'collation' => 'latin1_swedish_ci'
+            'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
+            'students_location_id_fkey' => ['type' => 'foreign', 'columns' => ['location_id'], 'references' => ['locations', 'id'], 'update' => 'noAction', 'delete' => 'noAction', 'length' => []],
         ],
     ];
     // @codingStandardsIgnoreEnd
@@ -39,11 +37,12 @@ class StudentsFixture extends TestFixture
      */
     public $records = [
         [
-            'student_id' => 1,
-            'location_id' => 1,
-            'vorname' => 'Lorem ipsum dolor sit amet',
-            'nachname' => 'Lorem ipsum dolor sit amet',
-            'telefon' => 'Lorem ipsum dolor sit amet'
+            'id' => 1,
+            'name' => 'Lorem ipsum dolor sit amet',
+            'lastname' => 'Lorem ipsum dolor sit amet',
+            'telephone' => 'Lorem ipsum dolor sit amet',
+            'mobile' => 'Lorem ipsum dolor sit amet',
+            'location_id' => 1
         ],
     ];
 }

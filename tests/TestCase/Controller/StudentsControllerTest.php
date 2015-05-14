@@ -16,8 +16,7 @@ class StudentsControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'app.students',
-        'app.locations'
+        'app.students'
     ];
 
     /**
