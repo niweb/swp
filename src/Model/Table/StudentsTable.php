@@ -25,8 +25,7 @@ class StudentsTable extends Table
         $this->displayField('student_id');
         $this->primaryKey('student_id');
         $this->belongsTo('Locations', [
-            'foreignKey' => 'location_id',
-            'joinType' => 'INNER'
+            'foreignKey' => 'location_id'
         ]);
         $this->hasMany('Tandems', [
             'foreignKey' => 'student_id'

@@ -18,9 +18,6 @@ class TypesController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Types']
-        ];
         $this->set('types', $this->paginate($this->Types));
         $this->set('_serialize', ['types']);
     }
@@ -35,7 +32,7 @@ class TypesController extends AppController
     public function view($id = null)
     {
         $type = $this->Types->get($id, [
-            'contain' => ['Types']
+            'contain' => ['Users']
         ]);
         $this->set('type', $type);
         $this->set('_serialize', ['type']);
@@ -58,8 +55,7 @@ class TypesController extends AppController
                 $this->Flash->error('The type could not be saved. Please, try again.');
             }
         }
-        $types = $this->Types->Types->find('list', ['limit' => 200]);
-        $this->set(compact('type', 'types'));
+        $this->set(compact('type'));
         $this->set('_serialize', ['type']);
     }
 
@@ -84,8 +80,7 @@ class TypesController extends AppController
                 $this->Flash->error('The type could not be saved. Please, try again.');
             }
         }
-        $types = $this->Types->Types->find('list', ['limit' => 200]);
-        $this->set(compact('type', 'types'));
+        $this->set(compact('type'));
         $this->set('_serialize', ['type']);
     }
 

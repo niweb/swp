@@ -26,9 +26,5 @@
             <h6 class="subheader"><?= __('Maximum Class') ?></h6>
             <p><?= $this->Number->format($preferredSubject->maximum_class) ?></p>
         </div>
-        <div class="large-2 columns booleans end">
-            <h6 class="subheader"><?= __('Not An Option') ?></h6>
-            <p><?= $preferredSubject->not_an_option ? __('Yes') : __('No'); ?></p>
-        </div>
     </div>
 </div>

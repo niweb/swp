@@ -14,7 +14,7 @@
         <legend><?= __('Add Preferred Classrange') ?></legend>
         <?php
             echo $this->Form->input('partner_id', ['options' => $partners]);
-            echo $this->Form->input('classrange_id', ['options' => $classranges]);
+            echo $this->Form->input('classrange_id', ['options' => $classranges, 'empty' => true]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

@@ -21,7 +21,6 @@
         <?php
             echo $this->Form->input('subject_id', ['options' => $subjects]);
             echo $this->Form->input('partner_id', ['options' => $partners]);
-            echo $this->Form->input('not_an_option');
             echo $this->Form->input('maximum_class');
         ?>
     </fieldset>

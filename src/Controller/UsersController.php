@@ -19,7 +19,7 @@ class UsersController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Users', 'Locations', 'Types']
+            'contain' => ['Types', 'Locations']
         ];
         $this->set('users', $this->paginate($this->Users));
         $this->set('_serialize', ['users']);
@@ -35,7 +35,7 @@ class UsersController extends AppController
     public function view($id = null)
     {
         $user = $this->Users->get($id, [
-            'contain' => ['Users', 'Locations', 'Types']
+            'contain' => ['Types', 'Locations']
         ]);
         $this->set('user', $user);
         $this->set('_serialize', ['user']);
@@ -58,10 +58,9 @@ class UsersController extends AppController
                 $this->Flash->error('The user could not be saved. Please, try again.');
             }
         }
-        $users = $this->Users->Users->find('list', ['limit' => 200]);
-        $locations = $this->Users->Locations->find('list', ['limit' => 200]);
         $types = $this->Users->Types->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'users', 'locations', 'types'));
+        $locations = $this->Users->Locations->find('list', ['limit' => 200]);
+        $this->set(compact('user', 'types', 'locations'));
         $this->set('_serialize', ['user']);
     }
 
@@ -86,10 +85,9 @@ class UsersController extends AppController
                 $this->Flash->error('The user could not be saved. Please, try again.');
             }
         }
-        $users = $this->Users->Users->find('list', ['limit' => 200]);
-        $locations = $this->Users->Locations->find('list', ['limit' => 200]);
         $types = $this->Users->Types->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'users', 'locations', 'types'));
+        $locations = $this->Users->Locations->find('list', ['limit' => 200]);
+        $this->set(compact('user', 'types', 'locations'));
         $this->set('_serialize', ['user']);
     }
 

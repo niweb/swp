@@ -29,8 +29,7 @@ class PreferredSchooltypesTable extends Table
             'joinType' => 'INNER'
         ]);
         $this->belongsTo('Schooltypes', [
-            'foreignKey' => 'schooltype_id',
-            'joinType' => 'INNER'
+            'foreignKey' => 'schooltype_id'
         ]);
     }
 

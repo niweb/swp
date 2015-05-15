@@ -25,8 +25,7 @@ class SchooltypesTable extends Table
         $this->displayField('name');
         $this->primaryKey('id');
         $this->belongsTo('Locations', [
-            'foreignKey' => 'location_id',
-            'joinType' => 'INNER'
+            'foreignKey' => 'location_id'
         ]);
     }
 

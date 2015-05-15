@@ -26,12 +26,10 @@ class UsersTable extends Table
         $this->primaryKey('user_id');
         $this->addBehavior('Timestamp');
         $this->belongsTo('Types', [
-            'foreignKey' => 'type_id',
-            'joinType' => 'INNER'
+            'foreignKey' => 'type_id'
         ]);
         $this->belongsTo('Locations', [
-            'foreignKey' => 'location_id',
-            'joinType' => 'INNER'
+            'foreignKey' => 'location_id'
         ]);
     }
 

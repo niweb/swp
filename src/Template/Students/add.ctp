@@ -2,6 +2,10 @@
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
         <li><?= $this->Html->link(__('List Students'), ['action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('List Locations'), ['controller' => 'Locations', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Location'), ['controller' => 'Locations', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Tandems'), ['controller' => 'Tandems', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Tandem'), ['controller' => 'Tandems', 'action' => 'add']) ?> </li>
     </ul>
 </div>
 <div class="students form large-10 medium-9 columns">
@@ -14,7 +18,7 @@
             echo $this->Form->input('lastname');
             echo $this->Form->input('telephone');
             echo $this->Form->input('mobile');
-            echo $this->Form->input('location_id');
+            echo $this->Form->input('location_id', ['options' => $locations, 'empty' => true]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

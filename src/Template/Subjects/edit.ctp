@@ -18,7 +18,7 @@
         <legend><?= __('Edit Subject') ?></legend>
         <?php
             echo $this->Form->input('name');
-            echo $this->Form->input('location_id', ['options' => $locations]);
+            echo $this->Form->input('location_id', ['options' => $locations, 'empty' => true]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

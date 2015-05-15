@@ -29,8 +29,7 @@ class PreferredClassrangesTable extends Table
             'joinType' => 'INNER'
         ]);
         $this->belongsTo('Classranges', [
-            'foreignKey' => 'classrange_id',
-            'joinType' => 'INNER'
+            'foreignKey' => 'classrange_id'
         ]);
     }
 

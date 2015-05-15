@@ -17,7 +17,6 @@ class PreferredSubject extends Entity
     protected $_accessible = [
         'subject_id' => true,
         'partner_id' => true,
-        'not_an_option' => true,
         'maximum_class' => true,
         'subject' => true,
         'partner' => true,

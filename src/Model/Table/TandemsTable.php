@@ -13,6 +13,8 @@ use Cake\Validation\Validator;
 class TandemsTable extends Table
 {
 
+	public $sequence = 'public.foobar_seq';
+	
     /**
      * Initialize method
      *

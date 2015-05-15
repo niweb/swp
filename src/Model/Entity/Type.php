@@ -17,6 +17,6 @@ class Type extends Entity
     protected $_accessible = [
         'id' => true,
         'name' => true,
-        'type' => true,
+        'users' => true,
     ];
 }

@@ -18,9 +18,6 @@ class LocationsController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Locations']
-        ];
         $this->set('locations', $this->paginate($this->Locations));
         $this->set('_serialize', ['locations']);
     }
@@ -35,7 +32,7 @@ class LocationsController extends AppController
     public function view($id = null)
     {
         $location = $this->Locations->get($id, [
-            'contain' => ['Locations']
+            'contain' => ['Partners', 'Schooltypes', 'Students', 'Subjects', 'Users']
         ]);
         $this->set('location', $location);
         $this->set('_serialize', ['location']);
@@ -58,8 +55,7 @@ class LocationsController extends AppController
                 $this->Flash->error('The location could not be saved. Please, try again.');
             }
         }
-        $locations = $this->Locations->Locations->find('list', ['limit' => 200]);
-        $this->set(compact('location', 'locations'));
+        $this->set(compact('location'));
         $this->set('_serialize', ['location']);
     }
 
@@ -84,8 +80,7 @@ class LocationsController extends AppController
                 $this->Flash->error('The location could not be saved. Please, try again.');
             }
         }
-        $locations = $this->Locations->Locations->find('list', ['limit' => 200]);
-        $this->set(compact('location', 'locations'));
+        $this->set(compact('location'));
         $this->set('_serialize', ['location']);
     }
 

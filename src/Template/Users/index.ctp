@@ -2,10 +2,10 @@
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
         <li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Locations'), ['controller' => 'Locations', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Location'), ['controller' => 'Locations', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Types'), ['controller' => 'Types', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Type'), ['controller' => 'Types', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Locations'), ['controller' => 'Locations', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Location'), ['controller' => 'Locations', 'action' => 'add']) ?> </li>
     </ul>
 </div>
 <div class="users index large-10 medium-9 columns">
@@ -28,7 +28,9 @@
             <td><?= h($user->email) ?></td>
             <td><?= h($user->password) ?></td>
             <td><?= h($user->created) ?></td>
-            <td><?= $this->Number->format($user->type_id) ?></td>
+            <td>
+                <?= $user->has('type') ? $this->Html->link($user->type->name, ['controller' => 'Types', 'action' => 'view', $user->type->type_id]) : '' ?>
+            </td>
             <td>
                 <?= $user->has('location') ? $this->Html->link($user->location->name, ['controller' => 'Locations', 'action' => 'view', $user->location->location_id]) : '' ?>
             </td>

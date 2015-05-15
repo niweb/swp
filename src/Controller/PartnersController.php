@@ -19,7 +19,7 @@ class PartnersController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Partners', 'Users', 'Students']
+            'contain' => ['Locations']
         ];
         $this->set('partners', $this->paginate($this->Partners));
         $this->set('_serialize', ['partners']);
@@ -35,7 +35,7 @@ class PartnersController extends AppController
     public function view($id = null)
     {
         $partner = $this->Partners->get($id, [
-            'contain' => ['Partners', 'Users', 'Students']
+            'contain' => ['Locations', 'PreferredClassranges', 'PreferredSchooltypes', 'PreferredSubjects', 'Tandems']
         ]);
         $this->set('partner', $partner);
         $this->set('_serialize', ['partner']);
@@ -58,10 +58,8 @@ class PartnersController extends AppController
                 $this->Flash->error('The partner could not be saved. Please, try again.');
             }
         }
-        $partners = $this->Partners->Partners->find('list', ['limit' => 200]);
-        $users = $this->Partners->Users->find('list', ['limit' => 200]);
-        $students = $this->Partners->Students->find('list', ['limit' => 200]);
-        $this->set(compact('partner', 'partners', 'users', 'students'));
+        $locations = $this->Partners->Locations->find('list', ['limit' => 200]);
+        $this->set(compact('partner', 'locations'));
         $this->set('_serialize', ['partner']);
     }
 
@@ -86,10 +84,8 @@ class PartnersController extends AppController
                 $this->Flash->error('The partner could not be saved. Please, try again.');
             }
         }
-        $partners = $this->Partners->Partners->find('list', ['limit' => 200]);
-        $users = $this->Partners->Users->find('list', ['limit' => 200]);
-        $students = $this->Partners->Students->find('list', ['limit' => 200]);
-        $this->set(compact('partner', 'partners', 'users', 'students'));
+        $locations = $this->Partners->Locations->find('list', ['limit' => 200]);
+        $this->set(compact('partner', 'locations'));
         $this->set('_serialize', ['partner']);
     }
 

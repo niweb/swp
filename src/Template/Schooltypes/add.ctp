@@ -14,7 +14,7 @@
             echo $this->Form->input('name');
             echo $this->Form->input('maximum_class');
             echo $this->Form->input('minimum_class');
-            echo $this->Form->input('location_id', ['options' => $locations]);
+            echo $this->Form->input('location_id', ['options' => $locations, 'empty' => true]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

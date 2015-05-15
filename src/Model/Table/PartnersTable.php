@@ -25,8 +25,7 @@ class PartnersTable extends Table
         $this->displayField('partner_id');
         $this->primaryKey('partner_id');
         $this->belongsTo('Locations', [
-            'foreignKey' => 'location_id',
-            'joinType' => 'INNER'
+            'foreignKey' => 'location_id'
         ]);
         $this->hasMany('PreferredClassranges', [
             'foreignKey' => 'partner_id'
@@ -122,7 +121,7 @@ class PartnersTable extends Table
             ->notEmpty('experience');
             
         $validator
-            ->allowEmpty('preffered_gender');
+            ->allowEmpty('preferred_gender');
             
         $validator
             ->allowEmpty('support_wish');

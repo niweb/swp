@@ -20,8 +20,7 @@ class User extends Entity
         'password' => true,
         'type_id' => true,
         'location_id' => true,
-        'user' => true,
-        'location' => true,
         'type' => true,
+        'location' => true,
     ];
 }

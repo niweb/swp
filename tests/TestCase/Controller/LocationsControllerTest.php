@@ -16,7 +16,18 @@ class LocationsControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'app.locations'
+        'app.locations',
+        'app.partners',
+        'app.preferred_classranges',
+        'app.classranges',
+        'app.preferred_schooltypes',
+        'app.schooltypes',
+        'app.preferred_subjects',
+        'app.subjects',
+        'app.tandems',
+        'app.students',
+        'app.users',
+        'app.types'
     ];
 
     /**

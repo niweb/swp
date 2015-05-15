@@ -2,6 +2,16 @@
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
         <li><?= $this->Html->link(__('New Partner'), ['action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Locations'), ['controller' => 'Locations', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Location'), ['controller' => 'Locations', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Preferred Classranges'), ['controller' => 'PreferredClassranges', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Preferred Classrange'), ['controller' => 'PreferredClassranges', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Preferred Schooltypes'), ['controller' => 'PreferredSchooltypes', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Preferred Schooltype'), ['controller' => 'PreferredSchooltypes', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Preferred Subjects'), ['controller' => 'PreferredSubjects', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Preferred Subject'), ['controller' => 'PreferredSubjects', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Tandems'), ['controller' => 'Tandems', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Tandem'), ['controller' => 'Tandems', 'action' => 'add']) ?> </li>
     </ul>
 </div>
 <div class="partners index large-10 medium-9 columns">

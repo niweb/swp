@@ -17,6 +17,10 @@ class Location extends Entity
     protected $_accessible = [
         'id' => true,
         'name' => true,
-        'location' => true,
+        'partners' => true,
+        'schooltypes' => true,
+        'students' => true,
+        'subjects' => true,
+        'users' => true,
     ];
 }

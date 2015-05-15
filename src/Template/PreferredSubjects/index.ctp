@@ -15,7 +15,6 @@
             <th><?= $this->Paginator->sort('id') ?></th>
             <th><?= $this->Paginator->sort('subject_id') ?></th>
             <th><?= $this->Paginator->sort('partner_id') ?></th>
-            <th><?= $this->Paginator->sort('not_an_option') ?></th>
             <th><?= $this->Paginator->sort('maximum_class') ?></th>
             <th class="actions"><?= __('Actions') ?></th>
         </tr>
@@ -30,7 +29,6 @@
             <td>
                 <?= $preferredSubject->has('partner') ? $this->Html->link($preferredSubject->partner->partner_id, ['controller' => 'Partners', 'action' => 'view', $preferredSubject->partner->partner_id]) : '' ?>
             </td>
-            <td><?= h($preferredSubject->not_an_option) ?></td>
             <td><?= $this->Number->format($preferredSubject->maximum_class) ?></td>
             <td class="actions">
                 <?= $this->Html->link(__('View'), ['action' => 'view', $preferredSubject->id]) ?>

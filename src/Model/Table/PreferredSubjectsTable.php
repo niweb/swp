@@ -47,10 +47,6 @@ class PreferredSubjectsTable extends Table
             ->allowEmpty('id', 'create');
             
         $validator
-            ->add('not_an_option', 'valid', ['rule' => 'boolean'])
-            ->allowEmpty('not_an_option');
-            
-        $validator
             ->add('maximum_class', 'valid', ['rule' => 'numeric'])
             ->allowEmpty('maximum_class');
 

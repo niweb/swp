@@ -2,6 +2,10 @@
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
         <li><?= $this->Html->link(__('New Student'), ['action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Locations'), ['controller' => 'Locations', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Location'), ['controller' => 'Locations', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Tandems'), ['controller' => 'Tandems', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Tandem'), ['controller' => 'Tandems', 'action' => 'add']) ?> </li>
     </ul>
 </div>
 <div class="students index large-10 medium-9 columns">
@@ -25,7 +29,9 @@
             <td><?= h($student->lastname) ?></td>
             <td><?= h($student->telephone) ?></td>
             <td><?= h($student->mobile) ?></td>
-            <td><?= $this->Number->format($student->location_id) ?></td>
+            <td>
+                <?= $student->has('location') ? $this->Html->link($student->location->name, ['controller' => 'Locations', 'action' => 'view', $student->location->location_id]) : '' ?>
+            </td>
             <td class="actions">
                 <?= $this->Html->link(__('View'), ['action' => 'view', $student->student_id]) ?>
                 <?= $this->Html->link(__('Edit'), ['action' => 'edit', $student->student_id]) ?>
