@@ -1,8 +1,8 @@
 <div class="actions columns large-2 medium-3">
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
-        <li><?= $this->Html->link(__('Edit Student'), ['action' => 'edit', $student->student_id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Student'), ['action' => 'delete', $student->student_id], ['confirm' => __('Are you sure you want to delete # {0}?', $student->student_id)]) ?> </li>
+        <li><?= $this->Html->link(__('Edit Student'), ['action' => 'edit', $student->id]) ?> </li>
+        <li><?= $this->Form->postLink(__('Delete Student'), ['action' => 'delete', $student->id], ['confirm' => __('Are you sure you want to delete # {0}?', $student->id)]) ?> </li>
         <li><?= $this->Html->link(__('List Students'), ['action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Student'), ['action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Locations'), ['controller' => 'Locations', 'action' => 'index']) ?> </li>
@@ -12,7 +12,7 @@
     </ul>
 </div>
 <div class="students view large-10 medium-9 columns">
-    <h2><?= h($student->student_id) ?></h2>
+    <h2><?= h($student->name) ?></h2>
     <div class="row">
         <div class="large-5 columns strings">
             <h6 class="subheader"><?= __('Name') ?></h6>
@@ -24,7 +24,7 @@
             <h6 class="subheader"><?= __('Mobile') ?></h6>
             <p><?= h($student->mobile) ?></p>
             <h6 class="subheader"><?= __('Location') ?></h6>
-            <p><?= $student->has('location') ? $this->Html->link($student->location->name, ['controller' => 'Locations', 'action' => 'view', $student->location->location_id]) : '' ?></p>
+            <p><?= $student->has('location') ? $this->Html->link($student->location->name, ['controller' => 'Locations', 'action' => 'view', $student->location->id]) : '' ?></p>
         </div>
         <div class="large-2 columns numbers end">
             <h6 class="subheader"><?= __('Id') ?></h6>

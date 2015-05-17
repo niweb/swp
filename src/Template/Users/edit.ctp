@@ -3,8 +3,8 @@
     <ul class="side-nav">
         <li><?= $this->Form->postLink(
                 __('Delete'),
-                ['action' => 'delete', $user->user_id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $user->user_id)]
+                ['action' => 'delete', $user->id],
+                ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]
             )
         ?></li>
         <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?></li>
@@ -19,7 +19,6 @@
     <fieldset>
         <legend><?= __('Edit User') ?></legend>
         <?php
-            echo $this->Form->input('id');
             echo $this->Form->input('email');
             echo $this->Form->input('password');
             echo $this->Form->input('type_id', ['options' => $types, 'empty' => true]);

@@ -21,13 +21,12 @@ class PreferredSchooltypesControllerTest extends IntegrationTestCase
         'app.locations',
         'app.schooltypes',
         'app.students',
-        'app.tandems',
         'app.subjects',
         'app.users',
-        'app.types',
         'app.preferred_classranges',
         'app.classranges',
-        'app.preferred_subjects'
+        'app.preferred_subjects',
+        'app.tandems'
     ];
 
     /**

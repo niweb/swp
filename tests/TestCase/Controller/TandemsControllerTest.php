@@ -23,7 +23,6 @@ class TandemsControllerTest extends IntegrationTestCase
         'app.students',
         'app.subjects',
         'app.users',
-        'app.types',
         'app.preferred_classranges',
         'app.classranges',
         'app.preferred_schooltypes',

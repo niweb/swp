@@ -21,9 +21,9 @@
             <td><?= $this->Number->format($type->id) ?></td>
             <td><?= h($type->name) ?></td>
             <td class="actions">
-                <?= $this->Html->link(__('View'), ['action' => 'view', $type->type_id]) ?>
-                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $type->type_id]) ?>
-                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $type->type_id], ['confirm' => __('Are you sure you want to delete # {0}?', $type->type_id)]) ?>
+                <?= $this->Html->link(__('View'), ['action' => 'view', $type->id]) ?>
+                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $type->id]) ?>
+                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $type->id], ['confirm' => __('Are you sure you want to delete # {0}?', $type->id)]) ?>
             </td>
         </tr>
 

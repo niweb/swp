@@ -3,8 +3,8 @@
     <ul class="side-nav">
         <li><?= $this->Form->postLink(
                 __('Delete'),
-                ['action' => 'delete', $partner->partner_id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $partner->partner_id)]
+                ['action' => 'delete', $partner->id],
+                ['confirm' => __('Are you sure you want to delete # {0}?', $partner->id)]
             )
         ?></li>
         <li><?= $this->Html->link(__('List Partners'), ['action' => 'index']) ?></li>
@@ -25,7 +25,6 @@
     <fieldset>
         <legend><?= __('Edit Partner') ?></legend>
         <?php
-            echo $this->Form->input('id');
             echo $this->Form->input('name');
             echo $this->Form->input('lastname');
             echo $this->Form->input('age');

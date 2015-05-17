@@ -3,8 +3,8 @@
     <ul class="side-nav">
         <li><?= $this->Form->postLink(
                 __('Delete'),
-                ['action' => 'delete', $location->location_id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $location->location_id)]
+                ['action' => 'delete', $location->id],
+                ['confirm' => __('Are you sure you want to delete # {0}?', $location->id)]
             )
         ?></li>
         <li><?= $this->Html->link(__('List Locations'), ['action' => 'index']) ?></li>
@@ -25,7 +25,6 @@
     <fieldset>
         <legend><?= __('Edit Location') ?></legend>
         <?php
-            echo $this->Form->input('id');
             echo $this->Form->input('name');
         ?>
     </fieldset>

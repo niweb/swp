@@ -13,7 +13,6 @@
     <fieldset>
         <legend><?= __('Add User') ?></legend>
         <?php
-            echo $this->Form->input('id');
             echo $this->Form->input('email');
             echo $this->Form->input('password');
             echo $this->Form->input('type_id', ['options' => $types, 'empty' => true]);

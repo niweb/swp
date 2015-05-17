@@ -16,9 +16,9 @@
     <div class="row">
         <div class="large-5 columns strings">
             <h6 class="subheader"><?= __('Partner') ?></h6>
-            <p><?= $tandem->has('partner') ? $this->Html->link($tandem->partner->partner_id, ['controller' => 'Partners', 'action' => 'view', $tandem->partner->partner_id]) : '' ?></p>
+            <p><?= $tandem->has('partner') ? $this->Html->link($tandem->partner->name, ['controller' => 'Partners', 'action' => 'view', $tandem->partner->id]) : '' ?></p>
             <h6 class="subheader"><?= __('Student') ?></h6>
-            <p><?= $tandem->has('student') ? $this->Html->link($tandem->student->student_id, ['controller' => 'Students', 'action' => 'view', $tandem->student->student_id]) : '' ?></p>
+            <p><?= $tandem->has('student') ? $this->Html->link($tandem->student->name, ['controller' => 'Students', 'action' => 'view', $tandem->student->id]) : '' ?></p>
         </div>
         <div class="large-2 columns numbers end">
             <h6 class="subheader"><?= __('Id') ?></h6>

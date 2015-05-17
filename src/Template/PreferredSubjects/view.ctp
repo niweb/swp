@@ -18,7 +18,7 @@
             <h6 class="subheader"><?= __('Subject') ?></h6>
             <p><?= $preferredSubject->has('subject') ? $this->Html->link($preferredSubject->subject->name, ['controller' => 'Subjects', 'action' => 'view', $preferredSubject->subject->id]) : '' ?></p>
             <h6 class="subheader"><?= __('Partner') ?></h6>
-            <p><?= $preferredSubject->has('partner') ? $this->Html->link($preferredSubject->partner->partner_id, ['controller' => 'Partners', 'action' => 'view', $preferredSubject->partner->partner_id]) : '' ?></p>
+            <p><?= $preferredSubject->has('partner') ? $this->Html->link($preferredSubject->partner->name, ['controller' => 'Partners', 'action' => 'view', $preferredSubject->partner->id]) : '' ?></p>
         </div>
         <div class="large-2 columns numbers end">
             <h6 class="subheader"><?= __('Id') ?></h6>

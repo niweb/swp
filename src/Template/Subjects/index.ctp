@@ -22,7 +22,7 @@
             <td><?= $this->Number->format($subject->id) ?></td>
             <td><?= h($subject->name) ?></td>
             <td>
-                <?= $subject->has('location') ? $this->Html->link($subject->location->name, ['controller' => 'Locations', 'action' => 'view', $subject->location->location_id]) : '' ?>
+                <?= $subject->has('location') ? $this->Html->link($subject->location->name, ['controller' => 'Locations', 'action' => 'view', $subject->location->id]) : '' ?>
             </td>
             <td class="actions">
                 <?= $this->Html->link(__('View'), ['action' => 'view', $subject->id]) ?>

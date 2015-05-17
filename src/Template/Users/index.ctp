@@ -29,15 +29,15 @@
             <td><?= h($user->password) ?></td>
             <td><?= h($user->created) ?></td>
             <td>
-                <?= $user->has('type') ? $this->Html->link($user->type->name, ['controller' => 'Types', 'action' => 'view', $user->type->type_id]) : '' ?>
+                <?= $user->has('type') ? $this->Html->link($user->type->name, ['controller' => 'Types', 'action' => 'view', $user->type->id]) : '' ?>
             </td>
             <td>
-                <?= $user->has('location') ? $this->Html->link($user->location->name, ['controller' => 'Locations', 'action' => 'view', $user->location->location_id]) : '' ?>
+                <?= $user->has('location') ? $this->Html->link($user->location->name, ['controller' => 'Locations', 'action' => 'view', $user->location->id]) : '' ?>
             </td>
             <td class="actions">
-                <?= $this->Html->link(__('View'), ['action' => 'view', $user->user_id]) ?>
-                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->user_id]) ?>
-                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->user_id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->user_id)]) ?>
+                <?= $this->Html->link(__('View'), ['action' => 'view', $user->id]) ?>
+                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
+                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?>
             </td>
         </tr>
 

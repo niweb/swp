@@ -22,8 +22,8 @@ class StudentsTable extends Table
     public function initialize(array $config)
     {
         $this->table('students');
-        $this->displayField('student_id');
-        $this->primaryKey('student_id');
+        $this->displayField('name');
+        $this->primaryKey('id');
         $this->belongsTo('Locations', [
             'foreignKey' => 'location_id'
         ]);

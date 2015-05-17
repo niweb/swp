@@ -19,16 +19,15 @@ class PreferredSubjectsTableTest extends TestCase
     public $fixtures = [
         'app.preferred_subjects',
         'app.subjects',
-        'app.locations',
         'app.partners',
+        'app.locations',
+        'app.schooltypes',
+        'app.students',
+        'app.users',
         'app.preferred_classranges',
         'app.classranges',
         'app.preferred_schooltypes',
-        'app.schooltypes',
-        'app.tandems',
-        'app.students',
-        'app.users',
-        'app.types'
+        'app.tandems'
     ];
 
     /**

@@ -30,12 +30,12 @@
             <td><?= h($student->telephone) ?></td>
             <td><?= h($student->mobile) ?></td>
             <td>
-                <?= $student->has('location') ? $this->Html->link($student->location->name, ['controller' => 'Locations', 'action' => 'view', $student->location->location_id]) : '' ?>
+                <?= $student->has('location') ? $this->Html->link($student->location->name, ['controller' => 'Locations', 'action' => 'view', $student->location->id]) : '' ?>
             </td>
             <td class="actions">
-                <?= $this->Html->link(__('View'), ['action' => 'view', $student->student_id]) ?>
-                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $student->student_id]) ?>
-                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $student->student_id], ['confirm' => __('Are you sure you want to delete # {0}?', $student->student_id)]) ?>
+                <?= $this->Html->link(__('View'), ['action' => 'view', $student->id]) ?>
+                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $student->id]) ?>
+                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $student->id], ['confirm' => __('Are you sure you want to delete # {0}?', $student->id)]) ?>
             </td>
         </tr>
 

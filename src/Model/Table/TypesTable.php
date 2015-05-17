@@ -23,7 +23,7 @@ class TypesTable extends Table
     {
         $this->table('types');
         $this->displayField('name');
-        $this->primaryKey('type_id');
+        $this->primaryKey('id');
         $this->hasMany('Users', [
             'foreignKey' => 'type_id'
         ]);

@@ -36,7 +36,32 @@ class AppController extends Controller
      */
     public function initialize()
     {
-        parent::initialize();
-        $this->loadComponent('Flash');
-    }
+	     $this->loadComponent('Flash');
+	        
+	        // Lade Authentifikations-Komponente
+	        // Setze 'Mail' und 'Password' Daten
+	        // Mache 'Users' fürs einloggen etc verantworlich
+	        // Login-Seite zu finden unter /users/login
+	        $this->loadComponent('Auth', [
+	        	'authenticate' => [
+	        		'Form' => [
+	        			'fields' => [
+	        				'username' => 'email',
+	        				'password' => 'password'
+	        			]
+	        		]
+	        	],
+	        	'loginAction' => [
+	        		'controller' => 'Users',
+	        		'action' => 'login'
+	        	]
+	        ]);
+	        
+		$this->Auth->allow(['dislay']);
+	}
+	    
+	public function beforeFilter(\Cake\Event\Event $event)
+	{
+		$this->Auth->allow(['add']);
+	}
 }

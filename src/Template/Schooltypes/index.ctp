@@ -26,7 +26,7 @@
             <td><?= $this->Number->format($schooltype->maximum_class) ?></td>
             <td><?= $this->Number->format($schooltype->minimum_class) ?></td>
             <td>
-                <?= $schooltype->has('location') ? $this->Html->link($schooltype->location->name, ['controller' => 'Locations', 'action' => 'view', $schooltype->location->location_id]) : '' ?>
+                <?= $schooltype->has('location') ? $this->Html->link($schooltype->location->name, ['controller' => 'Locations', 'action' => 'view', $schooltype->location->id]) : '' ?>
             </td>
             <td class="actions">
                 <?= $this->Html->link(__('View'), ['action' => 'view', $schooltype->id]) ?>

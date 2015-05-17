@@ -3,8 +3,8 @@
     <ul class="side-nav">
         <li><?= $this->Form->postLink(
                 __('Delete'),
-                ['action' => 'delete', $type->type_id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $type->type_id)]
+                ['action' => 'delete', $type->id],
+                ['confirm' => __('Are you sure you want to delete # {0}?', $type->id)]
             )
         ?></li>
         <li><?= $this->Html->link(__('List Types'), ['action' => 'index']) ?></li>
@@ -17,7 +17,6 @@
     <fieldset>
         <legend><?= __('Edit Type') ?></legend>
         <?php
-            echo $this->Form->input('id');
             echo $this->Form->input('name');
         ?>
     </fieldset>

@@ -39,9 +39,9 @@
             <td><?= h($partner->degree_course) ?></td>
             <td><?= h($partner->job) ?></td>
             <td class="actions">
-                <?= $this->Html->link(__('View'), ['action' => 'view', $partner->partner_id]) ?>
-                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $partner->partner_id]) ?>
-                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $partner->partner_id], ['confirm' => __('Are you sure you want to delete # {0}?', $partner->partner_id)]) ?>
+                <?= $this->Html->link(__('View'), ['action' => 'view', $partner->id]) ?>
+                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $partner->id]) ?>
+                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $partner->id], ['confirm' => __('Are you sure you want to delete # {0}?', $partner->id)]) ?>
             </td>
         </tr>
 

@@ -29,9 +29,9 @@
             <td><?= $this->Number->format($location->id) ?></td>
             <td><?= h($location->name) ?></td>
             <td class="actions">
-                <?= $this->Html->link(__('View'), ['action' => 'view', $location->location_id]) ?>
-                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $location->location_id]) ?>
-                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $location->location_id], ['confirm' => __('Are you sure you want to delete # {0}?', $location->location_id)]) ?>
+                <?= $this->Html->link(__('View'), ['action' => 'view', $location->id]) ?>
+                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $location->id]) ?>
+                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $location->id], ['confirm' => __('Are you sure you want to delete # {0}?', $location->id)]) ?>
             </td>
         </tr>
 

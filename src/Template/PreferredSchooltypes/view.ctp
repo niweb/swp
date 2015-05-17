@@ -16,7 +16,7 @@
     <div class="row">
         <div class="large-5 columns strings">
             <h6 class="subheader"><?= __('Partner') ?></h6>
-            <p><?= $preferredSchooltype->has('partner') ? $this->Html->link($preferredSchooltype->partner->partner_id, ['controller' => 'Partners', 'action' => 'view', $preferredSchooltype->partner->partner_id]) : '' ?></p>
+            <p><?= $preferredSchooltype->has('partner') ? $this->Html->link($preferredSchooltype->partner->name, ['controller' => 'Partners', 'action' => 'view', $preferredSchooltype->partner->id]) : '' ?></p>
             <h6 class="subheader"><?= __('Schooltype') ?></h6>
             <p><?= $preferredSchooltype->has('schooltype') ? $this->Html->link($preferredSchooltype->schooltype->name, ['controller' => 'Schooltypes', 'action' => 'view', $preferredSchooltype->schooltype->id]) : '' ?></p>
         </div>

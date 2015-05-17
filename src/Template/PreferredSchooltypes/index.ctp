@@ -23,7 +23,7 @@
         <tr>
             <td><?= $this->Number->format($preferredSchooltype->id) ?></td>
             <td>
-                <?= $preferredSchooltype->has('partner') ? $this->Html->link($preferredSchooltype->partner->partner_id, ['controller' => 'Partners', 'action' => 'view', $preferredSchooltype->partner->partner_id]) : '' ?>
+                <?= $preferredSchooltype->has('partner') ? $this->Html->link($preferredSchooltype->partner->name, ['controller' => 'Partners', 'action' => 'view', $preferredSchooltype->partner->id]) : '' ?>
             </td>
             <td>
                 <?= $preferredSchooltype->has('schooltype') ? $this->Html->link($preferredSchooltype->schooltype->name, ['controller' => 'Schooltypes', 'action' => 'view', $preferredSchooltype->schooltype->id]) : '' ?>

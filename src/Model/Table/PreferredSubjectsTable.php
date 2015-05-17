@@ -25,12 +25,10 @@ class PreferredSubjectsTable extends Table
         $this->displayField('id');
         $this->primaryKey('id');
         $this->belongsTo('Subjects', [
-            'foreignKey' => 'subject_id',
-            'joinType' => 'INNER'
+            'foreignKey' => 'subject_id'
         ]);
         $this->belongsTo('Partners', [
-            'foreignKey' => 'partner_id',
-            'joinType' => 'INNER'
+            'foreignKey' => 'partner_id'
         ]);
     }
 

@@ -22,12 +22,11 @@ class PreferredClassrangesTableTest extends TestCase
         'app.locations',
         'app.schooltypes',
         'app.students',
-        'app.tandems',
         'app.subjects',
         'app.users',
-        'app.types',
         'app.preferred_schooltypes',
         'app.preferred_subjects',
+        'app.tandems',
         'app.classranges'
     ];
 

@@ -13,7 +13,6 @@
     <fieldset>
         <legend><?= __('Add Student') ?></legend>
         <?php
-            echo $this->Form->input('id');
             echo $this->Form->input('name');
             echo $this->Form->input('lastname');
             echo $this->Form->input('telephone');

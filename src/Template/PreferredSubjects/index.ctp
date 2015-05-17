@@ -27,7 +27,7 @@
                 <?= $preferredSubject->has('subject') ? $this->Html->link($preferredSubject->subject->name, ['controller' => 'Subjects', 'action' => 'view', $preferredSubject->subject->id]) : '' ?>
             </td>
             <td>
-                <?= $preferredSubject->has('partner') ? $this->Html->link($preferredSubject->partner->partner_id, ['controller' => 'Partners', 'action' => 'view', $preferredSubject->partner->partner_id]) : '' ?>
+                <?= $preferredSubject->has('partner') ? $this->Html->link($preferredSubject->partner->name, ['controller' => 'Partners', 'action' => 'view', $preferredSubject->partner->id]) : '' ?>
             </td>
             <td><?= $this->Number->format($preferredSubject->maximum_class) ?></td>
             <td class="actions">

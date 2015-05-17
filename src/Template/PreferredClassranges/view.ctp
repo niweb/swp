@@ -16,7 +16,7 @@
     <div class="row">
         <div class="large-5 columns strings">
             <h6 class="subheader"><?= __('Partner') ?></h6>
-            <p><?= $preferredClassrange->has('partner') ? $this->Html->link($preferredClassrange->partner->partner_id, ['controller' => 'Partners', 'action' => 'view', $preferredClassrange->partner->partner_id]) : '' ?></p>
+            <p><?= $preferredClassrange->has('partner') ? $this->Html->link($preferredClassrange->partner->name, ['controller' => 'Partners', 'action' => 'view', $preferredClassrange->partner->id]) : '' ?></p>
             <h6 class="subheader"><?= __('Classrange') ?></h6>
             <p><?= $preferredClassrange->has('classrange') ? $this->Html->link($preferredClassrange->classrange->name, ['controller' => 'Classranges', 'action' => 'view', $preferredClassrange->classrange->id]) : '' ?></p>
         </div>

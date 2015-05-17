@@ -26,8 +26,7 @@ class SchooltypesControllerTest extends IntegrationTestCase
         'app.subjects',
         'app.tandems',
         'app.students',
-        'app.users',
-        'app.types'
+        'app.users'
     ];
 
     /**

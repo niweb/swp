@@ -1,8 +1,8 @@
 <div class="actions columns large-2 medium-3">
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
-        <li><?= $this->Html->link(__('Edit Location'), ['action' => 'edit', $location->location_id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Location'), ['action' => 'delete', $location->location_id], ['confirm' => __('Are you sure you want to delete # {0}?', $location->location_id)]) ?> </li>
+        <li><?= $this->Html->link(__('Edit Location'), ['action' => 'edit', $location->id]) ?> </li>
+        <li><?= $this->Form->postLink(__('Delete Location'), ['action' => 'delete', $location->id], ['confirm' => __('Are you sure you want to delete # {0}?', $location->id)]) ?> </li>
         <li><?= $this->Html->link(__('List Locations'), ['action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Location'), ['action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Partners'), ['controller' => 'Partners', 'action' => 'index']) ?> </li>
@@ -90,11 +90,11 @@
             <td><?= h($partners->location_id) ?></td>
 
             <td class="actions">
-                <?= $this->Html->link(__('View'), ['controller' => 'Partners', 'action' => 'view', $partners->partner_id]) ?>
+                <?= $this->Html->link(__('View'), ['controller' => 'Partners', 'action' => 'view', $partners->id]) ?>
 
-                <?= $this->Html->link(__('Edit'), ['controller' => 'Partners', 'action' => 'edit', $partners->partner_id]) ?>
+                <?= $this->Html->link(__('Edit'), ['controller' => 'Partners', 'action' => 'edit', $partners->id]) ?>
 
-                <?= $this->Form->postLink(__('Delete'), ['controller' => 'Partners', 'action' => 'delete', $partners->partner_id], ['confirm' => __('Are you sure you want to delete # {0}?', $partners->partner_id)]) ?>
+                <?= $this->Form->postLink(__('Delete'), ['controller' => 'Partners', 'action' => 'delete', $partners->id], ['confirm' => __('Are you sure you want to delete # {0}?', $partners->id)]) ?>
 
             </td>
         </tr>
@@ -164,11 +164,11 @@
             <td><?= h($students->location_id) ?></td>
 
             <td class="actions">
-                <?= $this->Html->link(__('View'), ['controller' => 'Students', 'action' => 'view', $students->student_id]) ?>
+                <?= $this->Html->link(__('View'), ['controller' => 'Students', 'action' => 'view', $students->id]) ?>
 
-                <?= $this->Html->link(__('Edit'), ['controller' => 'Students', 'action' => 'edit', $students->student_id]) ?>
+                <?= $this->Html->link(__('Edit'), ['controller' => 'Students', 'action' => 'edit', $students->id]) ?>
 
-                <?= $this->Form->postLink(__('Delete'), ['controller' => 'Students', 'action' => 'delete', $students->student_id], ['confirm' => __('Are you sure you want to delete # {0}?', $students->student_id)]) ?>
+                <?= $this->Form->postLink(__('Delete'), ['controller' => 'Students', 'action' => 'delete', $students->id], ['confirm' => __('Are you sure you want to delete # {0}?', $students->id)]) ?>
 
             </td>
         </tr>
@@ -234,11 +234,11 @@
             <td><?= h($users->location_id) ?></td>
 
             <td class="actions">
-                <?= $this->Html->link(__('View'), ['controller' => 'Users', 'action' => 'view', $users->user_id]) ?>
+                <?= $this->Html->link(__('View'), ['controller' => 'Users', 'action' => 'view', $users->id]) ?>
 
-                <?= $this->Html->link(__('Edit'), ['controller' => 'Users', 'action' => 'edit', $users->user_id]) ?>
+                <?= $this->Html->link(__('Edit'), ['controller' => 'Users', 'action' => 'edit', $users->id]) ?>
 
-                <?= $this->Form->postLink(__('Delete'), ['controller' => 'Users', 'action' => 'delete', $users->user_id], ['confirm' => __('Are you sure you want to delete # {0}?', $users->user_id)]) ?>
+                <?= $this->Form->postLink(__('Delete'), ['controller' => 'Users', 'action' => 'delete', $users->id], ['confirm' => __('Are you sure you want to delete # {0}?', $users->id)]) ?>
 
             </td>
         </tr>

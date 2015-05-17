@@ -13,8 +13,6 @@ use Cake\Validation\Validator;
 class TandemsTable extends Table
 {
 
-	public $sequence = 'public.foobar_seq';
-	
     /**
      * Initialize method
      *
@@ -27,12 +25,10 @@ class TandemsTable extends Table
         $this->displayField('id');
         $this->primaryKey('id');
         $this->belongsTo('Partners', [
-            'foreignKey' => 'partner_id',
-            'joinType' => 'INNER'
+            'foreignKey' => 'partner_id'
         ]);
         $this->belongsTo('Students', [
-            'foreignKey' => 'student_id',
-            'joinType' => 'INNER'
+            'foreignKey' => 'student_id'
         ]);
     }
 

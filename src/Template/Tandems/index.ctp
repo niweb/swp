@@ -24,10 +24,10 @@
         <tr>
             <td><?= $this->Number->format($tandem->id) ?></td>
             <td>
-                <?= $tandem->has('partner') ? $this->Html->link($tandem->partner->partner_id, ['controller' => 'Partners', 'action' => 'view', $tandem->partner->partner_id]) : '' ?>
+                <?= $tandem->has('partner') ? $this->Html->link($tandem->partner->name, ['controller' => 'Partners', 'action' => 'view', $tandem->partner->id]) : '' ?>
             </td>
             <td>
-                <?= $tandem->has('student') ? $this->Html->link($tandem->student->student_id, ['controller' => 'Students', 'action' => 'view', $tandem->student->student_id]) : '' ?>
+                <?= $tandem->has('student') ? $this->Html->link($tandem->student->name, ['controller' => 'Students', 'action' => 'view', $tandem->student->id]) : '' ?>
             </td>
             <td><?= h($tandem->active) ?></td>
             <td class="actions">

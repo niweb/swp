@@ -16,7 +16,7 @@
             <h6 class="subheader"><?= __('Name') ?></h6>
             <p><?= h($schooltype->name) ?></p>
             <h6 class="subheader"><?= __('Location') ?></h6>
-            <p><?= $schooltype->has('location') ? $this->Html->link($schooltype->location->name, ['controller' => 'Locations', 'action' => 'view', $schooltype->location->location_id]) : '' ?></p>
+            <p><?= $schooltype->has('location') ? $this->Html->link($schooltype->location->name, ['controller' => 'Locations', 'action' => 'view', $schooltype->location->id]) : '' ?></p>
         </div>
         <div class="large-2 columns numbers end">
             <h6 class="subheader"><?= __('Id') ?></h6>

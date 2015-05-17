@@ -27,8 +27,7 @@ class SchooltypesTableTest extends TestCase
         'app.subjects',
         'app.tandems',
         'app.students',
-        'app.users',
-        'app.types'
+        'app.users'
     ];
 
     /**

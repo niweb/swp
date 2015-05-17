@@ -25,8 +25,7 @@ class PreferredClassrangesTable extends Table
         $this->displayField('id');
         $this->primaryKey('id');
         $this->belongsTo('Partners', [
-            'foreignKey' => 'partner_id',
-            'joinType' => 'INNER'
+            'foreignKey' => 'partner_id'
         ]);
         $this->belongsTo('Classranges', [
             'foreignKey' => 'classrange_id'

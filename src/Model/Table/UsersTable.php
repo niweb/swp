@@ -22,8 +22,8 @@ class UsersTable extends Table
     public function initialize(array $config)
     {
         $this->table('users');
-        $this->displayField('user_id');
-        $this->primaryKey('user_id');
+        $this->displayField('id');
+        $this->primaryKey('id');
         $this->addBehavior('Timestamp');
         $this->belongsTo('Types', [
             'foreignKey' => 'type_id'

@@ -22,8 +22,8 @@ class PartnersTable extends Table
     public function initialize(array $config)
     {
         $this->table('partners');
-        $this->displayField('partner_id');
-        $this->primaryKey('partner_id');
+        $this->displayField('name');
+        $this->primaryKey('id');
         $this->belongsTo('Locations', [
             'foreignKey' => 'location_id'
         ]);

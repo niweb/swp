@@ -23,7 +23,7 @@
         <tr>
             <td><?= $this->Number->format($preferredClassrange->id) ?></td>
             <td>
-                <?= $preferredClassrange->has('partner') ? $this->Html->link($preferredClassrange->partner->partner_id, ['controller' => 'Partners', 'action' => 'view', $preferredClassrange->partner->partner_id]) : '' ?>
+                <?= $preferredClassrange->has('partner') ? $this->Html->link($preferredClassrange->partner->name, ['controller' => 'Partners', 'action' => 'view', $preferredClassrange->partner->id]) : '' ?>
             </td>
             <td>
                 <?= $preferredClassrange->has('classrange') ? $this->Html->link($preferredClassrange->classrange->name, ['controller' => 'Classranges', 'action' => 'view', $preferredClassrange->classrange->id]) : '' ?>

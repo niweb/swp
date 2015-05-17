@@ -23,7 +23,7 @@ class LocationsTable extends Table
     {
         $this->table('locations');
         $this->displayField('name');
-        $this->primaryKey('location_id');
+        $this->primaryKey('id');
         $this->hasMany('Partners', [
             'foreignKey' => 'location_id'
         ]);

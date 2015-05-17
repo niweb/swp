@@ -27,8 +27,7 @@ class SubjectsTableTest extends TestCase
         'app.preferred_subjects',
         'app.tandems',
         'app.students',
-        'app.users',
-        'app.types'
+        'app.users'
     ];
 
     /**

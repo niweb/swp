@@ -3,8 +3,8 @@
     <ul class="side-nav">
         <li><?= $this->Form->postLink(
                 __('Delete'),
-                ['action' => 'delete', $student->student_id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $student->student_id)]
+                ['action' => 'delete', $student->id],
+                ['confirm' => __('Are you sure you want to delete # {0}?', $student->id)]
             )
         ?></li>
         <li><?= $this->Html->link(__('List Students'), ['action' => 'index']) ?></li>
@@ -19,7 +19,6 @@
     <fieldset>
         <legend><?= __('Edit Student') ?></legend>
         <?php
-            echo $this->Form->input('id');
             echo $this->Form->input('name');
             echo $this->Form->input('lastname');
             echo $this->Form->input('telephone');
