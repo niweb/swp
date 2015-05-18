@@ -108,4 +108,22 @@ class PartnersController extends AppController
         return $this->redirect(['action' => 'index']);
     }
     
+    public function register($register_id = null)
+    {
+    	$partner = $this->Partners->newEntity();
+        if ($this->request->is('post')) {
+            $partner = $this->Partners->patchEntity($partner, $this->request->data);
+            $partner->user_id = $register_id;
+            if ($this->Partners->save($partner)) {
+                $this->Flash->success('Deine Informationen wurden gespeichert. Dankeschön!');
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error('Es ist leider etwas schief gelaufen. Bitte versuche es gleich noch einmal.');
+            }
+        }
+        $locations = $this->Partners->Locations->find('list', ['limit' => 10]);
+        $this->set(compact('partner', 'locations'));
+        $this->set('_serialize', ['partner']);
+    }
+    
 }

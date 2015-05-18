@@ -414,3 +414,161 @@ Stack Trace:
 #3 {main}
 
 
+2015-05-18 16:02:11 Error: Fatal Error (4): syntax error, unexpected '$locations' (T_VARIABLE), expecting function (T_FUNCTION) in [C:\xampp\htdocs\schuelerpaten\src\Controller\UsersController.php, line 159]
+Trace:
+Cake\Error\BaseErrorHandler::handleFatalError() - CORE\src\Error\BaseErrorHandler.php, line 191
+Cake\Error\BaseErrorHandler::Cake\Error\{closure}() - CORE\src\Error\BaseErrorHandler.php, line 90
+[main] - [internal], line ??
+
+
+
+2015-05-18 16:02:12 Error: [Cake\Error\FatalErrorException] syntax error, unexpected '$locations' (T_VARIABLE), expecting function (T_FUNCTION)
+Request URL: /schuelerpaten/register
+Stack Trace:
+#0 C:\xampp\htdocs\schuelerpaten\vendor\cakephp\cakephp\src\Error\BaseErrorHandler.php(90): Cake\Error\BaseErrorHandler->handleFatalError(4, 'syntax error, u...', 'C:\\xampp\\htdocs...', 159)
+#1 [internal function]: Cake\Error\BaseErrorHandler->Cake\Error\{closure}()
+#2 {main}
+
+
+2015-05-18 16:06:38 Error: Fatal Error (4): syntax error, unexpected '$locations' (T_VARIABLE), expecting function (T_FUNCTION) in [C:\xampp\htdocs\schuelerpaten\src\Controller\UsersController.php, line 159]
+Trace:
+Cake\Error\BaseErrorHandler::handleFatalError() - CORE\src\Error\BaseErrorHandler.php, line 191
+Cake\Error\BaseErrorHandler::Cake\Error\{closure}() - CORE\src\Error\BaseErrorHandler.php, line 90
+[main] - [internal], line ??
+
+
+
+2015-05-18 16:06:40 Error: [Cake\Error\FatalErrorException] syntax error, unexpected '$locations' (T_VARIABLE), expecting function (T_FUNCTION)
+Request URL: /schuelerpaten/register
+Stack Trace:
+#0 C:\xampp\htdocs\schuelerpaten\vendor\cakephp\cakephp\src\Error\BaseErrorHandler.php(90): Cake\Error\BaseErrorHandler->handleFatalError(4, 'syntax error, u...', 'C:\\xampp\\htdocs...', 159)
+#1 [internal function]: Cake\Error\BaseErrorHandler->Cake\Error\{closure}()
+#2 {main}
+
+
+2015-05-18 16:07:12 Error: [Cake\Controller\Exception\MissingActionException] Action PartnersController::register() could not be found, or is not accessible.
+Exception Attributes: array (
+  'controller' => 'PartnersController',
+  'action' => 'register',
+  'prefix' => '',
+  'plugin' => NULL,
+)
+Request URL: /schuelerpaten/partners/register
+Stack Trace:
+#0 C:\xampp\htdocs\schuelerpaten\vendor\cakephp\cakephp\src\Routing\Dispatcher.php(114): Cake\Controller\Controller->invokeAction()
+#1 C:\xampp\htdocs\schuelerpaten\vendor\cakephp\cakephp\src\Routing\Dispatcher.php(87): Cake\Routing\Dispatcher->_invoke(Object(App\Controller\PartnersController))
+#2 C:\xampp\htdocs\schuelerpaten\webroot\index.php(37): Cake\Routing\Dispatcher->dispatch(Object(Cake\Network\Request), Object(Cake\Network\Response))
+#3 {main}
+
+
+2015-05-18 16:09:18 Error: Fatal Error (4): syntax error, unexpected '$locations' (T_VARIABLE), expecting function (T_FUNCTION) in [C:\xampp\htdocs\schuelerpaten\src\Controller\UsersController.php, line 159]
+Trace:
+Cake\Error\BaseErrorHandler::handleFatalError() - CORE\src\Error\BaseErrorHandler.php, line 191
+Cake\Error\BaseErrorHandler::Cake\Error\{closure}() - CORE\src\Error\BaseErrorHandler.php, line 90
+[main] - [internal], line ??
+
+
+
+2015-05-18 16:09:20 Error: [Cake\Error\FatalErrorException] syntax error, unexpected '$locations' (T_VARIABLE), expecting function (T_FUNCTION)
+Request URL: /schuelerpaten/register
+Stack Trace:
+#0 C:\xampp\htdocs\schuelerpaten\vendor\cakephp\cakephp\src\Error\BaseErrorHandler.php(90): Cake\Error\BaseErrorHandler->handleFatalError(4, 'syntax error, u...', 'C:\\xampp\\htdocs...', 159)
+#1 [internal function]: Cake\Error\BaseErrorHandler->Cake\Error\{closure}()
+#2 {main}
+
+
+2015-05-18 16:42:59 Error: [Cake\Controller\Exception\MissingActionException] Action PartnersController::register() could not be found, or is not accessible.
+Exception Attributes: array (
+  'controller' => 'PartnersController',
+  'action' => 'register',
+  'prefix' => '',
+  'plugin' => NULL,
+)
+Request URL: /schuelerpaten/partners/register?register_id=19
+Stack Trace:
+#0 C:\xampp\htdocs\schuelerpaten\vendor\cakephp\cakephp\src\Routing\Dispatcher.php(114): Cake\Controller\Controller->invokeAction()
+#1 C:\xampp\htdocs\schuelerpaten\vendor\cakephp\cakephp\src\Routing\Dispatcher.php(87): Cake\Routing\Dispatcher->_invoke(Object(App\Controller\PartnersController))
+#2 C:\xampp\htdocs\schuelerpaten\webroot\index.php(37): Cake\Routing\Dispatcher->dispatch(Object(Cake\Network\Request), Object(Cake\Network\Response))
+#3 {main}
+
+
+2015-05-18 16:50:30 Error: Fatal Error (4): syntax error, unexpected ']' in [C:\xampp\htdocs\schuelerpaten\src\Template\Partners\register.ctp, line 10]
+Trace:
+Cake\Error\BaseErrorHandler::handleFatalError() - CORE\src\Error\BaseErrorHandler.php, line 191
+Cake\Error\BaseErrorHandler::Cake\Error\{closure}() - CORE\src\Error\BaseErrorHandler.php, line 90
+[main] - [internal], line ??
+
+
+
+2015-05-18 16:50:30 Error: [Cake\Error\FatalErrorException] syntax error, unexpected ']'
+Request URL: /schuelerpaten/partners/register?register_id=20
+Stack Trace:
+#0 C:\xampp\htdocs\schuelerpaten\vendor\cakephp\cakephp\src\Error\BaseErrorHandler.php(90): Cake\Error\BaseErrorHandler->handleFatalError(4, 'syntax error, u...', 'C:\\xampp\\htdocs...', 10)
+#1 [internal function]: Cake\Error\BaseErrorHandler->Cake\Error\{closure}()
+#2 {main}
+
+
+2015-05-18 16:51:27 Error: Fatal Error (4): syntax error, unexpected '=>' (T_DOUBLE_ARROW) in [C:\xampp\htdocs\schuelerpaten\src\Template\Partners\register.ctp, line 10]
+Trace:
+Cake\Error\BaseErrorHandler::handleFatalError() - CORE\src\Error\BaseErrorHandler.php, line 191
+Cake\Error\BaseErrorHandler::Cake\Error\{closure}() - CORE\src\Error\BaseErrorHandler.php, line 90
+[main] - [internal], line ??
+
+
+
+2015-05-18 16:51:28 Error: [Cake\Error\FatalErrorException] syntax error, unexpected '=>' (T_DOUBLE_ARROW)
+Request URL: /schuelerpaten/partners/register?register_id=20
+Stack Trace:
+#0 C:\xampp\htdocs\schuelerpaten\vendor\cakephp\cakephp\src\Error\BaseErrorHandler.php(90): Cake\Error\BaseErrorHandler->handleFatalError(4, 'syntax error, u...', 'C:\\xampp\\htdocs...', 10)
+#1 [internal function]: Cake\Error\BaseErrorHandler->Cake\Error\{closure}()
+#2 {main}
+
+
+2015-05-18 16:51:59 Error: Fatal Error (4): syntax error, unexpected 'label' (T_STRING) in [C:\xampp\htdocs\schuelerpaten\src\Template\Partners\register.ctp, line 11]
+Trace:
+Cake\Error\BaseErrorHandler::handleFatalError() - CORE\src\Error\BaseErrorHandler.php, line 191
+Cake\Error\BaseErrorHandler::Cake\Error\{closure}() - CORE\src\Error\BaseErrorHandler.php, line 90
+[main] - [internal], line ??
+
+
+
+2015-05-18 16:52:00 Error: [Cake\Error\FatalErrorException] syntax error, unexpected 'label' (T_STRING)
+Request URL: /schuelerpaten/partners/register?register_id=20
+Stack Trace:
+#0 C:\xampp\htdocs\schuelerpaten\vendor\cakephp\cakephp\src\Error\BaseErrorHandler.php(90): Cake\Error\BaseErrorHandler->handleFatalError(4, 'syntax error, u...', 'C:\\xampp\\htdocs...', 11)
+#1 [internal function]: Cake\Error\BaseErrorHandler->Cake\Error\{closure}()
+#2 {main}
+
+
+2015-05-18 16:56:06 Error: Fatal Error (4): syntax error, unexpected 'label' (T_STRING) in [C:\xampp\htdocs\schuelerpaten\src\Template\Partners\register.ctp, line 14]
+Trace:
+Cake\Error\BaseErrorHandler::handleFatalError() - CORE\src\Error\BaseErrorHandler.php, line 191
+Cake\Error\BaseErrorHandler::Cake\Error\{closure}() - CORE\src\Error\BaseErrorHandler.php, line 90
+[main] - [internal], line ??
+
+
+
+2015-05-18 16:56:07 Error: [Cake\Error\FatalErrorException] syntax error, unexpected 'label' (T_STRING)
+Request URL: /schuelerpaten/partners/register?register_id=19
+Stack Trace:
+#0 C:\xampp\htdocs\schuelerpaten\vendor\cakephp\cakephp\src\Error\BaseErrorHandler.php(90): Cake\Error\BaseErrorHandler->handleFatalError(4, 'syntax error, u...', 'C:\\xampp\\htdocs...', 14)
+#1 [internal function]: Cake\Error\BaseErrorHandler->Cake\Error\{closure}()
+#2 {main}
+
+
+2015-05-18 16:59:27 Error: Fatal Error (4): syntax error, unexpected ')' in [C:\xampp\htdocs\schuelerpaten\src\Template\Partners\register.ctp, line 30]
+Trace:
+Cake\Error\BaseErrorHandler::handleFatalError() - CORE\src\Error\BaseErrorHandler.php, line 191
+Cake\Error\BaseErrorHandler::Cake\Error\{closure}() - CORE\src\Error\BaseErrorHandler.php, line 90
+[main] - [internal], line ??
+
+
+
+2015-05-18 16:59:27 Error: [Cake\Error\FatalErrorException] syntax error, unexpected ')'
+Request URL: /schuelerpaten/partners/register?register_id=19
+Stack Trace:
+#0 C:\xampp\htdocs\schuelerpaten\vendor\cakephp\cakephp\src\Error\BaseErrorHandler.php(90): Cake\Error\BaseErrorHandler->handleFatalError(4, 'syntax error, u...', 'C:\\xampp\\htdocs...', 30)
+#1 [internal function]: Cake\Error\BaseErrorHandler->Cake\Error\{closure}()
+#2 {main}
+
+

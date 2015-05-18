@@ -125,7 +125,7 @@ class UsersController extends AppController
 	
 	public function logout()
 	{
-	    $this->Flash->success('You are now logged out.');
+	    $this->Flash->success('Du bist jetzt ausgeloggt.');
 	    return $this->redirect($this->Auth->logout());
 	}
 	
@@ -145,16 +145,11 @@ class UsersController extends AppController
             $user = $this->Users->patchEntity($user, $this->request->data);
             $user->type_id = 1;
             if ($this->Users->save($user)) {
-            	//dazu gehoeriges partner-profil erstellen
-                $partner = TableRegistry::get('Partners')->newEntity([
-                	'user_id' => $user->id
-                ]);
-                $this->Flash->success('Du bist jetzt ein registrierter Schuelerpate! Gib am besten gleich ein paar Information an, damit wir dich mit Schuelern die deine Hilfe brauchen verbinden koennen!');
+            	$this->Flash->success('Du bist jetzt ein registrierter Schuelerpate! Gib am besten gleich ein paar Information an, damit wir dich mit Schuelern die deine Hilfe brauchen verbinden koennen!');
 			    return $this->redirect(['controller' => 'Partners', 'action' => 'register', 'register_id' => $user->id]);
-                }
-            } else {
-                $this->Flash->error('Bei deiner Registrierung ist wohl ein Fehler unterlaufen. Bitte probiere es gleich noch einmal.');
-            }
+        	}
+		} else {
+        	$this->Flash->error('Bei deiner Registrierung ist wohl ein Fehler unterlaufen. Bitte probiere es gleich noch einmal.');
         }
         $locations = $this->Users->Locations->find('list', ['limit' => 10]);
         $this->set(compact('user', 'locations'));
