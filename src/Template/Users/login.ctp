@@ -4,3 +4,4 @@
 <?= $this->Form->input('password') ?>
 <?= $this->Form->button('Login') ?>
 <?= $this->Form->end() ?>
+Noch kein Mitglied? Gleich <?= $this->Html->link(__('registrieren'), ['action' => 'register']) ?>!

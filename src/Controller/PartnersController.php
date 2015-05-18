@@ -107,4 +107,5 @@ class PartnersController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
+    
 }

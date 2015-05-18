@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
 
 /**
  * Users Controller
@@ -130,6 +131,34 @@ class UsersController extends AppController
 	
 	public function beforeFilter(\Cake\Event\Event $event)
 	{
-	    $this->Auth->allow(['add']);
+	    $this->Auth->allow('register');
 	}
+	
+	public function register()
+	{
+		//registrierungsfunktion nur fuer paten!!!
+		//vermittler/matchmaker/admins muessen sich ueber /users/add
+		//von jemand anderem registrieren lassen
+		
+		$user = $this->Users->newEntity();
+        if ($this->request->is('post')) {
+            $user = $this->Users->patchEntity($user, $this->request->data);
+            $user->type_id = 1;
+            if ($this->Users->save($user)) {
+            	//dazu gehoeriges partner-profil erstellen
+                $partner = TableRegistry::get('Partners')->newEntity([
+                	'user_id' => $user->id
+                ]);
+                $this->Flash->success('Du bist jetzt ein registrierter Schuelerpate! Gib am besten gleich ein paar Information an, damit wir dich mit Schuelern die deine Hilfe brauchen verbinden koennen!');
+			    return $this->redirect(['controller' => 'Partners', 'action' => 'register', 'register_id' => $user->id]);
+                }
+            } else {
+                $this->Flash->error('Bei deiner Registrierung ist wohl ein Fehler unterlaufen. Bitte probiere es gleich noch einmal.');
+            }
+        }
+        $locations = $this->Users->Locations->find('list', ['limit' => 10]);
+        $this->set(compact('user', 'locations'));
+        $this->set('_serialize', ['user']);
+	}
+	
 }

@@ -71,6 +71,10 @@ Router::scope('/', function ($routes) {
      * routes you want in your application.
      */
     $routes->fallbacks('InflectedRoute');
+    
+    $routes->connect('/register/', ['controller' => 'Users', 'action' => 'register']);
+    $routes->connect('/login/', ['controller' => 'Users', 'action' => 'login']);
+    $routes->connect('/logout/', ['controller' => 'Users', 'action' => 'logout']);
 });
 
 /**
