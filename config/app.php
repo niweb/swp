@@ -221,7 +221,7 @@ return [
             //'port' => 'nonstandard_port_number',
             'username' => 'root',
             'password' => '',
-            'database' => 'schuelerpaten2',
+            'database' => 'schuelerpaten',
             'encoding' => 'utf8',
             'timezone' => 'UTC',
             'cacheMetadata' => true,
