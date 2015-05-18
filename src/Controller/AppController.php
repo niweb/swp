@@ -38,24 +38,24 @@ class AppController extends Controller
     {
 	     $this->loadComponent('Flash');
 	        
-	        // Lade Authentifikations-Komponente
-	        // Setze 'Mail' und 'Password' Daten
-	        // Mache 'Users' fürs einloggen etc verantworlich
-	        // Login-Seite zu finden unter /users/login
-	        $this->loadComponent('Auth', [
-	        	'authenticate' => [
-	        		'Form' => [
-	        			'fields' => [
-	        				'username' => 'email',
-	        				'password' => 'password'
-	        			]
+	     // Lade Authentifikations-Komponente
+	     // Setze 'Mail' und 'Password' Daten
+	     // Mache 'Users' fürs einloggen etc verantworlich
+	     // Login-Seite zu finden unter /users/login
+	     $this->loadComponent('Auth', [
+	     	'authenticate' => [
+	        	'Form' => [
+	        		'fields' => [
+	        			'username' => 'email',
+	        			'password' => 'password'
 	        		]
-	        	],
-	        	'loginAction' => [
-	        		'controller' => 'Users',
-	        		'action' => 'login'
 	        	]
-	        ]);
+	        ],
+	        'loginAction' => [
+	        	'controller' => 'Users',
+	        	'action' => 'login'
+	        ]
+		]);
 	        
 		$this->Auth->allow(['dislay']);
 	}
