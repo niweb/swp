@@ -24,8 +24,8 @@
         ?>
         <h3>Patenschaft</h3>
         <?php
-            echo $this->Form->input('teach_time', ['label' => 'Wie viel Zeit (in Minuten) möchtest du in der Woche fürs Unterrichten investieren? (mindestens 90)']);
-            echo $this->Form->input('extra_time', ['label' => 'Wie viel Zeit (in Minuten) möchtest du im Monat zusätzlich für Seminare oder Veranstaltungen gemeinsam mit deiner/m PatenschülerIn investieren?']);
+            echo $this->Form->input('teach_time', ['label' => 'Wie viel Zeit (in Minuten) moechtest du in der Woche fürs Unterrichten investieren? (mindestens 90)']);
+            echo $this->Form->input('extra_time', ['label' => 'Wie viel Zeit (in Minuten) moechtest du im Monat zusaetzlich für Seminare oder Veranstaltungen gemeinsam mit deiner/m PatenschülerIn investieren?']);
             echo $this->Form->input('spend_time', ['label' => 'Wie lange bist du in nächster Zeit verfügbar? (mindestens 1 Jahr']);
             echo $this->Form->textarea('experience', ['label' => 'Welche Erfahrungen hast du schon mit Nachhilfe oder Patenschaften sammeln können?']);
             echo $this->Form->input('preferred_gender', ['label' => 'Bevorzugtes Geschlecht deine/r SchülerIn']);

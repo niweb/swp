@@ -129,11 +129,6 @@ class UsersController extends AppController
 	    return $this->redirect($this->Auth->logout());
 	}
 	
-	public function beforeFilter(\Cake\Event\Event $event)
-	{
-	    $this->Auth->allow('register');
-	}
-	
 	public function register()
 	{
 		//registrierungsfunktion nur fuer paten!!!
