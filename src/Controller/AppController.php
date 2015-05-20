@@ -42,7 +42,7 @@ class AppController extends Controller
 	     // Setze 'Mail' und 'Password' Daten
 	     // Mache 'Users' fürs einloggen etc verantworlich
 	     // Login-Seite zu finden unter /users/login
-	     $this->loadComponent('Auth', [
+	     /*$this->loadComponent('Auth', [
 	     	'authenticate' => [
 	        	'Form' => [
 	        		'fields' => [
@@ -62,6 +62,6 @@ class AppController extends Controller
 	    
 	public function beforeFilter(\Cake\Event\Event $event)
 	{
-		$this->Auth->allow(['register','add']);
+		$this->Auth->allow(['register','add']);*/
 	}
 }
