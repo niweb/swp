@@ -101,7 +101,7 @@ class PartnersController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $partner = $this->Partners->get($id);
         if ($this->Partners->delete($partner)) {
-            $this->Flash->success('The partner has been deleted.');
+            $this->Flash->success('Du bist jetzt kein Schuelerpate mehr. Wenn du deine Meinung aenderst bist du wieder willkommen.');
         } else {
             $this->Flash->error('The partner could not be deleted. Please, try again.');
         }
@@ -115,7 +115,8 @@ class PartnersController extends AppController
             $partner = $this->Partners->patchEntity($partner, $this->request->data);
             $partner->user_id = $register_id;
             if ($this->Partners->save($partner)) {
-                $this->Flash->success('Deine Informationen wurden gespeichert. Dankeschön!');
+                $this->Flash->success('Deine Informationen wurden gespeichert. Danke!');
+                //hier nachher aufs userprofil umleiten!
                 return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error('Es ist leider etwas schief gelaufen. Bitte versuche es gleich noch einmal.');

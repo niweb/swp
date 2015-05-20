@@ -148,8 +148,9 @@ class UsersController extends AppController
             	$this->Flash->success('Du bist jetzt ein registrierter Schuelerpate! Gib am besten gleich ein paar Information an, damit wir dich mit Schuelern die deine Hilfe brauchen verbinden koennen!');
 			    return $this->redirect(['controller' => 'Partners', 'action' => 'register', 'register_id' => $user->id]);
         	}
-		} else {
+			else {
         	$this->Flash->error('Bei deiner Registrierung ist wohl ein Fehler unterlaufen. Bitte probiere es gleich noch einmal.');
+			}
         }
         $locations = $this->Users->Locations->find('list', ['limit' => 10]);
         $this->set(compact('user', 'locations'));

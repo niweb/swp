@@ -1,0 +1,28 @@
+2015-05-18 08:46:07 Notice: Notice (8): Use of undefined constant Controller - assumed 'Controller' in [C:\xampp\htdocs\schuelerpaten\src\Controller\UsersController.php, line 133]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE\src\Error\BaseErrorHandler.php, line 138
+App\Controller\UsersController::beforeFilter() - APP/Controller\UsersController.php, line 133
+Cake\Event\EventManager::_callListener() - CORE\src\Event\EventManager.php, line 381
+Cake\Event\EventManager::dispatch() - CORE\src\Event\EventManager.php, line 351
+Cake\Controller\Controller::dispatchEvent() - CORE\src\Event\EventManagerTrait.php, line 78
+Cake\Controller\Controller::startupProcess() - CORE\src\Controller\Controller.php, line 472
+Cake\Routing\Dispatcher::_invoke() - CORE\src\Routing\Dispatcher.php, line 109
+Cake\Routing\Dispatcher::dispatch() - CORE\src\Routing\Dispatcher.php, line 87
+[main] - ROOT\webroot\index.php, line 37
+
+
+
+2015-05-18 08:46:07 Notice: Notice (8): Use of undefined constant action - assumed 'action' in [C:\xampp\htdocs\schuelerpaten\src\Controller\UsersController.php, line 133]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE\src\Error\BaseErrorHandler.php, line 138
+App\Controller\UsersController::beforeFilter() - APP/Controller\UsersController.php, line 133
+Cake\Event\EventManager::_callListener() - CORE\src\Event\EventManager.php, line 381
+Cake\Event\EventManager::dispatch() - CORE\src\Event\EventManager.php, line 351
+Cake\Controller\Controller::dispatchEvent() - CORE\src\Event\EventManagerTrait.php, line 78
+Cake\Controller\Controller::startupProcess() - CORE\src\Controller\Controller.php, line 472
+Cake\Routing\Dispatcher::_invoke() - CORE\src\Routing\Dispatcher.php, line 109
+Cake\Routing\Dispatcher::dispatch() - CORE\src\Routing\Dispatcher.php, line 87
+[main] - ROOT\webroot\index.php, line 37
+
+
+

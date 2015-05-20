@@ -572,3 +572,18 @@ Stack Trace:
 #2 {main}
 
 
+2015-05-20 10:51:24 Error: [Cake\Controller\Exception\MissingActionException] Action UsersController::new() could not be found, or is not accessible.
+Exception Attributes: array (
+  'controller' => 'UsersController',
+  'action' => 'new',
+  'prefix' => '',
+  'plugin' => NULL,
+)
+Request URL: /schuelerpaten/users/new
+Stack Trace:
+#0 C:\xampp\htdocs\schuelerpaten\vendor\cakephp\cakephp\src\Routing\Dispatcher.php(114): Cake\Controller\Controller->invokeAction()
+#1 C:\xampp\htdocs\schuelerpaten\vendor\cakephp\cakephp\src\Routing\Dispatcher.php(87): Cake\Routing\Dispatcher->_invoke(Object(App\Controller\UsersController))
+#2 C:\xampp\htdocs\schuelerpaten\webroot\index.php(37): Cake\Routing\Dispatcher->dispatch(Object(Cake\Network\Request), Object(Cake\Network\Response))
+#3 {main}
+
+
