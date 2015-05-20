@@ -62,6 +62,6 @@ class AppController extends Controller
 	    
 	public function beforeFilter(\Cake\Event\Event $event)
 	{
-		$this->Auth->allow(['register']);
+		$this->Auth->allow(['register','add']);
 	}
 }

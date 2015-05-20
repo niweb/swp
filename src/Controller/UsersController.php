@@ -139,6 +139,7 @@ class UsersController extends AppController
 		//registrierungsfunktion nur fuer paten!!!
 		//vermittler/matchmaker/admins muessen sich ueber /users/add
 		//von jemand anderem registrieren lassen
+		//schueler muessen dies ueber students/add tun lassen
 		
 		$user = $this->Users->newEntity();
         if ($this->request->is('post')) {
