@@ -1,7 +1,7 @@
 <div class="partners form large-10 medium-9 columns">
     <?= $this->Form->create($partner); ?>
     <fieldset>
-        <legend><?= __('Add Partner') ?></legend>
+        <legend><?= __('Werde Pate') ?></legend>
         <h3>Zur Person</h3>
         <?php
             echo $this->Form->input('name', ['label' => 'Vorname']);
