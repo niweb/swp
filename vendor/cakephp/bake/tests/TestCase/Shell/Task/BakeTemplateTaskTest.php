@@ -22,83 +22,83 @@ use Cake\Core\Plugin;
  */
 class BakeTemplateTaskTest extends TestCase
 {
-    /**
-     * setUp method
-     *
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-        $this->_compareBasePath = Plugin::path('Bake') . 'tests' . DS . 'comparisons' . DS . 'BakeTemplate' . DS;
-        $io = $this->getMock('Cake\Console\ConsoleIo', [], [], '', false);
+	/**
+	 * setUp method
+	 *
+	 * @return void
+	 */
+	public function setUp()
+	{
+		parent::setUp();
+		$this->_compareBasePath = Plugin::path('Bake') . 'tests' . DS . 'comparisons' . DS . 'BakeTemplate' . DS;
+		$io = $this->getMock('Cake\Console\ConsoleIo', [], [], '', false);
 
-        $this->Task = $this->getMock(
+		$this->Task = $this->getMock(
             'Bake\Shell\Task\BakeTemplateTask',
-            ['in', 'err', 'createFile', '_stop', 'clear'],
-            [$io]
-        );
-    }
+		['in', 'err', 'createFile', '_stop', 'clear'],
+		[$io]
+		);
+	}
 
-    /**
-     * tearDown method
-     *
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-        unset($this->Task);
-        Plugin::unload('TestBakeTheme');
-    }
+	/**
+	 * tearDown method
+	 *
+	 * @return void
+	 */
+	public function tearDown()
+	{
+		parent::tearDown();
+		unset($this->Task);
+		Plugin::unload('TestBakeTheme');
+	}
 
-    /**
-     * test generate
-     *
-     * @return void
-     */
-    public function testGenerate()
-    {
-        $this->Task->expects($this->any())->method('in')->will($this->returnValue(1));
+	/**
+	 * test generate
+	 *
+	 * @return void
+	 */
+	public function testGenerate()
+	{
+		$this->Task->expects($this->any())->method('in')->will($this->returnValue(1));
 
-        $result = $this->Task->generate('example', ['test' => 'foo']);
-        $this->assertSameAsFile(__FUNCTION__ . '.ctp', $result);
-    }
+		$result = $this->Task->generate('example', ['test' => 'foo']);
+		$this->assertSameAsFile(__FUNCTION__ . '.ctp', $result);
+	}
 
-    /**
-     * test generate with an overriden template it gets used
-     *
-     * @return void
-     */
-    public function testGenerateWithTemplateOverride()
-    {
-        $this->_loadTestPlugin('TestBakeTheme');
-        $this->Task->params['theme'] = 'TestBakeTheme';
-        $this->Task->set([
+	/**
+	 * test generate with an overriden template it gets used
+	 *
+	 * @return void
+	 */
+	public function testGenerateWithTemplateOverride()
+	{
+		$this->_loadTestPlugin('TestBakeTheme');
+		$this->Task->params['theme'] = 'TestBakeTheme';
+		$this->Task->set([
             'plugin' => 'Special'
-        ]);
-        $result = $this->Task->generate('config/routes');
-        $this->assertSameAsFile(__FUNCTION__ . '.ctp', $result);
-    }
-    /**
-     * test generate with a missing template in the chosen template.
-     * ensure fallback to default works.
-     *
-     * @return void
-     */
-    public function testGenerateWithTemplateFallbacks()
-    {
-        $this->_loadTestPlugin('TestBakeTheme');
-        $this->Task->params['theme'] = 'TestBakeTheme';
-        $this->Task->set([
+            ]);
+            $result = $this->Task->generate('config/routes');
+            $this->assertSameAsFile(__FUNCTION__ . '.ctp', $result);
+	}
+	/**
+	 * test generate with a missing template in the chosen template.
+	 * ensure fallback to default works.
+	 *
+	 * @return void
+	 */
+	public function testGenerateWithTemplateFallbacks()
+	{
+		$this->_loadTestPlugin('TestBakeTheme');
+		$this->Task->params['theme'] = 'TestBakeTheme';
+		$this->Task->set([
             'name' => 'Articles',
             'table' => 'articles',
             'import' => false,
             'records' => false,
             'schema' => '',
             'namespace' => ''
-        ]);
-        $result = $this->Task->generate('tests/fixture');
-        $this->assertSameAsFile(__FUNCTION__ . '.ctp', $result);
-    }
+            ]);
+            $result = $this->Task->generate('tests/fixture');
+            $this->assertSameAsFile(__FUNCTION__ . '.ctp', $result);
+	}
 }

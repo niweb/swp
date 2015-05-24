@@ -21,22 +21,22 @@ use Cake\ORM\Table;
  */
 class CategoryThreadsTable extends Table
 {
-    public function initialize(array $config)
-    {
-        $this->table('category_threads');
-        $this->belongsTo(
+	public function initialize(array $config)
+	{
+		$this->table('category_threads');
+		$this->belongsTo(
             'ParentCategoryThreads',
-            [
+		[
             'className' => __CLASS__,
             'foreignKey' => 'parent_id'
             ]
-        );
-        $this->hasMany(
+            );
+            $this->hasMany(
             'ChildCategoryThreads',
             [
             'className' => __CLASS__,
             'foreignKey' => 'parent_id'
             ]
-        );
-    }
+            );
+	}
 }

@@ -10,22 +10,22 @@ use Cake\TestSuite\IntegrationTestCase;
 class PostsControllerTest extends IntegrationTestCase
 {
 
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
+	/**
+	 * Fixtures
+	 *
+	 * @var array
+	 */
+	public $fixtures = [
         'app.posts'
-    ];
+        ];
 
-    /**
-     * Test index method
-     *
-     * @return void
-     */
-    public function testIndex()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
+        /**
+         * Test index method
+         *
+         * @return void
+         */
+        public function testIndex()
+        {
+        	$this->markTestIncomplete('Not implemented yet.');
+        }
 }

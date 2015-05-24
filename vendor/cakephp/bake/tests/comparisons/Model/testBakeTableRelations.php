@@ -13,38 +13,38 @@ use Cake\Validation\Validator;
 class BakeArticlesTable extends Table
 {
 
-    /**
-     * Initialize method
-     *
-     * @param array $config The configuration for the Table.
-     * @return void
-     */
-    public function initialize(array $config)
-    {
-        $this->primaryKey('id');
-        $this->belongsTo('SomethingElse', [
+	/**
+	 * Initialize method
+	 *
+	 * @param array $config The configuration for the Table.
+	 * @return void
+	 */
+	public function initialize(array $config)
+	{
+		$this->primaryKey('id');
+		$this->belongsTo('SomethingElse', [
             'foreignKey' => 'something_else_id'
-        ]);
-        $this->belongsTo('BakeUser', [
+            ]);
+            $this->belongsTo('BakeUser', [
             'foreignKey' => 'bake_user_id'
-        ]);
-        $this->hasMany('BakeComment', [
+            ]);
+            $this->hasMany('BakeComment', [
             'foreignKey' => 'parent_id'
-        ]);
-        $this->belongsToMany('BakeTag', [
+            ]);
+            $this->belongsToMany('BakeTag', [
             'foreignKey' => 'bake_article_id',
             'joinTable' => 'bake_articles_bake_tags',
             'targetForeignKey' => 'bake_tag_id'
-        ]);
-    }
+            ]);
+	}
 
-    /**
-     * Returns the database connection name to use by default.
-     *
-     * @return string
-     */
-    public static function defaultConnectionName()
-    {
-        return 'test';
-    }
+	/**
+	 * Returns the database connection name to use by default.
+	 *
+	 * @return string
+	 */
+	public static function defaultConnectionName()
+	{
+		return 'test';
+	}
 }

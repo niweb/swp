@@ -22,12 +22,12 @@ use Cake\TestSuite\Fixture\TestFixture;
  */
 class InvitationsFixture extends TestFixture
 {
-    /**
-     * fields property
-     *
-     * @var array
-     */
-    public $fields = [
+	/**
+	 * fields property
+	 *
+	 * @var array
+	 */
+	public $fields = [
         'id' => ['type' => 'integer'],
         'sender_id' => ['type' => 'integer', 'null' => false],
         'receiver_id' => ['type' => 'integer', 'null' => false],
@@ -38,19 +38,19 @@ class InvitationsFixture extends TestFixture
             'primary' => ['type' => 'primary', 'columns' => ['id']],
             'sender_idx' => ['type' => 'foreign', 'columns' => ['sender_id'], 'references' => ['users', 'id']],
             'receiver_idx' => ['type' => 'foreign', 'columns' => ['receiver_id'], 'references' => ['users', 'id']],
-        ]
-    ];
+	]
+	];
 
-    /**
-     * records property
-     *
-     * @var array
-     */
-    public $records = [
-        [
+	/**
+	 * records property
+	 *
+	 * @var array
+	 */
+	public $records = [
+	[
             'sender_id' => 1,
             'receiver_id' => 1,
             'body' => 'Try it out!',
-        ]
-    ];
+	]
+	];
 }

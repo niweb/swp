@@ -19,30 +19,30 @@ namespace Bake\Test\App\Controller;
  */
 class PostsController extends AppController
 {
-    /**
-     * Components array
-     *
-     * @var array
-     */
-    public $components = [
+	/**
+	 * Components array
+	 *
+	 * @var array
+	 */
+	public $components = [
         'Flash',
         'RequestHandler',
-    ];
+	];
 
-    /**
-     * Index method.
-     *
-     * @return void
-     */
-    public function index()
-    {
-        $this->Flash->error('An error message');
-        $this->response->cookie(
-            [
+	/**
+	 * Index method.
+	 *
+	 * @return void
+	 */
+	public function index()
+	{
+		$this->Flash->error('An error message');
+		$this->response->cookie(
+		[
             'name' => 'remember_me',
             'value' => 1,
-            ]
-        );
-        $this->set('test', 'value');
-    }
+		]
+		);
+		$this->set('test', 'value');
+	}
 }

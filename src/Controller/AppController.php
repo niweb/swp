@@ -27,39 +27,39 @@ use Cake\Controller\Controller;
 class AppController extends Controller
 {
 
-    /**
-     * Initialization hook method.
-     *
-     * Use this method to add common initialization code like loading components.
-     *
-     * @return void
-     */
-    public function initialize()
-    {
-	     $this->loadComponent('Flash');
-	        
-	     // Lade Authentifikations-Komponente
-	     // Setze 'Mail' und 'Password' Daten
-	     // Mache 'Users' fürs einloggen etc verantworlich
-	     // Login-Seite zu finden unter /users/login
-	     $this->loadComponent('Auth', [
+	/**
+	 * Initialization hook method.
+	 *
+	 * Use this method to add common initialization code like loading components.
+	 *
+	 * @return void
+	 */
+	public function initialize()
+	{
+		$this->loadComponent('Flash');
+			
+		// Lade Authentifikations-Komponente
+		// Setze 'Mail' und 'Password' Daten
+		// Mache 'Users' fÃ¼rs einloggen etc verantworlich
+		// Login-Seite zu finden unter /users/login
+		$this->loadComponent('Auth', [
 	     	'authenticate' => [
 	        	'Form' => [
 	        		'fields' => [
 	        			'username' => 'email',
 	        			'password' => 'password'
-	        		]
-	        	]
-	        ],
+	        			]
+	        			]
+	        			],
 	        'loginAction' => [
 	        	'controller' => 'Users',
 	        	'action' => 'login'
-	        ]
-		]);
-	        
-		$this->Auth->allow(['dislay']);
+	        	]
+	        	]);
+	        	 
+	        	$this->Auth->allow(['dislay']);
 	}
-	    
+
 	public function beforeFilter(\Cake\Event\Event $event)
 	{
 		$this->Auth->allow(['register','add']);

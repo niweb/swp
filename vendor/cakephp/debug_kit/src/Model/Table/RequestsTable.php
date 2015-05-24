@@ -22,66 +22,66 @@ use DebugKit\Model\Table\LazyTableTrait;
 class RequestsTable extends Table
 {
 
-    use LazyTableTrait;
+	use LazyTableTrait;
 
-    /**
-     * initialize method
-     *
-     * @param array $config Config data.
-     * @return void
-     */
-    public function initialize(array $config)
-    {
-        $this->hasMany('DebugKit.Panels', [
+	/**
+	 * initialize method
+	 *
+	 * @param array $config Config data.
+	 * @return void
+	 */
+	public function initialize(array $config)
+	{
+		$this->hasMany('DebugKit.Panels', [
             'sort' => 'Panels.title ASC',
-        ]);
-        $this->addBehavior('Timestamp', [
+		]);
+		$this->addBehavior('Timestamp', [
             'events' => [
                 'Model.beforeSave' => ['requested_at' => 'new']
-            ]
-        ]);
-        $this->ensureTables(['DebugKit.Requests', 'DebugKit.Panels']);
-    }
+		]
+		]);
+		$this->ensureTables(['DebugKit.Requests', 'DebugKit.Panels']);
+	}
 
-    /**
-     * DebugKit tables are special.
-     *
-     * @return string
-     */
-    public static function defaultConnectionName()
-    {
-        return 'debug_kit';
-    }
+	/**
+	 * DebugKit tables are special.
+	 *
+	 * @return string
+	 */
+	public static function defaultConnectionName()
+	{
+		return 'debug_kit';
+	}
 
-    /**
-     * Finder method to get recent requests as a simple array
-     *
-     * @param Cake\ORM\Query $query The query
-     * @param array $options The options
-     * @return Query The query.
-     */
-    public function findRecent(Query $query, array $options)
-    {
-        return $query->order(['Requests.requested_at' => 'DESC'])
-            ->limit(10);
-    }
+	/**
+	 * Finder method to get recent requests as a simple array
+	 *
+	 * @param Cake\ORM\Query $query The query
+	 * @param array $options The options
+	 * @return Query The query.
+	 */
+	public function findRecent(Query $query, array $options)
+	{
+		return $query->order(['Requests.requested_at' => 'DESC'])
+		->limit(10);
+	}
 
-    /**
-     * Garbage collect old request data.
-     *
-     * Delete request data that is older than 2 weeks old.
-     * This method will only trigger periodically.
-     *
-     * @return void
-     */
-    public function gc()
-    {
-        if (time() % 100 !== 0) {
-            return;
-        }
-        $query = $this->query()
-            ->delete()
-            ->where(['requested_at <=' => new \DateTime('-2 weeks')]);
+	/**
+	 * Garbage collect old request data.
+	 *
+	 * Delete request data that is older than 2 weeks old.
+	 * This method will only trigger periodically.
+	 *
+	 * @return void
+	 */
+	public function gc()
+	{
+		if (time() % 100 !== 0) {
+			return;
+		}
+		$query = $this->query()
+		->delete()
+		->where(['requested_at <=' => new \DateTime('-2 weeks')]);
         $statement = $query->execute();
         $statement->closeCursor();
 
@@ -90,7 +90,7 @@ class RequestsTable extends Table
         $query = $this->Panels->query()
             ->delete()
             ->where(['request_id NOT IN' => $existing]);
-        $statement = $query->execute();
-        $statement->closeCursor();
-    }
+		$statement = $query->execute();
+		$statement->closeCursor();
+	}
 }

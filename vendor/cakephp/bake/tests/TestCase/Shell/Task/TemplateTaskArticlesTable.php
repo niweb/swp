@@ -21,8 +21,8 @@ use Cake\ORM\Table;
  */
 class TemplateTaskArticlesTable extends Table
 {
-    public function intialize(array $config)
-    {
-        $this->table('articles');
-    }
+	public function intialize(array $config)
+	{
+		$this->table('articles');
+	}
 }

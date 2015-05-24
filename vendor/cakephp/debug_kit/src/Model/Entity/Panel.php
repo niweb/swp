@@ -19,10 +19,10 @@ use Cake\ORM\Entity;
 class Panel extends Entity
 {
 
-    /**
-     * Some fields should not be in JSON/array exports.
-     *
-     * @var array
-     */
-    protected $_hidden = ['content'];
+	/**
+	 * Some fields should not be in JSON/array exports.
+	 *
+	 * @var array
+	 */
+	protected $_hidden = ['content'];
 }

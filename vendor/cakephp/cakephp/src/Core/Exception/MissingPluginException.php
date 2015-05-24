@@ -21,5 +21,5 @@ use Cake\Core\Exception\Exception;
 class MissingPluginException extends Exception
 {
 
-    protected $_messageTemplate = 'Plugin %s could not be found.';
+	protected $_messageTemplate = 'Plugin %s could not be found.';
 }

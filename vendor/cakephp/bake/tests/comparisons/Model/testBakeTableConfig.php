@@ -13,27 +13,27 @@ use Cake\Validation\Validator;
 class BakeArticlesTable extends Table
 {
 
-    /**
-     * Initialize method
-     *
-     * @param array $config The configuration for the Table.
-     * @return void
-     */
-    public function initialize(array $config)
-    {
-        $this->table('articles');
-        $this->displayField('title');
-        $this->primaryKey('id');
-        $this->addBehavior('Timestamp');
-    }
+	/**
+	 * Initialize method
+	 *
+	 * @param array $config The configuration for the Table.
+	 * @return void
+	 */
+	public function initialize(array $config)
+	{
+		$this->table('articles');
+		$this->displayField('title');
+		$this->primaryKey('id');
+		$this->addBehavior('Timestamp');
+	}
 
-    /**
-     * Returns the database connection name to use by default.
-     *
-     * @return string
-     */
-    public static function defaultConnectionName()
-    {
-        return 'website';
-    }
+	/**
+	 * Returns the database connection name to use by default.
+	 *
+	 * @return string
+	 */
+	public static function defaultConnectionName()
+	{
+		return 'website';
+	}
 }

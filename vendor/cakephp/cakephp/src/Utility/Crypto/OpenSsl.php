@@ -28,18 +28,18 @@ namespace Cake\Utility\Crypto;
 class OpenSsl
 {
 
-    /**
-     * Not implemented
-     *
-     * @param string $text Encrypted string to decrypt, normal string to encrypt
-     * @param string $key Key to use as the encryption key for encrypted data.
-     * @param string $operation Operation to perform, encrypt or decrypt
-     * @throws \LogicException Rijndael compatibility does not exist with Openssl.
-     * @return void
-     */
-    public static function rijndael($text, $key, $operation)
-    {
-        throw new \LogicException('rijndael is not compatible with OpenSSL. Use mcrypt instead.');
+	/**
+	 * Not implemented
+	 *
+	 * @param string $text Encrypted string to decrypt, normal string to encrypt
+	 * @param string $key Key to use as the encryption key for encrypted data.
+	 * @param string $operation Operation to perform, encrypt or decrypt
+	 * @throws \LogicException Rijndael compatibility does not exist with Openssl.
+	 * @return void
+	 */
+	public static function rijndael($text, $key, $operation)
+	{
+		throw new \LogicException('rijndael is not compatible with OpenSSL. Use mcrypt instead.');
     }
 
     /**
@@ -80,6 +80,6 @@ class OpenSsl
         $iv = mb_substr($cipher, 0, $ivSize, '8bit');
 
         $cipher = mb_substr($cipher, $ivSize, null, '8bit');
-        return openssl_decrypt($cipher, $method, $key, true, $iv);
-    }
+		return openssl_decrypt($cipher, $method, $key, true, $iv);
+	}
 }

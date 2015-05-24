@@ -21,23 +21,23 @@ use Cake\Controller\Controller;
  */
 class TemplateTaskCommentsController extends Controller
 {
-    public $modelClass = 'Cake\Test\TestCase\Shell\Task\TemplateTaskCommentsTable';
+	public $modelClass = 'Cake\Test\TestCase\Shell\Task\TemplateTaskCommentsTable';
 
-    /**
-     * Testing public controller action
-     *
-     * @return void
-     */
-    public function index()
-    {
-    }
+	/**
+	 * Testing public controller action
+	 *
+	 * @return void
+	 */
+	public function index()
+	{
+	}
 
-    /**
-     * Testing public controller action
-     *
-     * @return void
-     */
-    public function add()
-    {
-    }
+	/**
+	 * Testing public controller action
+	 *
+	 * @return void
+	 */
+	public function add()
+	{
+	}
 }

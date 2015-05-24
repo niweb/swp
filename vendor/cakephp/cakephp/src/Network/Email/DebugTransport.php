@@ -24,17 +24,17 @@ namespace Cake\Network\Email;
 class DebugTransport extends AbstractTransport
 {
 
-    /**
-     * Send mail
-     *
-     * @param \Cake\Network\Email\Email $email Cake Email
-     * @return array
-     */
-    public function send(Email $email)
-    {
-        $headers = $email->getHeaders(['from', 'sender', 'replyTo', 'readReceipt', 'returnPath', 'to', 'cc', 'subject']);
-        $headers = $this->_headersToString($headers);
-        $message = implode("\r\n", (array)$email->message());
-        return ['headers' => $headers, 'message' => $message];
-    }
+	/**
+	 * Send mail
+	 *
+	 * @param \Cake\Network\Email\Email $email Cake Email
+	 * @return array
+	 */
+	public function send(Email $email)
+	{
+		$headers = $email->getHeaders(['from', 'sender', 'replyTo', 'readReceipt', 'returnPath', 'to', 'cc', 'subject']);
+		$headers = $this->_headersToString($headers);
+		$message = implode("\r\n", (array)$email->message());
+		return ['headers' => $headers, 'message' => $message];
+	}
 }

@@ -10,10 +10,10 @@ use Cake\ORM\Table;
 class ExampleBehavior extends Behavior
 {
 
-    /**
-     * Default configuration.
-     *
-     * @var array
-     */
-    protected $_defaultConfig = [];
+	/**
+	 * Default configuration.
+	 *
+	 * @var array
+	 */
+	protected $_defaultConfig = [];
 }

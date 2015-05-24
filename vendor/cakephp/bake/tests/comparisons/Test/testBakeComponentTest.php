@@ -11,37 +11,37 @@ use Cake\TestSuite\TestCase;
 class AppleComponentTest extends TestCase
 {
 
-    /**
-     * setUp method
-     *
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-        $registry = new ComponentRegistry();
-        $this->Apple = new AppleComponent($registry);
-    }
+	/**
+	 * setUp method
+	 *
+	 * @return void
+	 */
+	public function setUp()
+	{
+		parent::setUp();
+		$registry = new ComponentRegistry();
+		$this->Apple = new AppleComponent($registry);
+	}
 
-    /**
-     * tearDown method
-     *
-     * @return void
-     */
-    public function tearDown()
-    {
-        unset($this->Apple);
+	/**
+	 * tearDown method
+	 *
+	 * @return void
+	 */
+	public function tearDown()
+	{
+		unset($this->Apple);
 
-        parent::tearDown();
-    }
+		parent::tearDown();
+	}
 
-    /**
-     * Test startup method
-     *
-     * @return void
-     */
-    public function testStartup()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
+	/**
+	 * Test startup method
+	 *
+	 * @return void
+	 */
+	public function testStartup()
+	{
+		$this->markTestIncomplete('Not implemented yet.');
+	}
 }

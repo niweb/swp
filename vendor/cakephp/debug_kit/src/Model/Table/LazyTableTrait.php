@@ -25,25 +25,25 @@ use Cake\Core\App;
 trait LazyTableTrait
 {
 
-    /**
-     * Ensures the tables for the given fixtures exist in the schema.
-     *
-     * If the tables do not exist, they will be created on the current model's connection.
-     *
-     * @param array $fixtures The fixture names to check and/or insert.
-     * @return void
-     * @throws \RuntimeException When fixtures are missing/unknown/fail.
-     */
-    public function ensureTables(array $fixtures)
-    {
-        $connection = $this->connection();
-        $schema = $connection->schemaCollection();
-        $existing = $schema->listTables();
+	/**
+	 * Ensures the tables for the given fixtures exist in the schema.
+	 *
+	 * If the tables do not exist, they will be created on the current model's connection.
+	 *
+	 * @param array $fixtures The fixture names to check and/or insert.
+	 * @return void
+	 * @throws \RuntimeException When fixtures are missing/unknown/fail.
+	 */
+	public function ensureTables(array $fixtures)
+	{
+		$connection = $this->connection();
+		$schema = $connection->schemaCollection();
+		$existing = $schema->listTables();
 
-        foreach ($fixtures as $name) {
-            $class = App::className($name, 'Test/Fixture', 'Fixture');
-            if ($class === false) {
-                throw new \RuntimeException("Unknown fixture '$name'.");
+		foreach ($fixtures as $name) {
+			$class = App::className($name, 'Test/Fixture', 'Fixture');
+			if ($class === false) {
+				throw new \RuntimeException("Unknown fixture '$name'.");
             }
             $fixture = new $class();
             $table = $fixture->table;

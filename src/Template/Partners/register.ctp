@@ -8,7 +8,7 @@
             echo $this->Form->input('lastname', ['label' => 'Nachname']);
             echo $this->Form->input('age', ['label' => 'Alter']);
             echo $this->Form->label('sex', 'Geschlecht');
-            echo $this->Form->select('sex', ['m' => 'maennlich', 'w' => 'weiblich']);
+            echo $this->Form->select('sex', ['m' => 'mÃ¤nnlich', 'w' => 'weiblich']);
             echo $this->Form->input('degree_course', ['label' => 'Studiengang']);
             echo $this->Form->input('job', ['label' => 'Beruf']);
         ?>
@@ -24,14 +24,20 @@
         ?>
         <h3>Patenschaft</h3>
         <?php
-            echo $this->Form->input('teach_time', ['label' => 'Wie viel Zeit (in Minuten) moechtest du in der Woche fürs Unterrichten investieren? (mindestens 90)']);
-            echo $this->Form->input('extra_time', ['label' => 'Wie viel Zeit (in Minuten) moechtest du im Monat zusaetzlich für Seminare oder Veranstaltungen gemeinsam mit deiner/m PatenschülerIn investieren?']);
-            echo $this->Form->input('spend_time', ['label' => 'Wie lange bist du in nächster Zeit verfügbar? (mindestens 1 Jahr']);
-            echo $this->Form->textarea('experience', ['label' => 'Welche Erfahrungen hast du schon mit Nachhilfe oder Patenschaften sammeln können?']);
-            echo $this->Form->input('preferred_gender', ['label' => 'Bevorzugtes Geschlecht deine/r SchülerIn']);
-            echo $this->Form->input('support_wish', ['label' => 'Welche Unterstützung wünscht du dir von uns während deiner Patenschaft?']);
-            echo $this->Form->input('reason_for_decision', ['label' => 'Warum hast du dich für uns entschieden?']);
-            echo $this->Form->input('additional_informations', ['label' => 'Gibt es sonst noch etwas, was wir über dich wissen sollten?']);
+            echo $this->Form->input('teach_time', ['label' => 'Wie viel Zeit (in Minuten) moechtest du in der Woche fÃ¼rs Unterrichten investieren? (mindestens 90)']);
+            echo $this->Form->input('extra_time', ['label' => 'Wie viel Zeit (in Minuten) moechtest du im Monat zusaetzlich fÃ¼r Seminare oder Veranstaltungen gemeinsam mit deiner/m PatenschÃ¼lerIn investieren?']);
+            echo $this->Form->input('spend_time', ['label' => 'Wie lange bist du in nÃ¤chster Zeit verfÃ¼gbar? (mindestens 1 Jahr)']);
+            
+            echo $this->Form->input('experience', [label' => 'Welche Erfahrungen hast du schon mit Nachhilfe oder Patenschaften sammeln kÃ¶nnen?']);
+            
+            echo $this->Form->label('preferred_gender', 'Bevorzugtes Geschlecht deine/r SchÃ¼lerIn');
+            echo $this->Form->select('preferred_gender', ['' => 'egal', 'm' => 'mÃ¤nnlich', 'w' => 'weiblich']);
+            
+            echo $this->Form->label('support_wish', 'Welche UnterstÃ¼tzung wÃ¼nscht du dir von uns wÃ¤hrend deiner Patenschaft?');
+            echo $this->Form->textarea('support_wish');
+            
+            echo $this->Form->input('reason_for_decision', ['label' => 'Warum hast du dich fÃ¼r uns entschieden?']);            
+            echo $this->Form->input('additional_informations', ['label' => 'Gibt es sonst noch etwas, was wir Ã¼ber dich wissen sollten?']);
             echo $this->Form->input('reason_for_schuelerpaten', ['label' => 'Wie bist du auf uns gekommen?']);
         ?>
     </fieldset>

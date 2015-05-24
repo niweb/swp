@@ -26,127 +26,127 @@ use Cake\Utility\Hash;
 class AssociationFilterTest extends TestCase
 {
 
-    /**
-     * fixtures
-     *
-     * Don't sort this list alphabetically - otherwise there are table constraints
-     * which fail when using postgres
-     *
-     * @var array
-     */
-    public $fixtures = [
+	/**
+	 * fixtures
+	 *
+	 * Don't sort this list alphabetically - otherwise there are table constraints
+	 * which fail when using postgres
+	 *
+	 * @var array
+	 */
+	public $fixtures = [
         'core.authors',
         'core.tags',
         'plugin.bake.bake_articles',
         'plugin.bake.bake_comments',
         'plugin.bake.bake_articles_bake_tags',
         'plugin.bake.bake_tags',
-    ];
+	];
 
-    /**
-     * setUp method
-     *
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-        $this->associationFilter = new AssociationFilter();
-    }
+	/**
+	 * setUp method
+	 *
+	 * @return void
+	 */
+	public function setUp()
+	{
+		parent::setUp();
+		$this->associationFilter = new AssociationFilter();
+	}
 
-    /**
-     * tearDown method
-     *
-     * @return void
-     */
-    public function tearDown()
-    {
-        TableRegistry::clear();
-        unset($this->associationFilter);
-        parent::tearDown();
-    }
+	/**
+	 * tearDown method
+	 *
+	 * @return void
+	 */
+	public function tearDown()
+	{
+		TableRegistry::clear();
+		unset($this->associationFilter);
+		parent::tearDown();
+	}
 
-    /**
-     * test extracting aliases and filtering the hasMany aliases correctly based on belongsToMany
-     *
-     * @return void
-     */
-    public function testFilterHasManyAssociationsAliases()
-    {
-        $table = TableRegistry::get('Articles', [
+	/**
+	 * test extracting aliases and filtering the hasMany aliases correctly based on belongsToMany
+	 *
+	 * @return void
+	 */
+	public function testFilterHasManyAssociationsAliases()
+	{
+		$table = TableRegistry::get('Articles', [
             'className' => '\Bake\Test\App\Model\Table\ArticlesTable'
-        ]);
-        $result = $this->associationFilter->filterHasManyAssociationsAliases($table, ['ArticlesTags']);
-        $expected = [];
-        $this->assertSame(
+            ]);
+            $result = $this->associationFilter->filterHasManyAssociationsAliases($table, ['ArticlesTags']);
+            $expected = [];
+            $this->assertSame(
             $expected,
             $result,
             'hasMany should filter results based on belongsToMany existing aliases'
-        );
-    }
+            );
+	}
 
-    /**
-     * test extracting extra HasMany
-     *
-     * @return void
-     */
-    public function testFilterHasManyAssociationsAliasesExtra()
-    {
-        $table = TableRegistry::get('Articles', [
+	/**
+	 * test extracting extra HasMany
+	 *
+	 * @return void
+	 */
+	public function testFilterHasManyAssociationsAliasesExtra()
+	{
+		$table = TableRegistry::get('Articles', [
             'className' => '\Bake\Test\App\Model\Table\ArticlesTable'
-        ]);
-        $table->hasMany('ExtraArticles', [
+            ]);
+            $table->hasMany('ExtraArticles', [
             'className' => 'Articles'
-        ]);
-        $result = $this->associationFilter->filterHasManyAssociationsAliases($table, [
+            ]);
+            $result = $this->associationFilter->filterHasManyAssociationsAliases($table, [
             'ExtraArticles',
             'ArticlesTags',
             'AnotherHasMany'
-        ]);
-        $expected = ['ExtraArticles', 'AnotherHasMany'];
-        $this->assertSame(
+            ]);
+            $expected = ['ExtraArticles', 'AnotherHasMany'];
+            $this->assertSame(
             $expected,
             $result,
             'hasMany should filter results based on belongsToMany existing aliases'
-        );
-        $table->associations()->remove('ExtraArticles');
-    }
+            );
+            $table->associations()->remove('ExtraArticles');
+	}
 
-    /**
-     * testFilterAssociations
-     *
-     * @return void
-     */
-    public function testFilterAssociations()
-    {
-        $table = TableRegistry::get('Articles', [
+	/**
+	 * testFilterAssociations
+	 *
+	 * @return void
+	 */
+	public function testFilterAssociations()
+	{
+		$table = TableRegistry::get('Articles', [
             'className' => '\Bake\Test\App\Model\Table\ArticlesTable'
-        ]);
-        $resultAssociations = $this->associationFilter->filterAssociations($table);
-        $result = [];
-        foreach ($resultAssociations as $assoc) {
-            $aliases = array_keys($assoc);
-            foreach ($aliases as $alias) {
-                $result[] = $alias;
+            ]);
+            $resultAssociations = $this->associationFilter->filterAssociations($table);
+            $result = [];
+            foreach ($resultAssociations as $assoc) {
+            	$aliases = array_keys($assoc);
+            	foreach ($aliases as $alias) {
+            		$result[] = $alias;
+            	}
             }
-        }
-        $expected = ['authors', 'tags'];
-        $this->assertEquals($expected, $result);
-    }
+            $expected = ['authors', 'tags'];
+            $this->assertEquals($expected, $result);
+	}
 
-    /**
-     * testFilterAssociations
-     *
-     * @return void
-     */
-    public function testFilterAssociationsMissingTable()
-    {
-        $table = TableRegistry::get('Articles', [
+	/**
+	 * testFilterAssociations
+	 *
+	 * @return void
+	 */
+	public function testFilterAssociationsMissingTable()
+	{
+		$table = TableRegistry::get('Articles', [
             'className' => '\Bake\Test\App\Model\Table\ArticlesTable'
-        ]);
-        $table->hasMany('Nopes');
+            ]);
+            $table->hasMany('Nopes');
 
-        $result = $this->associationFilter->filterAssociations($table);
-        $this->assertArrayNotHasKey('HasMany', $result);
-    }
+            $result = $this->associationFilter->filterAssociations($table);
+            $this->assertArrayNotHasKey('HasMany', $result);
+	}
 }

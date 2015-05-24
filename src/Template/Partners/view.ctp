@@ -61,6 +61,8 @@
             <p><?= h($partner->reason_for_schuelerpaten) ?></p>
             <h6 class="subheader"><?= __('Location') ?></h6>
             <p><?= $partner->has('location') ? $this->Html->link($partner->location->name, ['controller' => 'Locations', 'action' => 'view', $partner->location->id]) : '' ?></p>
+            <h6 class="subheader"><?= __('User') ?></h6>
+            <p><?= $partner->has('user') ? $this->Html->link($partner->user->email, ['controller' => 'Users', 'action' => 'view', $partner->user->id]) : '' ?></p>
         </div>
         <div class="large-2 columns numbers end">
             <h6 class="subheader"><?= __('Id') ?></h6>

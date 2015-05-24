@@ -22,101 +22,101 @@ use Cake\Console\Shell;
 class CompletionShell extends Shell
 {
 
-    /**
-     * Contains tasks to load and instantiate
-     *
-     * @var array
-     */
-    public $tasks = ['Command'];
+	/**
+	 * Contains tasks to load and instantiate
+	 *
+	 * @var array
+	 */
+	public $tasks = ['Command'];
 
-    /**
-     * Echo no header by overriding the startup method
-     *
-     * @return void
-     */
-    public function startup()
-    {
-    }
+	/**
+	 * Echo no header by overriding the startup method
+	 *
+	 * @return void
+	 */
+	public function startup()
+	{
+	}
 
-    /**
-     * Not called by the autocomplete shell - this is for curious users
-     *
-     * @return int|bool Returns the number of bytes returned from writing to stdout.
-     */
-    public function main()
-    {
-        return $this->out($this->getOptionParser()->help());
-    }
+	/**
+	 * Not called by the autocomplete shell - this is for curious users
+	 *
+	 * @return int|bool Returns the number of bytes returned from writing to stdout.
+	 */
+	public function main()
+	{
+		return $this->out($this->getOptionParser()->help());
+	}
 
-    /**
-     * list commands
-     *
-     * @return void|int|bool Returns the number of bytes returned from writing to stdout.
-     */
-    public function commands()
-    {
-        $options = $this->Command->commands();
-        return $this->_output($options);
-    }
+	/**
+	 * list commands
+	 *
+	 * @return void|int|bool Returns the number of bytes returned from writing to stdout.
+	 */
+	public function commands()
+	{
+		$options = $this->Command->commands();
+		return $this->_output($options);
+	}
 
-    /**
-     * list options for the named command
-     *
-     * @return void|int|bool Returns the number of bytes returned from writing to stdout.
-     */
-    public function options()
-    {
-        $commandName = '';
-        if (!empty($this->args[0])) {
-            $commandName = $this->args[0];
-        }
-        $options = $this->Command->options($commandName);
+	/**
+	 * list options for the named command
+	 *
+	 * @return void|int|bool Returns the number of bytes returned from writing to stdout.
+	 */
+	public function options()
+	{
+		$commandName = '';
+		if (!empty($this->args[0])) {
+			$commandName = $this->args[0];
+		}
+		$options = $this->Command->options($commandName);
 
-        return $this->_output($options);
-    }
+		return $this->_output($options);
+	}
 
-    /**
-     * list subcommands for the named command
-     *
-     * @return void|int|bool Returns the number of bytes returned from writing to stdout.
-     */
-    public function subcommands()
-    {
-        if (!$this->args) {
-            return $this->_output();
-        }
+	/**
+	 * list subcommands for the named command
+	 *
+	 * @return void|int|bool Returns the number of bytes returned from writing to stdout.
+	 */
+	public function subcommands()
+	{
+		if (!$this->args) {
+			return $this->_output();
+		}
 
-        $options = $this->Command->subCommands($this->args[0]);
-        return $this->_output($options);
-    }
+		$options = $this->Command->subCommands($this->args[0]);
+		return $this->_output($options);
+	}
 
-    /**
-     * Guess autocomplete from the whole argument string
-     *
-     * @return void|int|bool Returns the number of bytes returned from writing to stdout.
-     */
-    public function fuzzy()
-    {
-        return $this->_output();
-    }
+	/**
+	 * Guess autocomplete from the whole argument string
+	 *
+	 * @return void|int|bool Returns the number of bytes returned from writing to stdout.
+	 */
+	public function fuzzy()
+	{
+		return $this->_output();
+	}
 
-    /**
-     * Gets the option parser instance and configures it.
-     *
-     * @return \Cake\Console\ConsoleOptionParser
-     */
-    public function getOptionParser()
-    {
-        $parser = parent::getOptionParser();
+	/**
+	 * Gets the option parser instance and configures it.
+	 *
+	 * @return \Cake\Console\ConsoleOptionParser
+	 */
+	public function getOptionParser()
+	{
+		$parser = parent::getOptionParser();
 
-        $parser->description(
+		$parser->description(
             'Used by shells like bash to autocomplete command name, options and arguments'
-        )->addSubcommand('commands', [
+            )->addSubcommand('commands', [
             'help' => 'Output a list of available commands',
             'parser' => [
                 'description' => 'List all availables',
             ]
-        ])->addSubcommand('subcommands', [
+            ])->addSubcommand('subcommands', [
             'help' => 'Output a list of available subcommands',
             'parser' => [
                 'description' => 'List subcommands for a command',
@@ -124,10 +124,10 @@ class CompletionShell extends Shell
                     'command' => [
                         'help' => 'The command name',
                         'required' => false,
-                    ]
-                ]
             ]
-        ])->addSubcommand('options', [
+            ]
+            ]
+            ])->addSubcommand('options', [
             'help' => 'Output a list of available options',
             'parser' => [
                 'description' => 'List options',
@@ -135,28 +135,28 @@ class CompletionShell extends Shell
                     'command' => [
                         'help' => 'The command name',
                         'required' => false,
-                    ]
-                ]
             ]
-        ])->addSubcommand('fuzzy', [
+            ]
+            ]
+            ])->addSubcommand('fuzzy', [
             'help' => 'Guess autocomplete'
-        ])->epilog([
+            ])->epilog([
             'This command is not intended to be called manually',
-        ]);
+            ]);
 
-        return $parser;
-    }
+            return $parser;
+	}
 
-    /**
-     * Emit results as a string, space delimited
-     *
-     * @param array $options The options to output
-     * @return void|int|bool Returns the number of bytes returned from writing to stdout.
-     */
-    protected function _output($options = [])
-    {
-        if ($options) {
-            return $this->out(implode($options, ' '));
-        }
-    }
+	/**
+	 * Emit results as a string, space delimited
+	 *
+	 * @param array $options The options to output
+	 * @return void|int|bool Returns the number of bytes returned from writing to stdout.
+	 */
+	protected function _output($options = [])
+	{
+		if ($options) {
+			return $this->out(implode($options, ' '));
+		}
+	}
 }

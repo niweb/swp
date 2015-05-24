@@ -22,12 +22,12 @@ use Cake\TestSuite\Fixture\TestFixture;
  */
 class BakeCommentsFixture extends TestFixture
 {
-    /**
-     * fields property
-     *
-     * @var array
-     */
-    public $fields = [
+	/**
+	 * fields property
+	 *
+	 * @var array
+	 */
+	public $fields = [
         'otherid' => ['type' => 'integer'],
         'bake_article_id' => ['type' => 'integer', 'null' => false],
         'bake_user_id' => ['type' => 'integer', 'null' => false],
@@ -36,12 +36,12 @@ class BakeCommentsFixture extends TestFixture
         'created' => 'datetime',
         'updated' => 'datetime',
         '_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['otherid']]]
-    ];
+	];
 
-    /**
-     * records property
-     *
-     * @var array
-     */
-    public $records = [];
+	/**
+	 * records property
+	 *
+	 * @var array
+	 */
+	public $records = [];
 }

@@ -9,12 +9,12 @@ use Cake\ORM\Entity;
 class Classrange extends Entity
 {
 
-    /**
-     * Fields that can be mass assigned using newEntity() or patchEntity().
-     *
-     * @var array
-     */
-    protected $_accessible = [
+	/**
+	 * Fields that can be mass assigned using newEntity() or patchEntity().
+	 *
+	 * @var array
+	 */
+	protected $_accessible = [
         'name' => true,
-    ];
+	];
 }

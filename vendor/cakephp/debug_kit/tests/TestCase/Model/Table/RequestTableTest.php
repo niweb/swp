@@ -24,42 +24,42 @@ use Cake\TestSuite\TestCase;
 class RequestTableTest extends TestCase
 {
 
-    /**
-     * test that schema is created on-demand.
-     *
-     * @return void
-     */
-    public function testInitializeCreatesSchema()
-    {
-        $connection = ConnectionManager::get('test');
-        $this->skipIf($connection->driver() instanceof Sqlite, 'Schema insertion/removal breaks SQLite');
+	/**
+	 * test that schema is created on-demand.
+	 *
+	 * @return void
+	 */
+	public function testInitializeCreatesSchema()
+	{
+		$connection = ConnectionManager::get('test');
+		$this->skipIf($connection->driver() instanceof Sqlite, 'Schema insertion/removal breaks SQLite');
 
-        TableRegistry::clear();
-        
-        $stmt = $connection->execute('DROP TABLE IF EXISTS panels');
-        $stmt->closeCursor();
+		TableRegistry::clear();
 
-        $stmt = $connection->execute('DROP TABLE IF EXISTS requests');
-        $stmt->closeCursor();
+		$stmt = $connection->execute('DROP TABLE IF EXISTS panels');
+		$stmt->closeCursor();
 
-        TableRegistry::get('DebugKit.Requests');
-        TableRegistry::get('DebugKit.Panels');
+		$stmt = $connection->execute('DROP TABLE IF EXISTS requests');
+		$stmt->closeCursor();
 
-        $schema = $connection->schemaCollection();
-        $this->assertContains('requests', $schema->listTables());
-        $this->assertContains('panels', $schema->listTables());
-    }
+		TableRegistry::get('DebugKit.Requests');
+		TableRegistry::get('DebugKit.Panels');
 
-    /**
-     * Test the recent finder.
-     *
-     * @return void
-     */
-    public function testFindRecent()
-    {
-        $table = TableRegistry::get('DebugKit.Requests');
-        $query = $table->find('recent');
-        $this->assertEquals(10, $query->clause('limit'));
-        $this->assertNotEmpty($query->clause('order'));
-    }
+		$schema = $connection->schemaCollection();
+		$this->assertContains('requests', $schema->listTables());
+		$this->assertContains('panels', $schema->listTables());
+	}
+
+	/**
+	 * Test the recent finder.
+	 *
+	 * @return void
+	 */
+	public function testFindRecent()
+	{
+		$table = TableRegistry::get('DebugKit.Requests');
+		$query = $table->find('recent');
+		$this->assertEquals(10, $query->clause('limit'));
+		$this->assertNotEmpty($query->clause('order'));
+	}
 }

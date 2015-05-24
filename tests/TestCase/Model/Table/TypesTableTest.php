@@ -11,57 +11,57 @@ use Cake\TestSuite\TestCase;
 class TypesTableTest extends TestCase
 {
 
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
+	/**
+	 * Fixtures
+	 *
+	 * @var array
+	 */
+	public $fixtures = [
         'app.types',
         'app.users'
-    ];
+        ];
 
-    /**
-     * setUp method
-     *
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-        $config = TableRegistry::exists('Types') ? [] : ['className' => 'App\Model\Table\TypesTable'];
-        $this->Types = TableRegistry::get('Types', $config);
-    }
+        /**
+         * setUp method
+         *
+         * @return void
+         */
+        public function setUp()
+        {
+        	parent::setUp();
+        	$config = TableRegistry::exists('Types') ? [] : ['className' => 'App\Model\Table\TypesTable'];
+        	$this->Types = TableRegistry::get('Types', $config);
+        }
 
-    /**
-     * tearDown method
-     *
-     * @return void
-     */
-    public function tearDown()
-    {
-        unset($this->Types);
+        /**
+         * tearDown method
+         *
+         * @return void
+         */
+        public function tearDown()
+        {
+        	unset($this->Types);
 
-        parent::tearDown();
-    }
+        	parent::tearDown();
+        }
 
-    /**
-     * Test initialize method
-     *
-     * @return void
-     */
-    public function testInitialize()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
+        /**
+         * Test initialize method
+         *
+         * @return void
+         */
+        public function testInitialize()
+        {
+        	$this->markTestIncomplete('Not implemented yet.');
+        }
 
-    /**
-     * Test validationDefault method
-     *
-     * @return void
-     */
-    public function testValidationDefault()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
+        /**
+         * Test validationDefault method
+         *
+         * @return void
+         */
+        public function testValidationDefault()
+        {
+        	$this->markTestIncomplete('Not implemented yet.');
+        }
 }

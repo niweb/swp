@@ -23,45 +23,45 @@ use Cake\Event\EventManagerTrait;
 class PanelRegistry extends ObjectRegistry
 {
 
-    use EventManagerTrait;
+	use EventManagerTrait;
 
-    /**
-     * Constructor
-     *
-     * @param \Cake\Event\EventManager $events Event Manager that panels should bind to.
-     *   Typically this is the global manager.
-     */
-    public function __construct(EventManager $events)
-    {
-        $this->eventManager($events);
-    }
+	/**
+	 * Constructor
+	 *
+	 * @param \Cake\Event\EventManager $events Event Manager that panels should bind to.
+	 *   Typically this is the global manager.
+	 */
+	public function __construct(EventManager $events)
+	{
+		$this->eventManager($events);
+	}
 
-    /**
-     * Resolve a panel classname.
-     *
-     * Part of the template method for Cake\Utility\ObjectRegistry::load()
-     *
-     * @param string $class Partial classname to resolve.
-     * @return string|false Either the correct classname or false.
-     */
-    protected function _resolveClassName($class)
-    {
-        return App::className($class, 'Panel', 'Panel');
-    }
+	/**
+	 * Resolve a panel classname.
+	 *
+	 * Part of the template method for Cake\Utility\ObjectRegistry::load()
+	 *
+	 * @param string $class Partial classname to resolve.
+	 * @return string|false Either the correct classname or false.
+	 */
+	protected function _resolveClassName($class)
+	{
+		return App::className($class, 'Panel', 'Panel');
+	}
 
-    /**
-     * Throws an exception when a component is missing.
-     *
-     * Part of the template method for Cake\Utility\ObjectRegistry::load()
-     *
-     * @param string $class The classname that is missing.
-     * @param string $plugin The plugin the component is missing in.
-     * @return void
-     * @throws \RuntimeException
-     */
-    protected function _throwMissingClassError($class, $plugin)
-    {
-        throw new \RuntimeException("Unable to find '$class' panel.");
+	/**
+	 * Throws an exception when a component is missing.
+	 *
+	 * Part of the template method for Cake\Utility\ObjectRegistry::load()
+	 *
+	 * @param string $class The classname that is missing.
+	 * @param string $plugin The plugin the component is missing in.
+	 * @return void
+	 * @throws \RuntimeException
+	 */
+	protected function _throwMissingClassError($class, $plugin)
+	{
+		throw new \RuntimeException("Unable to find '$class' panel.");
     }
 
     /**
@@ -76,8 +76,8 @@ class PanelRegistry extends ObjectRegistry
      */
     protected function _create($class, $alias, $config)
     {
-        $instance = new $class($this, $config);
-        $this->eventManager()->on($instance);
+    $instance = new $class($this, $config);
+    $this->eventManager()->on($instance);
         return $instance;
     }
 }

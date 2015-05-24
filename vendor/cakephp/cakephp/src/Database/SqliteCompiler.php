@@ -24,10 +24,10 @@ use Cake\Database\QueryCompiler;
  */
 class SqliteCompiler extends QueryCompiler
 {
-    /**
-     * SQLite does not support ORDER BY in UNION queries.
-     *
-     * @var bool
-     */
-    protected $_orderedUnion = false;
+	/**
+	 * SQLite does not support ORDER BY in UNION queries.
+	 *
+	 * @var bool
+	 */
+	protected $_orderedUnion = false;
 }

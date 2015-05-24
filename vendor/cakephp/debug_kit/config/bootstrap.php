@@ -21,46 +21,46 @@ use DebugKit\Routing\Filter\DebugBarFilter;
 $debugBar = new DebugBarFilter(EventManager::instance(), (array)Configure::read('DebugKit'));
 
 if (!$debugBar->isEnabled() || php_sapi_name() === 'cli') {
-    return;
+	return;
 }
 
 $hasDebugKitConfig = ConnectionManager::config('debug_kit');
 if (!$hasDebugKitConfig && !in_array('sqlite', PDO::getAvailableDrivers())) {
-    $msg = 'DebugKit not enabled. You need to either install pdo_sqlite, ' .
+	$msg = 'DebugKit not enabled. You need to either install pdo_sqlite, ' .
         'or define the "debug_kit" connection name.';
-    Log::warning($msg);
-    return;
+	Log::warning($msg);
+	return;
 }
 
 if (!$hasDebugKitConfig) {
-    ConnectionManager::config('debug_kit', [
+	ConnectionManager::config('debug_kit', [
         'className' => 'Cake\Database\Connection',
         'driver' => 'Cake\Database\Driver\Sqlite',
         'database' => TMP . 'debug_kit.sqlite',
         'encoding' => 'utf8',
         'cacheMetadata' => true,
         'quoteIdentifiers' => false,
-    ]);
+	]);
 }
 
 Router::plugin('DebugKit', function ($routes) {
-    $routes->extensions('json');
-    $routes->connect(
+	$routes->extensions('json');
+	$routes->connect(
         '/toolbar/clear_cache',
-        ['controller' => 'Toolbar', 'action' => 'clearCache']
-    );
-    $routes->connect(
+	['controller' => 'Toolbar', 'action' => 'clearCache']
+	);
+	$routes->connect(
         '/toolbar/*',
-        ['controller' => 'Requests', 'action' => 'view']
-    );
-    $routes->connect(
+	['controller' => 'Requests', 'action' => 'view']
+	);
+	$routes->connect(
         '/panels/view/*',
-        ['controller' => 'Panels', 'action' => 'view']
-    );
-    $routes->connect(
+	['controller' => 'Panels', 'action' => 'view']
+	);
+	$routes->connect(
         '/panels/*',
-        ['controller' => 'Panels', 'action' => 'index']
-    );
+	['controller' => 'Panels', 'action' => 'index']
+	);
 });
 
 

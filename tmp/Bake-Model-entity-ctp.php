@@ -13,39 +13,43 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 ?>
-<CakePHPBakeOpenTagphp
-namespace <?= $namespace ?>\Model\Entity;
+<CakePHPBakeOpenTagphp namespace
+<?= $namespace ?>\Model\Entity;
 
-use Cake\ORM\Entity;
+use
+	Cake\ORM\Entity;
 
 /**
  * <?= $name ?> Entity.
  */
-class <?= $name ?> extends Entity
+class <?= $name ?>
+	extends Entity
 {
 <?php if (!empty($fields)): ?>
 
     /**
-     * Fields that can be mass assigned using newEntity() or patchEntity().
+     * Fields
+	that can be mass assigned using newEntity() or
+	patchEntity().
      *
-     * @var array
+     * @var
+	array
      */
-    protected $_accessible = [
-<?php foreach ($fields as $field): ?>
-        '<?= $field ?>' => true,
-<?php endforeach; ?>
-    ];
-<?php endif ?>
-<?php if (!empty($hidden)): ?>
+    protected $_accessible=[
+    <?php foreach ($fields as $field): ?>
+        '<?= $field ?>' =>
+true,
+    <?php endforeach; ?>
+];
+    <?php endif ?>
+    <?php if (!empty($hidden)): ?>
 
-    /**
-     * Fields that are excluded from JSON an array versions of the entity.
-     *
-     * @var array
-     */
-    protected $_hidden = [<?= $this->Bake->stringifyList($hidden) ?>];
-<?php endif ?>
-<?php if (empty($fields) && empty($hidden)): ?>
+/** * Fields that are excluded from JSON an array versions of the
+entity. * * @var array */ protected $_hidden = [
+    <?= $this->Bake->stringifyList($hidden) ?>
+];
+    <?php endif ?>
+    <?php if (empty($fields) && empty($hidden)): ?>
 
-<?php endif ?>
+    <?php endif ?>
 }

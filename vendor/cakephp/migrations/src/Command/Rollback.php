@@ -21,40 +21,40 @@ use Symfony\Component\Console\Output\OutputInterface;
 class Rollback extends RollbackCommand
 {
 
-    use ConfigurationTrait {
-        execute as parentExecute;
-    }
-    use EventManagerTrait;
+	use ConfigurationTrait {
+		execute as parentExecute;
+	}
+	use EventManagerTrait;
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
-    {
-        $this->setName('rollback')
-            ->setDescription('Rollback the last or to a specific migration')
-            ->addOption('--target', '-t', InputArgument::OPTIONAL, 'The version number to rollback to')
-            ->setHelp('reverts the last migration, or optionally up to a specific version')
-            ->addOption('--plugin', '-p', InputArgument::OPTIONAL, 'The plugin containing the migrations')
-            ->addOption('--connection', '-c', InputArgument::OPTIONAL, 'The datasource connection to use')
-            ->addOption('--source', '-s', InputArgument::OPTIONAL, 'The folder where migrations are in');
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function configure()
+	{
+		$this->setName('rollback')
+		->setDescription('Rollback the last or to a specific migration')
+		->addOption('--target', '-t', InputArgument::OPTIONAL, 'The version number to rollback to')
+		->setHelp('reverts the last migration, or optionally up to a specific version')
+		->addOption('--plugin', '-p', InputArgument::OPTIONAL, 'The plugin containing the migrations')
+		->addOption('--connection', '-c', InputArgument::OPTIONAL, 'The datasource connection to use')
+		->addOption('--source', '-s', InputArgument::OPTIONAL, 'The folder where migrations are in');
+	}
 
-    /**
-     * Overrides the action execute method in order to vanish the idea of environments
-     * from phinx. CakePHP does not beleive in the idea of having in-app environments
-     *
-     * @param Symfony\Component\Console\Input\Inputnterface $input the input object
-     * @param Symfony\Component\Console\Input\OutputInterface $output the output object
-     * @return void
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $event = $this->dispatchEvent('Migration.beforeRollback');
-        if ($event->isStopped()) {
-            return $event->result;
-        }
-        $this->parentExecute($input, $output);
-        $this->dispatchEvent('Migration.afterRollback');
-    }
+	/**
+	 * Overrides the action execute method in order to vanish the idea of environments
+	 * from phinx. CakePHP does not beleive in the idea of having in-app environments
+	 *
+	 * @param Symfony\Component\Console\Input\Inputnterface $input the input object
+	 * @param Symfony\Component\Console\Input\OutputInterface $output the output object
+	 * @return void
+	 */
+	protected function execute(InputInterface $input, OutputInterface $output)
+	{
+		$event = $this->dispatchEvent('Migration.beforeRollback');
+		if ($event->isStopped()) {
+			return $event->result;
+		}
+		$this->parentExecute($input, $output);
+		$this->dispatchEvent('Migration.afterRollback');
+	}
 }

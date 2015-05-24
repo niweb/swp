@@ -11,12 +11,12 @@ use Cake\TestSuite\TestCase;
 class PreferredSchooltypesTableTest extends TestCase
 {
 
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
+	/**
+	 * Fixtures
+	 *
+	 * @var array
+	 */
+	public $fixtures = [
         'app.preferred_schooltypes',
         'app.partners',
         'app.locations',
@@ -28,59 +28,59 @@ class PreferredSchooltypesTableTest extends TestCase
         'app.classranges',
         'app.preferred_subjects',
         'app.tandems'
-    ];
+        ];
 
-    /**
-     * setUp method
-     *
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-        $config = TableRegistry::exists('PreferredSchooltypes') ? [] : ['className' => 'App\Model\Table\PreferredSchooltypesTable'];
-        $this->PreferredSchooltypes = TableRegistry::get('PreferredSchooltypes', $config);
-    }
+        /**
+         * setUp method
+         *
+         * @return void
+         */
+        public function setUp()
+        {
+        	parent::setUp();
+        	$config = TableRegistry::exists('PreferredSchooltypes') ? [] : ['className' => 'App\Model\Table\PreferredSchooltypesTable'];
+        	$this->PreferredSchooltypes = TableRegistry::get('PreferredSchooltypes', $config);
+        }
 
-    /**
-     * tearDown method
-     *
-     * @return void
-     */
-    public function tearDown()
-    {
-        unset($this->PreferredSchooltypes);
+        /**
+         * tearDown method
+         *
+         * @return void
+         */
+        public function tearDown()
+        {
+        	unset($this->PreferredSchooltypes);
 
-        parent::tearDown();
-    }
+        	parent::tearDown();
+        }
 
-    /**
-     * Test initialize method
-     *
-     * @return void
-     */
-    public function testInitialize()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
+        /**
+         * Test initialize method
+         *
+         * @return void
+         */
+        public function testInitialize()
+        {
+        	$this->markTestIncomplete('Not implemented yet.');
+        }
 
-    /**
-     * Test validationDefault method
-     *
-     * @return void
-     */
-    public function testValidationDefault()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
+        /**
+         * Test validationDefault method
+         *
+         * @return void
+         */
+        public function testValidationDefault()
+        {
+        	$this->markTestIncomplete('Not implemented yet.');
+        }
 
-    /**
-     * Test buildRules method
-     *
-     * @return void
-     */
-    public function testBuildRules()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
+        /**
+         * Test buildRules method
+         *
+         * @return void
+         */
+        public function testBuildRules()
+        {
+        	$this->markTestIncomplete('Not implemented yet.');
+        }
 }

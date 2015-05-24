@@ -22,12 +22,12 @@ use Cake\TestSuite\Fixture\TestFixture;
 class RequestsFixture extends TestFixture
 {
 
-    /**
-     * fields property
-     *
-     * @var array
-     */
-    public $fields = [
+	/**
+	 * fields property
+	 *
+	 * @var array
+	 */
+	public $fields = [
         'id' => ['type' => 'uuid', 'null' => false],
         'url' => ['type' => 'string', 'null' => false],
         'content_type' => ['type' => 'string'],
@@ -36,21 +36,21 @@ class RequestsFixture extends TestFixture
         'requested_at' => ['type' => 'datetime', 'null' => false],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id']],
-        ]
-    ];
+	]
+	];
 
-    /**
-     * Records
-     *
-     * @var array
-     */
-    public $records = [
-        [
+	/**
+	 * Records
+	 *
+	 * @var array
+	 */
+	public $records = [
+	[
             'id' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
             'url' => '/tasks/add',
             'content_type' => 'text/html',
             'status_code' => 200,
             'requested_at' => '2014-08-21 7:41:12'
-        ]
-    ];
+            ]
+            ];
 }

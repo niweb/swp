@@ -25,10 +25,10 @@ use Cake\View\Widget\LabelWidget;
 class NestingLabelWidget extends LabelWidget
 {
 
-    /**
-     * The template to use.
-     *
-     * @var string
-     */
-    protected $_labelTemplate = 'nestingLabel';
+	/**
+	 * The template to use.
+	 *
+	 * @var string
+	 */
+	protected $_labelTemplate = 'nestingLabel';
 }

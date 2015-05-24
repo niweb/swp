@@ -17,10 +17,10 @@ use App\Controller\AppController;
 class BakeArticlesController extends AppController
 {
 
-    /**
-     * Components
-     *
-     * @var array
-     */
-    public $components = ['Csrf', 'Auth', 'Company/TestBakeThree.Something', 'TestBake.Other', 'Apple', 'NonExistent'];
+	/**
+	 * Components
+	 *
+	 * @var array
+	 */
+	public $components = ['Csrf', 'Auth', 'Company/TestBakeThree.Something', 'TestBake.Other', 'Apple', 'NonExistent'];
 }

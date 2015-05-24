@@ -11,100 +11,100 @@ use App\Controller\AppController;
 class StudentsController extends AppController
 {
 
-    /**
-     * Index method
-     *
-     * @return void
-     */
-    public function index()
-    {
-        $this->paginate = [
+	/**
+	 * Index method
+	 *
+	 * @return void
+	 */
+	public function index()
+	{
+		$this->paginate = [
             'contain' => ['Locations']
-        ];
-        $this->set('students', $this->paginate($this->Students));
-        $this->set('_serialize', ['students']);
-    }
+		];
+		$this->set('students', $this->paginate($this->Students));
+		$this->set('_serialize', ['students']);
+	}
 
-    /**
-     * View method
-     *
-     * @param string|null $id Student id.
-     * @return void
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $student = $this->Students->get($id, [
+	/**
+	 * View method
+	 *
+	 * @param string|null $id Student id.
+	 * @return void
+	 * @throws \Cake\Network\Exception\NotFoundException When record not found.
+	 */
+	public function view($id = null)
+	{
+		$student = $this->Students->get($id, [
             'contain' => ['Locations', 'Tandems']
-        ]);
-        $this->set('student', $student);
-        $this->set('_serialize', ['student']);
-    }
+		]);
+		$this->set('student', $student);
+		$this->set('_serialize', ['student']);
+	}
 
-    /**
-     * Add method
-     *
-     * @return void Redirects on successful add, renders view otherwise.
-     */
-    public function add()
-    {
-        $student = $this->Students->newEntity();
-        if ($this->request->is('post')) {
-            $student = $this->Students->patchEntity($student, $this->request->data);
-            if ($this->Students->save($student)) {
-                $this->Flash->success('The student has been saved.');
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error('The student could not be saved. Please, try again.');
-            }
-        }
-        $locations = $this->Students->Locations->find('list', ['limit' => 200]);
-        $this->set(compact('student', 'locations'));
-        $this->set('_serialize', ['student']);
-    }
+	/**
+	 * Add method
+	 *
+	 * @return void Redirects on successful add, renders view otherwise.
+	 */
+	public function add()
+	{
+		$student = $this->Students->newEntity();
+		if ($this->request->is('post')) {
+			$student = $this->Students->patchEntity($student, $this->request->data);
+			if ($this->Students->save($student)) {
+				$this->Flash->success('The student has been saved.');
+				return $this->redirect(['action' => 'index']);
+			} else {
+				$this->Flash->error('The student could not be saved. Please, try again.');
+			}
+		}
+		$locations = $this->Students->Locations->find('list', ['limit' => 200]);
+		$this->set(compact('student', 'locations'));
+		$this->set('_serialize', ['student']);
+	}
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Student id.
-     * @return void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        $student = $this->Students->get($id, [
+	/**
+	 * Edit method
+	 *
+	 * @param string|null $id Student id.
+	 * @return void Redirects on successful edit, renders view otherwise.
+	 * @throws \Cake\Network\Exception\NotFoundException When record not found.
+	 */
+	public function edit($id = null)
+	{
+		$student = $this->Students->get($id, [
             'contain' => []
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $student = $this->Students->patchEntity($student, $this->request->data);
-            if ($this->Students->save($student)) {
-                $this->Flash->success('The student has been saved.');
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error('The student could not be saved. Please, try again.');
-            }
-        }
-        $locations = $this->Students->Locations->find('list', ['limit' => 200]);
-        $this->set(compact('student', 'locations'));
-        $this->set('_serialize', ['student']);
-    }
+		]);
+		if ($this->request->is(['patch', 'post', 'put'])) {
+			$student = $this->Students->patchEntity($student, $this->request->data);
+			if ($this->Students->save($student)) {
+				$this->Flash->success('The student has been saved.');
+				return $this->redirect(['action' => 'index']);
+			} else {
+				$this->Flash->error('The student could not be saved. Please, try again.');
+			}
+		}
+		$locations = $this->Students->Locations->find('list', ['limit' => 200]);
+		$this->set(compact('student', 'locations'));
+		$this->set('_serialize', ['student']);
+	}
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id Student id.
-     * @return void Redirects to index.
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
-     */
-    public function delete($id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-        $student = $this->Students->get($id);
-        if ($this->Students->delete($student)) {
-            $this->Flash->success('The student has been deleted.');
-        } else {
-            $this->Flash->error('The student could not be deleted. Please, try again.');
-        }
-        return $this->redirect(['action' => 'index']);
-    }
+	/**
+	 * Delete method
+	 *
+	 * @param string|null $id Student id.
+	 * @return void Redirects to index.
+	 * @throws \Cake\Network\Exception\NotFoundException When record not found.
+	 */
+	public function delete($id = null)
+	{
+		$this->request->allowMethod(['post', 'delete']);
+		$student = $this->Students->get($id);
+		if ($this->Students->delete($student)) {
+			$this->Flash->success('The student has been deleted.');
+		} else {
+			$this->Flash->error('The student could not be deleted. Please, try again.');
+		}
+		return $this->redirect(['action' => 'index']);
+	}
 }

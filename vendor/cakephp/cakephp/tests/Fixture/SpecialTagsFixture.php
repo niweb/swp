@@ -23,12 +23,12 @@ use Cake\TestSuite\Fixture\TestFixture;
 class SpecialTagsFixture extends TestFixture
 {
 
-    /**
-     * fields property
-     *
-     * @var array
-     */
-    public $fields = [
+	/**
+	 * fields property
+	 *
+	 * @var array
+	 */
+	public $fields = [
         'id' => ['type' => 'integer'],
         'article_id' => ['type' => 'integer', 'null' => false],
         'tag_id' => ['type' => 'integer', 'null' => false],
@@ -38,16 +38,16 @@ class SpecialTagsFixture extends TestFixture
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id']],
             'UNIQUE_TAG2' => ['type' => 'unique', 'columns' => ['article_id', 'tag_id']]
-        ]
-    ];
+	]
+	];
 
-    /**
-     * records property
-     *
-     * @var array
-     */
-    public $records = [
-        ['article_id' => 1, 'tag_id' => 3, 'highlighted' => false, 'highlighted_time' => null, 'author_id' => null],
-        ['article_id' => 2, 'tag_id' => 1, 'highlighted' => true, 'highlighted_time' => '2014-06-01 10:10:00', 'author_id' => null]
-    ];
+	/**
+	 * records property
+	 *
+	 * @var array
+	 */
+	public $records = [
+	['article_id' => 1, 'tag_id' => 3, 'highlighted' => false, 'highlighted_time' => null, 'author_id' => null],
+	['article_id' => 2, 'tag_id' => 1, 'highlighted' => true, 'highlighted_time' => '2014-06-01 10:10:00', 'author_id' => null]
+	];
 }

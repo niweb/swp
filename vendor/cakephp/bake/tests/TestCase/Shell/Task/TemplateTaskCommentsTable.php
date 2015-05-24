@@ -21,11 +21,11 @@ use Cake\ORM\Table;
  */
 class TemplateTaskCommentsTable extends Table
 {
-    public function initialize(array $config)
-    {
-        $this->table('comments');
-        $this->belongsTo('Articles', [
+	public function initialize(array $config)
+	{
+		$this->table('comments');
+		$this->belongsTo('Articles', [
             'foreignKey' => 'article_id'
-        ]);
-    }
+            ]);
+	}
 }

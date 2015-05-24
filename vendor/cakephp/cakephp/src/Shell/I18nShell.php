@@ -25,60 +25,60 @@ use Cake\Console\Shell;
 class I18nShell extends Shell
 {
 
-    /**
-     * Contains tasks to load and instantiate
-     *
-     * @var array
-     */
-    public $tasks = ['Extract'];
+	/**
+	 * Contains tasks to load and instantiate
+	 *
+	 * @var array
+	 */
+	public $tasks = ['Extract'];
 
-    /**
-     * Override main() for help message hook
-     *
-     * @return void
-     */
-    public function main()
-    {
-        $this->out('<info>I18n Shell</info>');
-        $this->hr();
-        $this->out('[E]xtract POT file from sources');
-        $this->out('[H]elp');
-        $this->out('[Q]uit');
+	/**
+	 * Override main() for help message hook
+	 *
+	 * @return void
+	 */
+	public function main()
+	{
+		$this->out('<info>I18n Shell</info>');
+		$this->hr();
+		$this->out('[E]xtract POT file from sources');
+		$this->out('[H]elp');
+		$this->out('[Q]uit');
 
-        $choice = strtolower($this->in('What would you like to do?', ['E', 'H', 'Q']));
-        switch ($choice) {
-            case 'e':
-                $this->Extract->main();
-                break;
-            case 'h':
-                $this->out($this->OptionParser->help());
-                break;
-            case 'q':
-                $this->_stop();
-                return;
-            default:
-                $this->out('You have made an invalid selection. Please choose a command to execute by entering E, I, H, or Q.');
-        }
-        $this->hr();
-        $this->main();
-    }
+		$choice = strtolower($this->in('What would you like to do?', ['E', 'H', 'Q']));
+		switch ($choice) {
+			case 'e':
+				$this->Extract->main();
+				break;
+			case 'h':
+				$this->out($this->OptionParser->help());
+				break;
+			case 'q':
+				$this->_stop();
+				return;
+			default:
+				$this->out('You have made an invalid selection. Please choose a command to execute by entering E, I, H, or Q.');
+		}
+		$this->hr();
+		$this->main();
+	}
 
-    /**
-     * Gets the option parser instance and configures it.
-     *
-     * @return \Cake\Console\ConsoleOptionParser
-     */
-    public function getOptionParser()
-    {
-        $parser = parent::getOptionParser();
+	/**
+	 * Gets the option parser instance and configures it.
+	 *
+	 * @return \Cake\Console\ConsoleOptionParser
+	 */
+	public function getOptionParser()
+	{
+		$parser = parent::getOptionParser();
 
-        $parser->description(
+		$parser->description(
             'I18n Shell generates .pot files(s) with translations.'
-        )->addSubcommand('extract', [
+            )->addSubcommand('extract', [
             'help' => 'Extract the po translations from your application',
             'parser' => $this->Extract->getOptionParser()
-        ]);
+            ]);
 
-        return $parser;
-    }
+            return $parser;
+	}
 }

@@ -9,15 +9,15 @@ use Cake\ORM\Entity;
 class PreferredClassrange extends Entity
 {
 
-    /**
-     * Fields that can be mass assigned using newEntity() or patchEntity().
-     *
-     * @var array
-     */
-    protected $_accessible = [
+	/**
+	 * Fields that can be mass assigned using newEntity() or patchEntity().
+	 *
+	 * @var array
+	 */
+	protected $_accessible = [
         'partner_id' => true,
         'classrange_id' => true,
         'partner' => true,
         'classrange' => true,
-    ];
+	];
 }

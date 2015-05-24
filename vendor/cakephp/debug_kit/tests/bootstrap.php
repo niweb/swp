@@ -62,7 +62,7 @@ Configure::write('App', [
     'paths' => [
         'plugins' => [APP . 'Plugin' . DS],
         'templates' => [APP . 'Template' . DS]
-    ]
+]
 ]);
 Configure::write('Session', [
     'defaults' => 'php'
@@ -73,22 +73,22 @@ Cache::config([
         'engine' => 'File',
         'prefix' => 'cake_core_',
         'serialize' => true
-    ],
+],
     '_cake_model_' => [
         'engine' => 'File',
         'prefix' => 'cake_model_',
         'serialize' => true
-    ],
+],
     'default' => [
         'engine' => 'File',
         'prefix' => 'default_',
         'serialize' => true
-    ]
+]
 ]);
 
 // Ensure default test connection is defined
 if (!getenv('db_dsn')) {
-    putenv('db_dsn=sqlite:/' . TMP . 'debug_kit_test.sqlite');
+	putenv('db_dsn=sqlite:/' . TMP . 'debug_kit_test.sqlite');
 }
 
 $config = [
@@ -106,12 +106,12 @@ Log::config([
         'engine' => 'Cake\Log\Engine\FileLog',
         'levels' => ['notice', 'info', 'debug'],
         'file' => 'debug',
-    ],
+],
     'error' => [
         'engine' => 'Cake\Log\Engine\FileLog',
         'levels' => ['warning', 'error', 'critical', 'alert', 'emergency'],
         'file' => 'error',
-    ]
+]
 ]);
 
 Plugin::load('DebugKit', ['path' => ROOT, 'bootstrap' => true]);

@@ -9,12 +9,12 @@ use Cake\ORM\Entity;
 class Partner extends Entity
 {
 
-    /**
-     * Fields that can be mass assigned using newEntity() or patchEntity().
-     *
-     * @var array
-     */
-    protected $_accessible = [
+	/**
+	 * Fields that can be mass assigned using newEntity() or patchEntity().
+	 *
+	 * @var array
+	 */
+	protected $_accessible = [
         'name' => true,
         'lastname' => true,
         'age' => true,
@@ -43,5 +43,5 @@ class Partner extends Entity
         'preferred_schooltypes' => true,
         'preferred_subjects' => true,
         'tandems' => true,
-    ];
+	];
 }

@@ -23,32 +23,32 @@ use DebugKit\Model\Table\LazyTableTrait;
 class PanelsTable extends Table
 {
 
-    use LazyTableTrait;
+	use LazyTableTrait;
 
-    /**
-     * initialize method
-     *
-     * @param array $config Config data.
-     * @return void
-     */
-    public function initialize(array $config)
-    {
-        $this->belongsTo('DebugKit.Requests');
-        $this->ensureTables(['DebugKit.Requests', 'DebugKit.Panels']);
-    }
+	/**
+	 * initialize method
+	 *
+	 * @param array $config Config data.
+	 * @return void
+	 */
+	public function initialize(array $config)
+	{
+		$this->belongsTo('DebugKit.Requests');
+		$this->ensureTables(['DebugKit.Requests', 'DebugKit.Panels']);
+	}
 
-    /**
-     * Find panels by requestid
-     *
-     * @param Cake\ORM\Query $query The query
-     * @param array $options The options to use.
-     * @return Cake\ORM\Query The query.
-     * @throws \RuntimeException
-     */
-    public function findByRequest(Query $query, array $options)
-    {
-        if (empty($options['requestId'])) {
-            throw new \RuntimeException('Missing request id in findByRequest.');
+	/**
+	 * Find panels by requestid
+	 *
+	 * @param Cake\ORM\Query $query The query
+	 * @param array $options The options to use.
+	 * @return Cake\ORM\Query The query.
+	 * @throws \RuntimeException
+	 */
+	public function findByRequest(Query $query, array $options)
+	{
+		if (empty($options['requestId'])) {
+			throw new \RuntimeException('Missing request id in findByRequest.');
         }
         return $query->where(['Panels.request_id' => $options['requestId']])
             ->order(['Panels.title' => 'ASC']);
@@ -62,5 +62,5 @@ class PanelsTable extends Table
     public static function defaultConnectionName()
     {
         return 'debug_kit';
-    }
-}
+		}
+	}

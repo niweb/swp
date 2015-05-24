@@ -9,12 +9,12 @@ use Cake\ORM\Entity;
 class Student extends Entity
 {
 
-    /**
-     * Fields that can be mass assigned using newEntity() or patchEntity().
-     *
-     * @var array
-     */
-    protected $_accessible = [
+	/**
+	 * Fields that can be mass assigned using newEntity() or patchEntity().
+	 *
+	 * @var array
+	 */
+	protected $_accessible = [
         'name' => true,
         'lastname' => true,
         'telephone' => true,
@@ -22,5 +22,5 @@ class Student extends Entity
         'location_id' => true,
         'location' => true,
         'tandems' => true,
-    ];
+	];
 }

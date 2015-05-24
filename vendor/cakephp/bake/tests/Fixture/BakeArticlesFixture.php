@@ -22,12 +22,12 @@ use Cake\TestSuite\Fixture\TestFixture;
  */
 class BakeArticlesFixture extends TestFixture
 {
-    /**
-     * fields property
-     *
-     * @var array
-     */
-    public $fields = [
+	/**
+	 * fields property
+	 *
+	 * @var array
+	 */
+	public $fields = [
         'id' => ['type' => 'integer'],
         'bake_user_id' => ['type' => 'integer', 'null' => false],
         'title' => ['type' => 'string', 'null' => false],
@@ -36,12 +36,12 @@ class BakeArticlesFixture extends TestFixture
         'created' => 'datetime',
         'updated' => 'datetime',
         '_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']]]
-    ];
+	];
 
-    /**
-     * records property
-     *
-     * @var array
-     */
-    public $records = [];
+	/**
+	 * records property
+	 *
+	 * @var array
+	 */
+	public $records = [];
 }

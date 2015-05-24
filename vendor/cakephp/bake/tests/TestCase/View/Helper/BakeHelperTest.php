@@ -28,95 +28,95 @@ use Cake\TestSuite\TestCase;
 class BakeHelperTest extends TestCase
 {
 
-    /**
-     * fixtures
-     *
-     * Don't sort this list alphabetically - otherwise there are table constraints
-     * which fail when using postgres
-     *
-     * @var array
-     */
-    public $fixtures = [
+	/**
+	 * fixtures
+	 *
+	 * Don't sort this list alphabetically - otherwise there are table constraints
+	 * which fail when using postgres
+	 *
+	 * @var array
+	 */
+	public $fixtures = [
         'plugin.bake.bake_articles',
         'plugin.bake.bake_comments',
         'plugin.bake.bake_articles_bake_tags',
         'plugin.bake.bake_tags',
-    ];
+	];
 
-    /**
-     * setUp method
-     *
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
+	/**
+	 * setUp method
+	 *
+	 * @return void
+	 */
+	public function setUp()
+	{
+		parent::setUp();
 
-        $request = new Request();
-        $response = new Response();
-        $this->View = new BakeView($request, $response);
-        $this->BakeHelper = new BakeHelper($this->View);
-    }
+		$request = new Request();
+		$response = new Response();
+		$this->View = new BakeView($request, $response);
+		$this->BakeHelper = new BakeHelper($this->View);
+	}
 
-    /**
-     * tearDown method
-     *
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-        unset($this->BakeHelper);
-    }
+	/**
+	 * tearDown method
+	 *
+	 * @return void
+	 */
+	public function tearDown()
+	{
+		parent::tearDown();
+		unset($this->BakeHelper);
+	}
 
-    /**
-     * test extracting aliases and filtering the hasMany aliases correctly based on belongsToMany
-     *
-     * @return void
-     */
-    public function testAliasExtractorFilteredHasMany()
-    {
-        $table = TableRegistry::get('Articles', [
+	/**
+	 * test extracting aliases and filtering the hasMany aliases correctly based on belongsToMany
+	 *
+	 * @return void
+	 */
+	public function testAliasExtractorFilteredHasMany()
+	{
+		$table = TableRegistry::get('Articles', [
             'className' => '\Bake\Test\App\Model\Table\ArticlesTable'
-        ]);
-        $this->BakeHelper = $this->getMockBuilder('Bake\View\Helper\BakeHelper')
-                ->disableOriginalConstructor()
-                ->setMethods(['_filterHasManyAssociationsAliases'])
-                ->getMock();
-        $this->BakeHelper->expects($this->once())
-                ->method('_filterHasManyAssociationsAliases')
-                ->with($table, ['ArticlesTags']);
-        $result = $this->BakeHelper->aliasExtractor($table, 'HasMany');
-        $this->assertEmpty($result);
-    }
+            ]);
+            $this->BakeHelper = $this->getMockBuilder('Bake\View\Helper\BakeHelper')
+            ->disableOriginalConstructor()
+            ->setMethods(['_filterHasManyAssociationsAliases'])
+            ->getMock();
+            $this->BakeHelper->expects($this->once())
+            ->method('_filterHasManyAssociationsAliases')
+            ->with($table, ['ArticlesTags']);
+            $result = $this->BakeHelper->aliasExtractor($table, 'HasMany');
+            $this->assertEmpty($result);
+	}
 
-    /**
-     * test extracting belongsTo
-     *
-     * @return void
-     */
-    public function testAliasExtractorBelongsTo()
-    {
-        $table = TableRegistry::get('Articles', [
+	/**
+	 * test extracting belongsTo
+	 *
+	 * @return void
+	 */
+	public function testAliasExtractorBelongsTo()
+	{
+		$table = TableRegistry::get('Articles', [
                     'className' => '\Bake\Test\App\Model\Table\ArticlesTable'
-        ]);
-        $result = $this->BakeHelper->aliasExtractor($table, 'BelongsTo');
-        $expected = ['authors'];
-        $this->assertSame($expected, $result);
-    }
+                    ]);
+                    $result = $this->BakeHelper->aliasExtractor($table, 'BelongsTo');
+                    $expected = ['authors'];
+                    $this->assertSame($expected, $result);
+	}
 
-    /**
-     * test extracting belongsToMany
-     *
-     * @return void
-     */
-    public function testAliasExtractorBelongsToMany()
-    {
-        $table = TableRegistry::get('Articles', [
+	/**
+	 * test extracting belongsToMany
+	 *
+	 * @return void
+	 */
+	public function testAliasExtractorBelongsToMany()
+	{
+		$table = TableRegistry::get('Articles', [
                     'className' => '\Bake\Test\App\Model\Table\ArticlesTable'
-        ]);
-        $result = $this->BakeHelper->aliasExtractor($table, 'BelongsToMany');
-        $expected = ['tags'];
-        $this->assertSame($expected, $result);
-    }
+                    ]);
+                    $result = $this->BakeHelper->aliasExtractor($table, 'BelongsToMany');
+                    $expected = ['tags'];
+                    $this->assertSame($expected, $result);
+	}
 }

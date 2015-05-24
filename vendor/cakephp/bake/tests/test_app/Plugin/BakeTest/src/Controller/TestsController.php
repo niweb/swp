@@ -19,19 +19,19 @@ namespace BakeTest\Controller;
  */
 class TestsController extends BakeTestAppController
 {
-    public $helpers = ['BakeTest.OtherHelper', 'Html'];
+	public $helpers = ['BakeTest.OtherHelper', 'Html'];
 
-    public $components = ['BakeTest.Plugins'];
+	public $components = ['BakeTest.Plugins'];
 
-    public function index()
-    {
-        $this->set('test_value', 'It is a variable');
-    }
+	public function index()
+	{
+		$this->set('test_value', 'It is a variable');
+	}
 
-    public function some_method()
-    {
-        $this->response->body(25);
+	public function some_method()
+	{
+		$this->response->body(25);
 
-        return $this->response;
-    }
+		return $this->response;
+	}
 }
