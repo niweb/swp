@@ -99,8 +99,11 @@ class PartnersController extends AppController
 				$this->Flash->error('The partner could not be saved. Please, try again.');
 			}
 		}
+		
+		$this->loadModel('Users');
+		$user = $this->Users->get($partner->user_id);
 		$locations = $this->Partners->Locations->find('list', ['limit' => 200]);
-		$this->set(compact('partner', 'locations'));
+		$this->set(compact('partner', 'locations', 'user'));
 		$this->set('_serialize', ['partner']);
 	}
 

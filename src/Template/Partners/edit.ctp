@@ -25,8 +25,8 @@
     <fieldset>
         <legend><?= __('Edit Partner') ?></legend>
         <?php
-            echo $this->Form->input('name');
-            echo $this->Form->input('lastname');
+            echo $this->Form->input('user.first_name', ['value' => $user->first_name]);
+            echo $this->Form->input('user.last_name', ['value' => $user->last_name]);
             echo $this->Form->input('age');
             echo $this->Form->input('sex');
             echo $this->Form->input('degree_course');
