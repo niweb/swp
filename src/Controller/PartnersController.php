@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
 
 /**
  * Partners Controller
@@ -18,10 +19,19 @@ class PartnersController extends AppController
 	 */
 	public function index()
 	{
-		$this->paginate = [
+		/*$this->paginate = [
             'contain' => ['Locations']
 		];
 		$this->set('partners', $this->paginate($this->Partners));
+		$this->set('_serialize', ['partners']);
+		
+		$this->loadModel('Users');
+		$this->set('users', $this->paginate($this->Users));
+		$this->set('_serialize', ['users']);*/
+
+		$this->paginate = ['contain' => ['Locations']];
+		$partners = $this->Partners->find('all')->contain(['Users']);
+		$this->set('partners', $this->paginate($partners));
 		$this->set('_serialize', ['partners']);
 	}
 
@@ -39,6 +49,11 @@ class PartnersController extends AppController
 		]);
 		$this->set('partner', $partner);
 		$this->set('_serialize', ['partner']);
+
+		$this->loadModel('Users');
+		$user = $this->Users->get($partner->user_id);
+		$this->set('user', $user);
+		$this->set('_serialize', ['user']);
 	}
 
 	/**
@@ -108,14 +123,19 @@ class PartnersController extends AppController
 		return $this->redirect(['action' => 'index']);
 	}
 
-	public function register($register_id = null)
+	public function register($register_id = null, $location_id = null)
 	{
 		//TODO partnerprofil wird nur angelegt, wenn user auf submit drueckt!
 		$partner = $this->Partners->newEntity();
+		$userTable = TableRegistry::get('Users');
 		if ($this->request->is('post')) {
 			$partner = $this->Partners->patchEntity($partner, $this->request->data);
 			$partner->user_id = $register_id;
-			if ($this->Partners->save($partner)) {
+			$partner->location_id = $location_id;
+			$user = $userTable->get($register_id);
+			$user->first_name = $this->request->data('name');
+			$user->last_name = $this->request->data('lastname');
+			if ($this->Partners->save($partner) && $userTable->save($user)) {
 				$this->Flash->success('Deine Informationen wurden gespeichert. Danke!');
 				//hier nachher aufs userprofil umleiten!
 				return $this->redirect(['action' => 'index']);

@@ -19,8 +19,8 @@
     <thead>
         <tr>
             <th><?= $this->Paginator->sort('id') ?></th>
-            <th><?= $this->Paginator->sort('name') ?></th>
-            <th><?= $this->Paginator->sort('lastname') ?></th>
+            <th><?= $this->Paginator->sort('first_name') ?></th>
+            <th><?= $this->Paginator->sort('last_name') ?></th>
             <th><?= $this->Paginator->sort('age') ?></th>
             <th><?= $this->Paginator->sort('sex') ?></th>
             <th><?= $this->Paginator->sort('degree_course') ?></th>
@@ -32,8 +32,8 @@
     <?php foreach ($partners as $partner): ?>
         <tr>
             <td><?= $this->Number->format($partner->id) ?></td>
-            <td><?= h($partner->name) ?></td>
-            <td><?= h($partner->lastname) ?></td>
+            <td><?= h($partner->user->first_name) ?></td>
+            <td><?= h($partner->user->last_name) ?></td>
             <td><?= $this->Number->format($partner->age) ?></td>
             <td><?= h($partner->sex) ?></td>
             <td><?= h($partner->degree_course) ?></td>

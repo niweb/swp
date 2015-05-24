@@ -24,6 +24,9 @@ class PartnersTable extends Table
 		$this->table('partners');
 		$this->displayField('name');
 		$this->primaryKey('id');
+		$this->belongsTo('Users', [
+	    'foreignKey' => 'user_id'
+	    ]);
 		$this->belongsTo('Locations', [
             'foreignKey' => 'location_id'
             ]);

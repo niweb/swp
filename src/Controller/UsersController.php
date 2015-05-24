@@ -176,7 +176,7 @@ class UsersController extends AppController
             					Dein Schülerpaten-Team");
 				$this->Flash->success('Es wurde eine Aktivierungsmail an '.$user->email.' gesendet. Bitte folge dem dort enthaltenen Link um deine Registrierung abzuschliessen.\n
             						Gib am besten jetzt gleich ein paar Information an, damit wir dich mit Schülern die deine Hilfe brauchen verbinden können!');
-				return $this->redirect(['controller' => 'Partners', 'action' => 'register', 'register_id' => $user->id]);
+				return $this->redirect(['controller' => 'Partners', 'action' => 'register', $user->id, $this->request->data('location_id')]);
 			}
 			else {
 				$this->Flash->error('Bei deiner Registrierung ist wohl ein Fehler unterlaufen. Bitte probiere es gleich noch einmal.');

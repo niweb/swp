@@ -28,7 +28,7 @@
             echo $this->Form->input('extra_time', ['label' => 'Wie viel Zeit (in Minuten) moechtest du im Monat zusaetzlich für Seminare oder Veranstaltungen gemeinsam mit deiner/m PatenschülerIn investieren?']);
             echo $this->Form->input('spend_time', ['label' => 'Wie lange bist du in nächster Zeit verfügbar? (mindestens 1 Jahr)']);
             
-            echo $this->Form->input('experience', [label' => 'Welche Erfahrungen hast du schon mit Nachhilfe oder Patenschaften sammeln können?']);
+            echo $this->Form->input('experience', ['label' => 'Welche Erfahrungen hast du schon mit Nachhilfe oder Patenschaften sammeln können?']);
             
             echo $this->Form->label('preferred_gender', 'Bevorzugtes Geschlecht deine/r SchülerIn');
             echo $this->Form->select('preferred_gender', ['' => 'egal', 'm' => 'männlich', 'w' => 'weiblich']);
