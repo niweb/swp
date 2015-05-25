@@ -39,8 +39,8 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             <span><?= $this->fetch('title') ?></span>
         </div>
         <div class="header-help">
-            <span><a target="_parent" href="/schuelerpaten/login">Login</a></span>
-            <span><a target="_parent" href="/schuelerpaten/register">Registrieren</a></span>
+            <span><a target="_parent" href="/users/login">Login</a></span>
+            <span><a target="_parent" href="/partners/register">Registrieren</a></span>
         </div>
     </header>
     <div id="container">
