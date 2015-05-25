@@ -128,12 +128,14 @@ class UsersController extends AppController
 	}
 
 	public function login()
-	{
+	{	
+		$this->loadModel('Partners');
 		if ($this->request->is('post')) {
 			$user = $this->Auth->identify();
 			if ($user) {
 				$this->Auth->setUser($user);
-				return $this->redirect($this->Auth->redirectUrl());
+				$partner = $this->Partners->findByUserId($this->Auth->user('id'))->first();
+				return $this->redirect($this->Auth->redirectUrl(['controller' => 'Partners', 'action' => 'view', $partner->id]));
 			}
 			$this->Flash->error('Die E-Mail-Adresse oder das Passwort ist leider nicht richtig.');
 		}
@@ -153,12 +155,20 @@ class UsersController extends AppController
 		//schueler muessen dies ueber students/add tun lassen
 
 		$user = $this->Users->newEntity();
+		$userTypeTable = TableRegistry::get('UserHasTypes');
+		$userType = $userTypeTable->newEntity();
 		if ($this->request->is('post')) {
 			$user = $this->Users->patchEntity($user, $this->request->data);
 			$user->type_id = 1;												//type_id von Typ "Pate" -
 			//unbedingt bei typenaenderung mit aendern!
 			$user->activation = rand(100000000,999999999);					//generate activation-key
+			$this->Flash->success($user->id);
+			$userType->user_id = $user->id;
+			$userType->type_id = 1;
 			if ($this->Users->save($user)) {
+				$userType->user_id = $user->id;
+                        	$userType->type_id = 1;
+				if($userTypeTable->save($userType)){
 				//link ist nur fuer localhost bestimmt. wenn das projekt auf richtigem server lauft, so bitte hier den link aendern
 				$link = 'http://localhost/schuelerpaten/users/activate/'.$user->id.'/'.$user->activation;
 				//TODO Email funktioniert noch nicht
@@ -177,6 +187,9 @@ class UsersController extends AppController
 				$this->Flash->success('Es wurde eine Aktivierungsmail an '.$user->email.' gesendet. Bitte folge dem dort enthaltenen Link um deine Registrierung abzuschliessen.\n
             						Gib am besten jetzt gleich ein paar Information an, damit wir dich mit Schülern die deine Hilfe brauchen verbinden können!');
 				return $this->redirect(['controller' => 'Partners', 'action' => 'register', $user->id, $this->request->data('location_id')]);
+			} else {
+				$this->Flash->error('Bei deiner Registrierung ist wohl ein Fehler unterlaufen. Bitte probiere es gleich noch einmal.');
+			}
 			}
 			else {
 				$this->Flash->error('Bei deiner Registrierung ist wohl ein Fehler unterlaufen. Bitte probiere es gleich noch einmal.');
