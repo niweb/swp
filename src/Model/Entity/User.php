@@ -16,12 +16,12 @@ class User extends Entity
 	 * @var array
 	 */
 	protected $_accessible = [
-        'email' => true,
+        'first_name' => true, 
+	'last_name' => true,
+	'email' => true,
         'password' => true,
         'type_id' => true,
         'location_id' => true,
-        'type' => true,
-        'location' => true,
 	];
 
 	protected function _setPassword($value)

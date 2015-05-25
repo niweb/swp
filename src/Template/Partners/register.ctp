@@ -2,10 +2,16 @@
     <?= $this->Form->create($partner); ?>
     <fieldset>
         <legend><?= __('Werde Pate') ?></legend>
-        <h3>Zur Person</h3>
+        <h3>Anmeldedaten</h3>
+	 <?php
+            echo $this->Form->input('user.email');
+            echo $this->Form->input('user.password');
+            echo $this->Form->input('user.location_id', ['options' => $locations, 'empty' => false]);
+        ?>
+	<h3>Zur Person</h3>
         <?php
-            echo $this->Form->input('name', ['label' => 'Vorname']);
-            echo $this->Form->input('lastname', ['label' => 'Nachname']);
+            echo $this->Form->input('user.first_name', ['label' => 'Vorname']);
+            echo $this->Form->input('user.last_name', ['label' => 'Nachname']);
             echo $this->Form->input('age', ['label' => 'Alter']);
             echo $this->Form->label('sex', 'Geschlecht');
             echo $this->Form->select('sex', ['m' => 'männlich', 'w' => 'weiblich']);

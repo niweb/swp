@@ -57,14 +57,6 @@ class PartnersTable extends Table
 		->allowEmpty('id', 'create');
 
 		$validator
-		->requirePresence('name', 'create')
-		->notEmpty('name');
-
-		$validator
-		->requirePresence('lastname', 'create')
-		->notEmpty('lastname');
-
-		$validator
 		->add('age', 'valid', ['rule' => 'numeric'])
 		->requirePresence('age', 'create')
 		->notEmpty('age');

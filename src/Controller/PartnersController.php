@@ -128,22 +128,33 @@ class PartnersController extends AppController
 		return $this->redirect(['action' => 'index']);
 	}
 
-	public function register($register_id = null, $location_id = null)
+	public function register()
 	{
 		//TODO partnerprofil wird nur angelegt, wenn user auf submit drueckt!
 		$partner = $this->Partners->newEntity();
 		$userTable = TableRegistry::get('Users');
+		$user = $userTable->newEntity();
 		if ($this->request->is('post')) {
-			$partner = $this->Partners->patchEntity($partner, $this->request->data);
-			$partner->user_id = $register_id;
-			$partner->location_id = $location_id;
-			$user = $userTable->get($register_id);
-			$user->first_name = $this->request->data('name');
-			$user->last_name = $this->request->data('lastname');
-			if ($this->Partners->save($partner) && $userTable->save($user)) {
-				$this->Flash->success('Deine Informationen wurden gespeichert. Danke!');
-				//hier nachher aufs userprofil umleiten!
-				return $this->redirect(['action' => 'index']);
+			$user->set(
+		['first_name'=>$this->request->data('user.first_name'),
+		 'last_name'=>$this->request->data('user.last_name'),
+		 'email'=>$this->request->data('user.email'),
+		 'password'=>$this->request->data('user.password'),
+		 'location_id'=>$this->request->data('user.location_id')]);
+			if($userTable->save($user)){
+				$this->Flash->success('User gespeichert');
+				$partner = $this->Partners->patchEntity($partner, $this->request->data, ['associated'=>'Users']);
+				$partner->user_id = $user->id;
+				$partner->location_id = $user->location_id;
+				$this->Flash->success($user->id);
+				if ($this->Partners->save($partner)) {
+					$this->Flash->success('Deine Informationen wurden gespeichert. Danke!');
+					//hier nachher aufs userprofil umleiten!
+					return $this->redirect(['action' => 'view', $partner->id]);
+				} else {
+					$userTable->delete($user);
+					$this->Flash->error('Es ist leider etwas schief gelaufen. Bitte versuche es gleich noch einmal.');
+				}
 			} else {
 				$this->Flash->error('Es ist leider etwas schief gelaufen. Bitte versuche es gleich noch einmal.');
 			}

@@ -155,8 +155,12 @@ class UsersController extends AppController
 		//schueler muessen dies ueber students/add tun lassen
 
 		$user = $this->Users->newEntity();
+
 		$userTypeTable = TableRegistry::get('UserHasTypes');
 		$userType = $userTypeTable->newEntity();
+
+		$partnerTable = TableRegistry::get('Partners');
+		$partner = $partnerTable->newEntity();
 		if ($this->request->is('post')) {
 			$user = $this->Users->patchEntity($user, $this->request->data);
 			$user->type_id = 1;												//type_id von Typ "Pate" -
@@ -169,11 +173,11 @@ class UsersController extends AppController
 				$userType->user_id = $user->id;
                         	$userType->type_id = 1;
 				if($userTypeTable->save($userType)){
-				//link ist nur fuer localhost bestimmt. wenn das projekt auf richtigem server lauft, so bitte hier den link aendern
-				$link = 'http://localhost/schuelerpaten/users/activate/'.$user->id.'/'.$user->activation;
-				//TODO Email funktioniert noch nicht
-				$email = new Email('default');
-				$email	->from(['noreply@schuelerpaten.de' => 'Schülerpaten'])
+					//link ist nur fuer localhost bestimmt. wenn das projekt auf richtigem server lauft, so bitte hier den link aendern
+					$link = 'http://localhost/schuelerpaten/users/activate/'.$user->id.'/'.$user->activation;
+					//TODO Email funktioniert noch nicht
+					$email = new Email('default');
+					$email	->from(['noreply@schuelerpaten.de' => 'Schülerpaten'])
 						->to($user->email)
 						->subject('Aktivierungslink fuer deine Registrierung bei Schülerpaten')
 						->send("Hallo ".$user->first_name."!\n\n
@@ -184,9 +188,9 @@ class UsersController extends AppController
             					Nach der Aktivierung kannst du dich auf unserem Portal mit deiner Email-Adresse und dem von dir gewählten Passwort einloggen um deine Informationen ueber dich einzusehen oder zu ändern, deinen Vermittlungsstatus ansehen oder deine Registrierung rückgaengig machen.\n\n
             					Mit freundlichen Grüßen,\n
             					Dein Schülerpaten-Team");
-				$this->Flash->success('Es wurde eine Aktivierungsmail an '.$user->email.' gesendet. Bitte folge dem dort enthaltenen Link um deine Registrierung abzuschliessen.\n
+					$this->Flash->success('Es wurde eine Aktivierungsmail an '.$user->email.' gesendet. Bitte folge dem dort enthaltenen Link um deine Registrierung abzuschliessen.\n
             						Gib am besten jetzt gleich ein paar Information an, damit wir dich mit Schülern die deine Hilfe brauchen verbinden können!');
-				return $this->redirect(['controller' => 'Partners', 'action' => 'register', $user->id, $this->request->data('location_id')]);
+					return $this->redirect(['controller' => 'Partners', 'action' => 'register', $user->id, $this->request->data('location_id')]);
 			} else {
 				$this->Flash->error('Bei deiner Registrierung ist wohl ein Fehler unterlaufen. Bitte probiere es gleich noch einmal.');
 			}
@@ -196,8 +200,8 @@ class UsersController extends AppController
 			}
 		}
 		$locations = $this->Users->Locations->find('list', ['limit' => 10]);
-		$this->set(compact('user', 'locations'));
-		$this->set('_serialize', ['user']);
+		$this->set(compact('user', 'locations', 'partner'));
+		$this->set('_serialize', ['user', 'partner']);
 	}
 
 	public function activate($id = null, $key = null)
