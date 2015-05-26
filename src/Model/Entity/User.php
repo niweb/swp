@@ -17,8 +17,8 @@ class User extends Entity
 	 */
 	protected $_accessible = [
         'first_name' => true, 
-	'last_name' => true,
-	'email' => true,
+		'last_name' => true,
+		'email' => true,
         'password' => true,
         'type_id' => true,
         'location_id' => true,

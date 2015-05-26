@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
+use Cake\Network\Email\Email;
 
 /**
  * Partners Controller
@@ -128,12 +129,14 @@ class PartnersController extends AppController
 		return $this->redirect(['action' => 'index']);
 	}
 
-	public function register()
+public function register()
 	{
 		//TODO partnerprofil wird nur angelegt, wenn user auf submit drueckt!
 		$partner = $this->Partners->newEntity();
 		$userTable = TableRegistry::get('Users');
 		$user = $userTable->newEntity();
+		$userTypeTable = TableRegistry::get('UserHasTypes');
+		$userType = $userTypeTable->newEntity();
 		if ($this->request->is('post')) {
 			$user->set(
 		['first_name'=>$this->request->data('user.first_name'),
@@ -141,13 +144,28 @@ class PartnersController extends AppController
 		 'email'=>$this->request->data('user.email'),
 		 'password'=>$this->request->data('user.password'),
 		 'location_id'=>$this->request->data('user.location_id')]);
+			$user->activation = rand(100000000,999999999);
 			if($userTable->save($user)){
 				$this->Flash->success('User gespeichert');
 				$partner = $this->Partners->patchEntity($partner, $this->request->data, ['associated'=>'Users']);
 				$partner->user_id = $user->id;
 				$partner->location_id = $user->location_id;
-				$this->Flash->success($user->id);
-				if ($this->Partners->save($partner)) {
+				$userType->user_id = $user->id;
+				$userType->type_id = 1;
+				if ($this->Partners->save($partner) && $userTypeTable->save($userType)) {
+					$link = 'http://localhost/swp/users/activate/'.$user->id.'/'.$user->activation;
+					$email = new Email('default');
+					$email	->from(['noreply@schuelerpaten.de' => 'Schülerpaten'])
+					->to($user->email)
+					->subject('Aktivierungslink fuer deine Registrierung bei Schülerpaten')
+					->send("Hallo ".$user->first_name."!\n\n
+            					Vielen Dank für deine Registrierung bei Schülerpaten!
+            					Um deine Registrierung bei Schülerpaten abzuschliessen klicke bitte auf den folgenden Aktivierungslink:\n
+            					<a href=\"".$link."\">".$link."</a>\n
+            					Sollte dieser nicht als Link erscheinen, so kannst du ihn auch in die Adresszeile deines Browsers kopieren.\n
+            					Nach der Aktivierung kannst du dich auf unserem Portal mit deiner Email-Adresse und dem von dir gewählten Passwort einloggen um deine Informationen ueber dich einzusehen oder zu ändern, deinen Vermittlungsstatus ansehen oder deine Registrierung rückgaengig machen.\n\n
+            					Mit freundlichen Grüßen,\n
+            					Dein Schülerpaten-Team");
 					$this->Flash->success('Deine Informationen wurden gespeichert. Danke!');
 					//hier nachher aufs userprofil umleiten!
 					return $this->redirect(['action' => 'view', $partner->id]);
