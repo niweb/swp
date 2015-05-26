@@ -2,8 +2,6 @@
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
         <li><?= $this->Html->link(__('New Partner'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Locations'), ['controller' => 'Locations', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Location'), ['controller' => 'Locations', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Preferred Classranges'), ['controller' => 'PreferredClassranges', 'action' => 'index']) ?> </li>
@@ -21,12 +19,12 @@
     <thead>
         <tr>
             <th><?= $this->Paginator->sort('id') ?></th>
+            <th><?= $this->Paginator->sort('first_name') ?></th>
+            <th><?= $this->Paginator->sort('last_name') ?></th>
             <th><?= $this->Paginator->sort('age') ?></th>
             <th><?= $this->Paginator->sort('sex') ?></th>
             <th><?= $this->Paginator->sort('degree_course') ?></th>
             <th><?= $this->Paginator->sort('job') ?></th>
-            <th><?= $this->Paginator->sort('street') ?></th>
-            <th><?= $this->Paginator->sort('house_number') ?></th>
             <th class="actions"><?= __('Actions') ?></th>
         </tr>
     </thead>
@@ -34,12 +32,12 @@
     <?php foreach ($partners as $partner): ?>
         <tr>
             <td><?= $this->Number->format($partner->id) ?></td>
+            <td><?= h($partner->user->first_name) ?></td>
+            <td><?= h($partner->user->last_name) ?></td>
             <td><?= $this->Number->format($partner->age) ?></td>
             <td><?= h($partner->sex) ?></td>
             <td><?= h($partner->degree_course) ?></td>
             <td><?= h($partner->job) ?></td>
-            <td><?= h($partner->street) ?></td>
-            <td><?= h($partner->house_number) ?></td>
             <td class="actions">
                 <?= $this->Html->link(__('View'), ['action' => 'view', $partner->id]) ?>
                 <?= $this->Html->link(__('Edit'), ['action' => 'edit', $partner->id]) ?>

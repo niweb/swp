@@ -8,8 +8,6 @@
             )
         ?></li>
         <li><?= $this->Html->link(__('List Partners'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Locations'), ['controller' => 'Locations', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Location'), ['controller' => 'Locations', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Preferred Classranges'), ['controller' => 'PreferredClassranges', 'action' => 'index']) ?> </li>
@@ -27,6 +25,8 @@
     <fieldset>
         <legend><?= __('Edit Partner') ?></legend>
         <?php
+            echo $this->Form->input('user.first_name', ['value' => $user->first_name]);
+            echo $this->Form->input('user.last_name', ['value' => $user->last_name]);
             echo $this->Form->input('age');
             echo $this->Form->input('sex');
             echo $this->Form->input('degree_course');
@@ -48,8 +48,6 @@
             echo $this->Form->input('additional_informations');
             echo $this->Form->input('reason_for_schuelerpaten');
             echo $this->Form->input('location_id', ['options' => $locations, 'empty' => true]);
-            echo $this->Form->input('user_id', ['options' => $users, 'empty' => true]);
-            echo $this->Form->input('status_id');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

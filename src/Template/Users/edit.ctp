@@ -19,12 +19,10 @@
     <fieldset>
         <legend><?= __('Edit User') ?></legend>
         <?php
-            echo $this->Form->input('first_name');
-            echo $this->Form->input('last_name');
             echo $this->Form->input('email');
             echo $this->Form->input('password');
+            echo $this->Form->input('type_id', ['options' => $types, 'empty' => true]);
             echo $this->Form->input('location_id', ['options' => $locations, 'empty' => true]);
-            echo $this->Form->input('activation');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

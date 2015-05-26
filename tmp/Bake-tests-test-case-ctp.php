@@ -19,27 +19,29 @@ use Cake\Utility\Inflector;
 $isController = strtolower($type) === 'controller';
 
 if ($isController) {
-    $uses[] = 'Cake\TestSuite\IntegrationTestCase';
+	$uses[] = 'Cake\TestSuite\IntegrationTestCase';
 } else {
-    $uses[] = 'Cake\TestSuite\TestCase';
+	$uses[] = 'Cake\TestSuite\TestCase';
 }
 sort($uses);
 ?>
-<CakePHPBakeOpenTagphp
-namespace <?= $baseNamespace; ?>\Test\TestCase\<?= $subNamespace ?>;
+<CakePHPBakeOpenTagphp namespace
+<?= $baseNamespace; ?>\Test\TestCase\<?= $subNamespace ?>;
 
 <?php foreach ($uses as $dependency): ?>
-use <?= $dependency; ?>;
-<?php endforeach; ?>
+	use
+	<?= $dependency; ?>;
+	<?php endforeach; ?>
 
 /**
- * <?= $fullClassName ?> Test Case
+ * <?= $fullClassName ?>
+	Test Case
  */
-<?php if ($isController): ?>
-class <?= $className ?>Test extends IntegrationTestCase
+ <?php if ($isController): ?> class <?= $className ?> Test
+	extends IntegrationTestCase
 {
-<?php else: ?>
-class <?= $className ?>Test extends TestCase
+<?php else: ?> class <?= $className ?>
+	Test extends TestCase
 {
 <?php endif; ?>
 <?php if (!empty($fixtures)): ?>
@@ -47,66 +49,49 @@ class <?= $className ?>Test extends TestCase
     /**
      * Fixtures
      *
-     * @var array
+     * @var
+	array
      */
-    public $fixtures = [<?= $this->Bake->stringifyList(array_values($fixtures)) ?>];
-<?php endif; ?>
-<?php if (!empty($construction)): ?>
+    public $fixtures=[
+    <?= $this->Bake->stringifyList(array_values($fixtures)) ?>];
+    <?php endif; ?>
+    <?php if (!empty($construction)): ?>
 
     /**
-     * setUp method
+     * setUp
+	method
      *
      * @return void
      */
-    public function setUp()
+    public function
+	setUp()
     {
         parent::setUp();
-<?php if ($preConstruct): ?>
-        <?= $preConstruct ?>
-
-<?php endif; ?>
+    <?php if ($preConstruct): ?>
+    <?= $preConstruct ?> <?php endif; ?>
         $this-><?= $subject . ' = ' . $construction ?>
 
-<?php if ($postConstruct): ?>
-        <?= $postConstruct ?>
+    <?php if ($postConstruct): ?>
+    <?= $postConstruct ?>
 
-<?php endif; ?>
-    }
+    <?php endif; ?>
+} /** * tearDown method * * @return void */ public function tearDown() {
+unset($this->
+    <?= $subject ?>
+); parent::tearDown(); }
+    <?php endif; ?>
+    <?php foreach ($methods as $method): ?>
 
-    /**
-     * tearDown method
-     *
-     * @return void
-     */
-    public function tearDown()
-    {
-        unset($this-><?= $subject ?>);
+/** * Test
+    <?= $method ?>
+method * * @return void */ public function test
+    <?= Inflector::camelize($method) ?>
+() { $this->markTestIncomplete('Not implemented yet.'); }
+    <?php endforeach; ?>
+    <?php if (empty($methods)): ?>
 
-        parent::tearDown();
-    }
-<?php endif; ?>
-<?php foreach ($methods as $method): ?>
-
-    /**
-     * Test <?= $method ?> method
-     *
-     * @return void
-     */
-    public function test<?= Inflector::camelize($method) ?>()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-<?php endforeach; ?>
-<?php if (empty($methods)): ?>
-
-    /**
-     * Test initial setup
-     *
-     * @return void
-     */
-    public function testInitialization()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-<?php endif; ?>
+/** * Test initial setup * * @return void */ public function
+testInitialization() { $this->markTestIncomplete('Not implemented
+yet.'); }
+    <?php endif; ?>
 }
