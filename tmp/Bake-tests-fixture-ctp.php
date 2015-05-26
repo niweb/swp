@@ -17,60 +17,53 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 ?>
-<CakePHPBakeOpenTagphp namespace <?= $namespace ?>\Test\Fixture;
+<CakePHPBakeOpenTagphp
+namespace <?= $namespace ?>\Test\Fixture;
 
-use
-	Cake\TestSuite\Fixture\TestFixture;
+use Cake\TestSuite\Fixture\TestFixture;
 
 /**
- * <?= $name ?>
-	Fixture
+ * <?= $name ?>Fixture
  *
  */
-class <?= $name ?> Fixture extends
-	TestFixture
+class <?= $name ?>Fixture extends TestFixture
 {
 <?php if ($table): ?>
 
     /**
-     * Table
-	name
+     * Table name
      *
-     * @var
-	string
+     * @var string
      */
-    public $table='<?= $table ?>' ;
+    public $table = '<?= $table ?>';
 <?php endif; ?>
 <?php if ($import): ?>
 
     /**
      * Import
      *
-     * @var
-	array
+     * @var array
      */
-    public $import=<?= $import ?> ;
+    public $import = <?= $import ?>;
 <?php endif; ?>
 <?php if ($schema): ?>
 
     /**
      * Fields
      *
-     * @var
-	array
+     * @var array
      */
     // @codingStandardsIgnoreStart
-	public $fields=<?= $schema ?> ;
+    public $fields = <?= $schema ?>;
     // @codingStandardsIgnoreEnd
-    <?php endif; ?>
-    <?php if ($records): ?>
+<?php endif; ?>
+<?php if ($records): ?>
 
     /**
      * Records
      *
-     * @var
-	array
+     * @var array
      */
-    public $records=<?= $records ?>;
-    <?php endif; ?>
+    public $records = <?= $records ?>;
+<?php endif; ?>
 }

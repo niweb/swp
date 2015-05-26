@@ -10,16 +10,14 @@ use Cake\TestSuite\Fixture\TestFixture;
 class PartnersFixture extends TestFixture
 {
 
-	/**
-	 * Fields
-	 *
-	 * @var array
-	 */
-	// @codingStandardsIgnoreStart
-	public $fields = [
+    /**
+     * Fields
+     *
+     * @var array
+     */
+    // @codingStandardsIgnoreStart
+    public $fields = [
         'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
-        'name' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
-        'lastname' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
         'age' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'sex' => ['type' => 'string', 'length' => 30, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
         'degree_course' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
@@ -41,26 +39,27 @@ class PartnersFixture extends TestFixture
         'additional_informations' => ['type' => 'string', 'length' => 510, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
         'reason_for_schuelerpaten' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
         'location_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'user_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'status_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
-	],
+            'user_id' => ['type' => 'unique', 'columns' => ['user_id'], 'length' => []],
+        ],
         '_options' => [
             'engine' => 'InnoDB',
             'collation' => 'latin1_swedish_ci'
-            ],
-            ];
-            // @codingStandardsIgnoreEnd
+        ],
+    ];
+    // @codingStandardsIgnoreEnd
 
-            /**
-             * Records
-             *
-             * @var array
-             */
-            public $records = [
-            [
+    /**
+     * Records
+     *
+     * @var array
+     */
+    public $records = [
+        [
             'id' => 1,
-            'name' => 'Lorem ipsum dolor sit amet',
-            'lastname' => 'Lorem ipsum dolor sit amet',
             'age' => 1,
             'sex' => 'Lorem ipsum dolor sit amet',
             'degree_course' => 'Lorem ipsum dolor sit amet',
@@ -81,7 +80,9 @@ class PartnersFixture extends TestFixture
             'reason_for_decision' => 'Lorem ipsum dolor sit amet',
             'additional_informations' => 'Lorem ipsum dolor sit amet',
             'reason_for_schuelerpaten' => 'Lorem ipsum dolor sit amet',
-            'location_id' => 1
-            ],
-            ];
+            'location_id' => 1,
+            'user_id' => 1,
+            'status_id' => 1
+        ],
+    ];
 }

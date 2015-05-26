@@ -5,6 +5,8 @@
         <li><?= $this->Form->postLink(__('Delete Partner'), ['action' => 'delete', $partner->id], ['confirm' => __('Are you sure you want to delete # {0}?', $partner->id)]) ?> </li>
         <li><?= $this->Html->link(__('List Partners'), ['action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Partner'), ['action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Locations'), ['controller' => 'Locations', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Location'), ['controller' => 'Locations', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Preferred Classranges'), ['controller' => 'PreferredClassranges', 'action' => 'index']) ?> </li>
@@ -18,13 +20,13 @@
     </ul>
 </div>
 <div class="partners view large-10 medium-9 columns">
-    <h2><?= h($partner->name) ?></h2>
+    <h2><?= h($user->first_name) ?></h2>
     <div class="row">
         <div class="large-5 columns strings">
-            <h6 class="subheader"><?= __('Name') ?></h6>
-            <p><?= h($partner->name) ?></p>
+        <h6 class="subheader"><?= __('Name') ?></h6>
+            <p><?= h($user->first_name) ?></p>
             <h6 class="subheader"><?= __('Lastname') ?></h6>
-            <p><?= h($partner->lastname) ?></p>
+            <p><?= h($user->last_name) ?></p>
             <h6 class="subheader"><?= __('Sex') ?></h6>
             <p><?= h($partner->sex) ?></p>
             <h6 class="subheader"><?= __('Degree Course') ?></h6>
@@ -62,7 +64,7 @@
             <h6 class="subheader"><?= __('Location') ?></h6>
             <p><?= $partner->has('location') ? $this->Html->link($partner->location->name, ['controller' => 'Locations', 'action' => 'view', $partner->location->id]) : '' ?></p>
             <h6 class="subheader"><?= __('User') ?></h6>
-            <p><?= $partner->has('user') ? $this->Html->link($partner->user->email, ['controller' => 'Users', 'action' => 'view', $partner->user->id]) : '' ?></p>
+            <p><?= $partner->has('user') ? $this->Html->link($partner->user->id, ['controller' => 'Users', 'action' => 'view', $partner->user->id]) : '' ?></p>
         </div>
         <div class="large-2 columns numbers end">
             <h6 class="subheader"><?= __('Id') ?></h6>
@@ -73,6 +75,8 @@
             <p><?= $this->Number->format($partner->teach_time) ?></p>
             <h6 class="subheader"><?= __('Extra Time') ?></h6>
             <p><?= $this->Number->format($partner->extra_time) ?></p>
+            <h6 class="subheader"><?= __('Status Id') ?></h6>
+            <p><?= $this->Number->format($partner->status_id) ?></p>
         </div>
     </div>
 </div>

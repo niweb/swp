@@ -9,6 +9,8 @@
     <fieldset>
         <legend><?= __('Werde Pate') ?></legend>
         <?php
+        	echo $this->Form->input('first_name', ['label' => 'Vorname']);
+        	echo $this->Form->input('last_name', ['label' => 'Nachname']);
             echo $this->Form->input('email');
             echo $this->Form->input('password');
             echo $this->Form->input('location_id', ['options' => $locations, 'empty' => false]);

@@ -13,62 +13,76 @@ use Cake\Validation\Validator;
 class UsersTable extends Table
 {
 
-	/**
-	 * Initialize method
-	 *
-	 * @param array $config The configuration for the Table.
-	 * @return void
-	 */
-	public function initialize(array $config)
-	{
-		$this->table('users');
-		$this->displayField('id');
-		$this->primaryKey('id');
-		$this->addBehavior('Timestamp');
-		$this->belongsTo('Types', [
-            'foreignKey' => 'type_id'
-            ]);
-            $this->belongsTo('Locations', [
+    /**
+     * Initialize method
+     *
+     * @param array $config The configuration for the Table.
+     * @return void
+     */
+    public function initialize(array $config)
+    {
+        $this->table('users');
+        $this->displayField('id');
+        $this->primaryKey('id');
+        $this->addBehavior('Timestamp');
+        $this->belongsTo('Locations', [
             'foreignKey' => 'location_id'
-            ]);
-	}
+        ]);
+        $this->hasMany('Partners', [
+            'foreignKey' => 'user_id'
+        ]);
+        $this->hasMany('UserHasTypes', [
+            'foreignKey' => 'user_id'
+        ]);
+    }
 
-	/**
-	 * Default validation rules.
-	 *
-	 * @param \Cake\Validation\Validator $validator Validator instance.
-	 * @return \Cake\Validation\Validator
-	 */
-	public function validationDefault(Validator $validator)
-	{
-		$validator
-		->add('id', 'valid', ['rule' => 'numeric'])
-		->allowEmpty('id', 'create');
+    /**
+     * Default validation rules.
+     *
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
+     */
+    public function validationDefault(Validator $validator)
+    {
+        $validator
+            ->add('id', 'valid', ['rule' => 'numeric'])
+            ->allowEmpty('id', 'create');
+            
+        $validator
+            ->requirePresence('first_name', 'create')
+            ->notEmpty('first_name');
+            
+        $validator
+            ->requirePresence('last_name', 'create')
+            ->notEmpty('last_name');
+            
+        $validator
+            ->add('email', 'valid', ['rule' => 'email'])
+            ->requirePresence('email', 'create')
+            ->notEmpty('email');
+            
+        $validator
+            ->requirePresence('password', 'create')
+            ->notEmpty('password');
+            
+        $validator
+            ->add('activation', 'valid', ['rule' => 'numeric'])
+            ->allowEmpty('activation');
 
-		$validator
-		->add('email', 'valid', ['rule' => 'email'])
-		->requirePresence('email', 'create')
-		->notEmpty('email');
+        return $validator;
+    }
 
-		$validator
-		->requirePresence('password', 'create')
-		->notEmpty('password');
-
-		return $validator;
-	}
-
-	/**
-	 * Returns a rules checker object that will be used for validating
-	 * application integrity.
-	 *
-	 * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-	 * @return \Cake\ORM\RulesChecker
-	 */
-	public function buildRules(RulesChecker $rules)
-	{
-		$rules->add($rules->isUnique(['email']));
-		$rules->add($rules->existsIn(['type_id'], 'Types'));
-		$rules->add($rules->existsIn(['location_id'], 'Locations'));
-		return $rules;
-	}
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->isUnique(['email']));
+        $rules->add($rules->existsIn(['location_id'], 'Locations'));
+        return $rules;
+    }
 }

@@ -13,9 +13,11 @@
     <thead>
         <tr>
             <th><?= $this->Paginator->sort('id') ?></th>
+            <th><?= $this->Paginator->sort('first_name') ?></th>
+            <th><?= $this->Paginator->sort('last_name') ?></th>
             <th><?= $this->Paginator->sort('email') ?></th>
+            <th><?= $this->Paginator->sort('password') ?></th>
             <th><?= $this->Paginator->sort('created') ?></th>
-            <th><?= $this->Paginator->sort('type_id') ?></th>
             <th><?= $this->Paginator->sort('location_id') ?></th>
             <th class="actions"><?= __('Actions') ?></th>
         </tr>
@@ -24,11 +26,11 @@
     <?php foreach ($users as $user): ?>
         <tr>
             <td><?= $this->Number->format($user->id) ?></td>
+            <td><?= h($user->first_name) ?></td>
+            <td><?= h($user->last_name) ?></td>
             <td><?= h($user->email) ?></td>
+            <td><?= h($user->password) ?></td>
             <td><?= h($user->created) ?></td>
-            <td>
-                <?= $user->has('type') ? $this->Html->link($user->type->name, ['controller' => 'Types', 'action' => 'view', $user->type->id]) : '' ?>
-            </td>
             <td>
                 <?= $user->has('location') ? $this->Html->link($user->location->name, ['controller' => 'Locations', 'action' => 'view', $user->location->id]) : '' ?>
             </td>
