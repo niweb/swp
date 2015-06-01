@@ -15,7 +15,7 @@ class TandemsController extends AppController
 		if(in_array($this->request->action, ['index', 'view', 'add', 'edit', 'delete'])){
 			$this->loadModel('UserHasTypes');
 			$type = $this->UserHasTypes->findByUserId($user['id'])->first()['type_id'];
-			if($type > '1' && $type < '4'){
+			if($type > '1'){
 				return true;
 			}
 		}
@@ -29,11 +29,11 @@ class TandemsController extends AppController
 	 */
 	public function index()
 	{
-		$this->paginate = [
-            'contain' => ['Partners', 'Students']
-		];
-		$this->set('tandems', $this->paginate($this->Tandems));
-		$this->set('_serialize', ['tandems']);
+            $this->paginate = [
+                'contain' => ['Partners', 'Students']
+            ];
+            $this->set('tandems', $this->paginate($this->Tandems));
+            $this->set('_serialize', ['tandems']);
 	}
 
 	/**
@@ -45,11 +45,11 @@ class TandemsController extends AppController
 	 */
 	public function view($id = null)
 	{
-		$tandem = $this->Tandems->get($id, [
-            'contain' => ['Partners', 'Students']
-		]);
-		$this->set('tandem', $tandem);
-		$this->set('_serialize', ['tandem']);
+            $tandem = $this->Tandems->get($id, [
+                'contain' => ['Partners', 'Students']
+            ]);
+            $this->set('tandem', $tandem);
+            $this->set('_serialize', ['tandem']);
 	}
 
 	/**
@@ -121,4 +121,5 @@ class TandemsController extends AppController
 		}
 		return $this->redirect(['action' => 'index']);
 	}
+        
 }

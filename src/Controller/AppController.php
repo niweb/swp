@@ -79,10 +79,7 @@ class AppController extends Controller
 			} else if($authUserType == '4'){
 				$locationAdmin = $authUser;
 				$this->set('locationAdmin', $locationAdmin);
-			} else if($authUserType == '3'){
-				$broker = $authUser;
-				$this->set('broker', $broker);
-			} else if($authUserType == '2') {
+			} else if($authUserType == '3' || $authUserType == '2') {
 				$matchmaker = $authUser;
 				$this->set('matchmaker', $matchmaker);
 			} else {
@@ -95,7 +92,7 @@ class AppController extends Controller
 	}
 
 	public function beforeFilter(Event $event){
-		
+            
 	}
 	
 	public function isAuthorized($user){
