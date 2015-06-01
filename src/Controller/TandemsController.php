@@ -11,6 +11,17 @@ use App\Controller\AppController;
 class TandemsController extends AppController
 {
 
+	public function isAuthorized($user){
+		if(in_array($this->request->action, ['index', 'view', 'add', 'edit', 'delete'])){
+			$this->loadModel('UserHasTypes');
+			$type = $this->UserHasTypes->findByUserId($user['id'])->first()['type_id'];
+			if($type > '1' && $type < '4'){
+				return true;
+			}
+		}
+		return parent::isAuthorized($user);
+	}
+
 	/**
 	 * Index method
 	 *
@@ -48,6 +59,7 @@ class TandemsController extends AppController
 	 */
 	public function add()
 	{
+		$this->loadModel('Users');
 		$tandem = $this->Tandems->newEntity();
 		if ($this->request->is('post')) {
 			$tandem = $this->Tandems->patchEntity($tandem, $this->request->data);
@@ -58,8 +70,8 @@ class TandemsController extends AppController
 				$this->Flash->error('The tandem could not be saved. Please, try again.');
 			}
 		}
-		$partners = $this->Tandems->Partners->find('list', ['limit' => 200]);
-		$students = $this->Tandems->Students->find('list', ['limit' => 200]);
+		$partners = $this->Tandems->Partners->find('list', ['limit' => 200, 'keyField' => 'id', 'valueField' => 'id']);
+		$students = $this->Tandems->Students->find('list', ['limit' => 200, 'keyField' => 'id', 'valueField' => 'first_name || last_name']);
 		$this->set(compact('tandem', 'partners', 'students'));
 		$this->set('_serialize', ['tandem']);
 	}

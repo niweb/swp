@@ -1,17 +1,17 @@
 <div class="actions columns large-2 medium-3">
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
-        <li><?= $this->Html->link(__('New Partner'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Locations'), ['controller' => 'Locations', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Location'), ['controller' => 'Locations', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Preferred Classranges'), ['controller' => 'PreferredClassranges', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Preferred Classrange'), ['controller' => 'PreferredClassranges', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Preferred Schooltypes'), ['controller' => 'PreferredSchooltypes', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Preferred Schooltype'), ['controller' => 'PreferredSchooltypes', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Preferred Subjects'), ['controller' => 'PreferredSubjects', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Preferred Subject'), ['controller' => 'PreferredSubjects', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Tandems'), ['controller' => 'Tandems', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Tandem'), ['controller' => 'Tandems', 'action' => 'add']) ?> </li>
+		<?php if(isset($locationAdmin)) : ?>
+			<li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
+			<li><?= $this->Html->link(__('New Matchmaker'), ['controller' => 'Users', 'action' => 'add']) ?></li>
+		<?php elseif(isset($matchmaker)) : ?>
+			<li><?= $this->Html->link(__('List Students'), ['controller' => 'Students', 'action' => 'index']) ?></li>
+			<li><?= $this->Html->link(__('New Student'), ['controller' => 'Students', 'action' => 'add']) ?></li>
+			<li><?= $this->Html->link(__('List Partners'), ['controller' => 'Partners', 'action' => 'index']) ?></li>
+			<li><?= $this->Html->link(__('New Partner'), ['controller' => 'Partners', 'action' => 'add']) ?></li>
+			<li><?= $this->Html->link(__('List Tandems'), ['controller' => 'Tandems', 'action' => 'index']) ?></li>
+			<li><?= $this->Html->link(__('New Tandem'), ['controller' => 'Tandems', 'action' => 'add']) ?></li>
+		<?php endif; ?>
     </ul>
 </div>
 <div class="partners index large-10 medium-9 columns">

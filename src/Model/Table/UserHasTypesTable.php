@@ -29,7 +29,8 @@ class UsersHasTypesTable extends Table
 				'foreignKey' => 'type_id'
 		]);
 		$this->belongsTo('Users', [
-				'foreignKey' => 'user_id'
+				'foreignKey' => 'user_id',
+				'joinType' => 'INNER',
 		]);
 	}
 

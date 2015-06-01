@@ -25,9 +25,6 @@ class UsersTable extends Table
 		$this->displayField('id');
 		$this->primaryKey('id');
 		$this->addBehavior('Timestamp');
-		$this->belongsTo('Types', [
-            'foreignKey' => 'type_id'
-            ]);
             $this->belongsTo('Locations', [
             'foreignKey' => 'location_id'
             ]);
@@ -46,13 +43,22 @@ class UsersTable extends Table
 		->allowEmpty('id', 'create');
 
 		$validator
-		->add('email', 'valid', ['rule' => 'email'])
+		->add('email', 'valid', ['rule' => 'email', 'message' => 'Bitte gib eine gültige Email-Adresse an'])
+                ->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table', 'message' => 'Die Email-Adresse gibt es bereits'])
 		->requirePresence('email', 'create')
 		->notEmpty('email');
 
 		$validator
 		->requirePresence('password', 'create')
 		->notEmpty('password');
+                
+                $validator
+                ->requirePresence('first_name', 'create')
+                ->notEmpty('first_name');
+                
+                $validator
+                ->requirePresence('last_name', 'create')
+                ->notEmpty('last_name');
 
 		return $validator;
 	}
@@ -67,7 +73,7 @@ class UsersTable extends Table
 	public function buildRules(RulesChecker $rules)
 	{
 		$rules->add($rules->isUnique(['email']));
-		$rules->add($rules->existsIn(['type_id'], 'Types'));
+		//$rules->add($rules->existsIn(['type_id'], 'Types'));
 		$rules->add($rules->existsIn(['location_id'], 'Locations'));
 		return $rules;
 	}

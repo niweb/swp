@@ -20,7 +20,6 @@
         <legend><?= __('Edit User') ?></legend>
         <?php
             echo $this->Form->input('email');
-            echo $this->Form->input('password');
             echo $this->Form->input('type_id', ['options' => $types, 'empty' => true]);
             echo $this->Form->input('location_id', ['options' => $locations, 'empty' => true]);
         ?>

@@ -15,8 +15,6 @@ class Partner extends Entity
 	 * @var array
 	 */
 	protected $_accessible = [
-        'name' => true,
-        'lastname' => true,
         'age' => true,
         'sex' => true,
         'degree_course' => true,

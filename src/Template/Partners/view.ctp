@@ -1,32 +1,38 @@
+<head><title>OpenLayers Marker Popups</title>
+  <style>
+    #mapdiv {height: 350px; width: 100%;}
+  </style>
+
+</head>
 <div class="actions columns large-2 medium-3">
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
         <li><?= $this->Html->link(__('Edit Partner'), ['action' => 'edit', $partner->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Partner'), ['action' => 'delete', $partner->id], ['confirm' => __('Are you sure you want to delete # {0}?', $partner->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Partners'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Partner'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Locations'), ['controller' => 'Locations', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Location'), ['controller' => 'Locations', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Preferred Classranges'), ['controller' => 'PreferredClassranges', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Preferred Classrange'), ['controller' => 'PreferredClassranges', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Preferred Schooltypes'), ['controller' => 'PreferredSchooltypes', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Preferred Schooltype'), ['controller' => 'PreferredSchooltypes', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Preferred Subjects'), ['controller' => 'PreferredSubjects', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Preferred Subject'), ['controller' => 'PreferredSubjects', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Tandems'), ['controller' => 'Tandems', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Tandem'), ['controller' => 'Tandems', 'action' => 'add']) ?> </li>
+		<?php if(isset($matchmaker)) : ?>
+			<li><?= $this->Form->postLink(__('Delete Partner'), ['action' => 'delete', $partner->id], ['confirm' => __('Are you sure you want to delete # {0}?', $partner->id)]) ?> </li>
+			<li><?= $this->Html->link(__('List Students'), ['controller' => 'Students', 'action' => 'index']) ?></li>
+			<li><?= $this->Html->link(__('New Student'), ['controller' => 'Students', 'action' => 'add']) ?></li>
+			<li><?= $this->Html->link(__('List Partners'), ['controller' => 'Partners', 'action' => 'index']) ?></li>
+			<li><?= $this->Html->link(__('New Partner'), ['controller' => 'Partners', 'action' => 'add']) ?></li>
+			<li><?= $this->Html->link(__('List Tandems'), ['controller' => 'Tandems', 'action' => 'index']) ?></li>
+			<li><?= $this->Html->link(__('New Tandem'), ['controller' => 'Tandems', 'action' => 'add']) ?></li>
+		<?php endif; ?>
     </ul>
 </div>
 <div class="partners view large-10 medium-9 columns">
     <h2><?= h($user->first_name) ?></h2>
     <div class="row">
         <div class="large-5 columns strings">
-            <h6 class="subheader"><?= __('Name') ?></h6>
+            <h6 class="subheader"><?= __('Id') ?></h6>
+            <p><?= $this->Number->format($partner->id) ?></p>
+            <h6 class="subheader"><?= __('First Name') ?></h6>
             <p><?= h($user->first_name) ?></p>
-            <h6 class="subheader"><?= __('Lastname') ?></h6>
+            <h6 class="subheader"><?= __('Last Name') ?></h6>
             <p><?= h($user->last_name) ?></p>
             <h6 class="subheader"><?= __('Sex') ?></h6>
             <p><?= h($partner->sex) ?></p>
+            <h6 class="subheader"><?= __('Age') ?></h6>
+            <p><?= $this->Number->format($partner->age) ?></p>
             <h6 class="subheader"><?= __('Degree Course') ?></h6>
             <p><?= h($partner->degree_course) ?></p>
             <h6 class="subheader"><?= __('Job') ?></h6>
@@ -45,37 +51,32 @@
             <p><?= h($partner->telephone) ?></p>
             <h6 class="subheader"><?= __('Mobile') ?></h6>
             <p><?= h($partner->mobile) ?></p>
-            <h6 class="subheader"><?= __('Spend Time') ?></h6>
+            <h6 class="subheader"><?= __('How much time (in minutes) would you like to spend teaching? (at least 90)') ?></h6>
+            <p><?= $this->Number->format($partner->teach_time) ?></p>
+            <h6 class="subheader"><?= __('How much time (in minutes) would you like to spend additionally per month for workshops or events with your student?') ?></h6>
+            <p><?= $this->Number->format($partner->extra_time) ?></p>
+            <h6 class="subheader"><?= __('For how long will you be available in the near future? (at least one year)') ?></h6>
             <p><?= h($partner->spend_time) ?></p>
-            <h6 class="subheader"><?= __('Experience') ?></h6>
+            <h6 class="subheader"><?= __('What experiences have you already made with tutoring or sponsorships?') ?></h6>
             <p><?= h($partner->experience) ?></p>
-            <h6 class="subheader"><?= __('Preferred Gender') ?></h6>
+            <h6 class="subheader"><?= __('Preferred Gender of your student') ?></h6>
             <p><?= h($partner->preferred_gender) ?></p>
-            <h6 class="subheader"><?= __('Support Wish') ?></h6>
+            <h6 class="subheader"><?= __('What kind of support would you like to get from us during your sponsorship?') ?></h6>
             <p><?= h($partner->support_wish) ?></p>
-            <h6 class="subheader"><?= __('Reason For Decision') ?></h6>
+            <h6 class="subheader"><?= __('Why did you choose us?') ?></h6>
             <p><?= h($partner->reason_for_decision) ?></p>
-            <h6 class="subheader"><?= __('Additional Informations') ?></h6>
+            <h6 class="subheader"><?= __('Is there anything else we should know about you?') ?></h6>
             <p><?= h($partner->additional_informations) ?></p>
-            <h6 class="subheader"><?= __('Reason For Schuelerpaten') ?></h6>
+            <h6 class="subheader"><?= __('How did you hear about Schülerpaten?') ?></h6>
             <p><?= h($partner->reason_for_schuelerpaten) ?></p>
             <h6 class="subheader"><?= __('Location') ?></h6>
             <p><?= $partner->has('location') ? $this->Html->link($partner->location->name, ['controller' => 'Locations', 'action' => 'view', $partner->location->id]) : '' ?></p>
             <h6 class="subheader"><?= __('User') ?></h6>
             <p><?= $partner->has('user') ? $this->Html->link($partner->user->email, ['controller' => 'Users', 'action' => 'view', $partner->user->id]) : '' ?></p>
         </div>
-        <div class="large-2 columns numbers end">
-            <h6 class="subheader"><?= __('Id') ?></h6>
-            <p><?= $this->Number->format($partner->id) ?></p>
-            <h6 class="subheader"><?= __('Age') ?></h6>
-            <p><?= $this->Number->format($partner->age) ?></p>
-            <h6 class="subheader"><?= __('Teach Time') ?></h6>
-            <p><?= $this->Number->format($partner->teach_time) ?></p>
-            <h6 class="subheader"><?= __('Extra Time') ?></h6>
-            <p><?= $this->Number->format($partner->extra_time) ?></p>
-        </div>
     </div>
 </div>
+
 <div class="related row">
     <div class="column large-12">
     <h4 class="subheader"><?= __('Related PreferredClassranges') ?></h4>
@@ -208,3 +209,21 @@
     <?php endif; ?>
     </div>
 </div>
+<div id="mapdiv"></div>
+
+<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+
+<script type="text/javascript" language="JavaScript">
+ 
+
+    map = new OpenLayers.Map('mapdiv');  //create map at div with id=mapdiv
+    map.addLayer(new OpenLayers.Layer.OSM());
+
+    epsg4326 =  new OpenLayers.Projection("EPSG:4326"); //WGS 1984 projection
+    projectTo = map.getProjectionObject(); //The map projection (Spherical Mercator)
+
+    var zoom=14;
+    var center  = new OpenLayers.LonLat( 13.40495,52.52000 ).transform(epsg4326, projectTo);
+    map.setCenter (center, zoom);  
+</script>
+

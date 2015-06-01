@@ -39,8 +39,21 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             <span><?= $this->fetch('title') ?></span>
         </div>
         <div class="header-help">
-            <span><a target="_parent" href="/users/login">Login</a></span>
-            <span><a target="_parent" href="/partners/register">Registrieren</a></span>
+			<?php if(!isset($authUser)) : ?>
+				<span><a target="_parent" href="/users/login">Login</a></span>
+				<span><a target="_parent" href="/partners/register">Registrieren</a></span>
+			<?php else : ?>
+				<?php if(isset($admin)) : ?>
+					<span><?php echo $this->Html->link('admin', ['controller' => 'Users', 'action' => 'index']);?></span>
+				<?php elseif(isset($locationAdmin)) : ?>
+					<span><?php echo $this->Html->link('Standortadmin', ['controller' => 'Users', 'action' => 'index']);?></span>
+				<?php elseif(isset($matchmaker)) : ?>
+					<span><?php echo $this->Html->link('Matchmaker', ['controller' => 'Students', 'action' => 'index']);?></span>
+				<?php else : ?>
+					<span><?php echo $this->Html->link($authUser['first_name'], ['controller' => 'Partners', 'action' => 'view', $authPartner['id']]); ?></span>
+				<?php endif; ?>
+				<span><a target="_parent" href="/users/logout">Logout</a></span>
+			<?php endif; ?>	
         </div>
     </header>
     <div id="container">

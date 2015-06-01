@@ -21,13 +21,13 @@ class PartnersTable extends Table
 	 */
 	public function initialize(array $config)
 	{
-		$this->table('partners');
-		$this->displayField('name');
-		$this->primaryKey('id');
-		$this->belongsTo('Users', [
-	    'foreignKey' => 'user_id'
-	    ]);
-		$this->belongsTo('Locations', [
+            $this->table('partners');
+            $this->displayField('first_name');
+            $this->primaryKey('id');
+            $this->belongsTo('Users', [
+            'foreignKey' => 'user_id'
+            ]);
+            $this->belongsTo('Locations', [
             'foreignKey' => 'location_id'
             ]);
             $this->hasMany('PreferredClassranges', [
@@ -57,7 +57,11 @@ class PartnersTable extends Table
 		->allowEmpty('id', 'create');
 
 		$validator
-		->add('age', 'valid', ['rule' => 'numeric'])
+                ->add('age', 'valid', ['rule' => 'numeric'])
+		->add('age', 'validValue', [
+                    'rule' => ['range',18,120],
+                    'message' => 'Du musst mindestens 18 jahre alt sein',
+                    ])
 		->requirePresence('age', 'create')
 		->notEmpty('age');
 
@@ -98,7 +102,8 @@ class PartnersTable extends Table
 		->allowEmpty('mobile');
 
 		$validator
-		->add('teach_time', 'valid', ['rule' => 'numeric'])
+                ->add('teach_time', 'valid', ['rule' => 'numeric'])
+		->add('teach_time', 'validValue', ['rule' => ['range',90,10080]])
 		->requirePresence('teach_time', 'create')
 		->notEmpty('teach_time');
 
@@ -146,5 +151,9 @@ class PartnersTable extends Table
 	{
 		$rules->add($rules->existsIn(['location_id'], 'Locations'));
 		return $rules;
+	}
+	
+	public function isTheSame($partnerID, $userID){
+		return $this->exists(['id' => $partnerID, 'user_id' => $userID]);
 	}
 }

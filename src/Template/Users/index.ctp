@@ -1,11 +1,16 @@
 <div class="actions columns large-2 medium-3">
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
-        <li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Types'), ['controller' => 'Types', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Type'), ['controller' => 'Types', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Locations'), ['controller' => 'Locations', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Location'), ['controller' => 'Locations', 'action' => 'add']) ?> </li>
+		<?php if(isset($locationAdmin)) : ?>
+			<li><?= $this->Html->link(__('New User'), ['action' => 'add']); ?></li>
+		<?php else : ?>
+			<li><?= $this->Html->link(__('List Students'), ['controller' => 'Students', 'action' => 'index']) ?></li>
+			<li><?= $this->Html->link(__('New Student'), ['controller' => 'Students', 'action' => 'add']) ?></li>
+			<li><?= $this->Html->link(__('List Partners'), ['controller' => 'Partners', 'action' => 'index']) ?></li>
+			<li><?= $this->Html->link(__('New Partner'), ['controller' => 'Partners', 'action' => 'add']) ?></li>
+			<li><?= $this->Html->link(__('List Tandems'), ['controller' => 'Tandems', 'action' => 'index']) ?></li>
+			<li><?= $this->Html->link(__('New Tandem'), ['controller' => 'Tandems', 'action' => 'add']) ?></li>
+		<?php endif; ?>
     </ul>
 </div>
 <div class="users index large-10 medium-9 columns">
@@ -15,7 +20,6 @@
             <th><?= $this->Paginator->sort('id') ?></th>
             <th><?= $this->Paginator->sort('email') ?></th>
             <th><?= $this->Paginator->sort('created') ?></th>
-            <th><?= $this->Paginator->sort('type_id') ?></th>
             <th><?= $this->Paginator->sort('location_id') ?></th>
             <th class="actions"><?= __('Actions') ?></th>
         </tr>
@@ -26,9 +30,6 @@
             <td><?= $this->Number->format($user->id) ?></td>
             <td><?= h($user->email) ?></td>
             <td><?= h($user->created) ?></td>
-            <td>
-                <?= $user->has('type') ? $this->Html->link($user->type->name, ['controller' => 'Types', 'action' => 'view', $user->type->id]) : '' ?>
-            </td>
             <td>
                 <?= $user->has('location') ? $this->Html->link($user->location->name, ['controller' => 'Locations', 'action' => 'view', $user->location->id]) : '' ?>
             </td>

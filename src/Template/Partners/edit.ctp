@@ -1,25 +1,24 @@
+<?php if(isset($admin)) : ?>
 <div class="actions columns large-2 medium-3">
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $partner->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $partner->id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List Partners'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Locations'), ['controller' => 'Locations', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Location'), ['controller' => 'Locations', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Preferred Classranges'), ['controller' => 'PreferredClassranges', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Preferred Classrange'), ['controller' => 'PreferredClassranges', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Preferred Schooltypes'), ['controller' => 'PreferredSchooltypes', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Preferred Schooltype'), ['controller' => 'PreferredSchooltypes', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Preferred Subjects'), ['controller' => 'PreferredSubjects', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Preferred Subject'), ['controller' => 'PreferredSubjects', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Tandems'), ['controller' => 'Tandems', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Tandem'), ['controller' => 'Tandems', 'action' => 'add']) ?> </li>
+        <?php if(isset($matchmaker)) : ?>
+			<li><?= $this->Form->postLink(
+					__('Delete'),
+					['action' => 'delete', $partner->id],
+					['confirm' => __('Are you sure you want to delete # {0}?', $partner->id)]
+				)
+			?></li>
+			<li><?= $this->Html->link(__('List Students'), ['controller' => 'Students', 'action' => 'index']) ?></li>
+			<li><?= $this->Html->link(__('New Student'), ['controller' => 'Students', 'action' => 'add']) ?></li>
+			<li><?= $this->Html->link(__('List Partners'), ['controller' => 'Partners', 'action' => 'index']) ?></li>
+			<li><?= $this->Html->link(__('New Partner'), ['controller' => 'Partners', 'action' => 'add']) ?></li>
+			<li><?= $this->Html->link(__('List Tandems'), ['controller' => 'Tandems', 'action' => 'index']) ?></li>
+			<li><?= $this->Html->link(__('New Tandem'), ['controller' => 'Tandems', 'action' => 'add']) ?></li>
+		<?php endif; ?>
     </ul>
-</div>
+</div> 
+<?php endif; ?>
 <div class="partners form large-10 medium-9 columns">
     <?= $this->Form->create($partner); ?>
     <fieldset>
@@ -42,14 +41,16 @@
             echo $this->Form->input('extra_time');
             echo $this->Form->input('spend_time');
             echo $this->Form->input('experience');
-            echo $this->Form->input('preferred_gender');
+            echo $this->Form->label('preferred_gender', 'Bevorzugtes Geschlecht deine/r SchülerIn');
+            echo $this->Form->select('preferred_gender', ['' => 'egal', 'm' => 'männlich', 'w' => 'weiblich']);
             echo $this->Form->input('support_wish');
             echo $this->Form->input('reason_for_decision');
             echo $this->Form->input('additional_informations');
             echo $this->Form->input('reason_for_schuelerpaten');
-            echo $this->Form->input('location_id', ['options' => $locations, 'empty' => true]);
+            echo $this->Form->input('location_id', ['options' => $locations, 'empty' => false]);
         ?>
     </fieldset>
+	<?php echo $this->Html->link('Cancel', ['action' => 'view', $partner->id], ['class' => 'button', 'float' => 'right']); ?>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
 </div>

@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
 use Cake\Network\Email\Email;
+use Cake\Event\Event;
 
 /**
  * Users Controller
@@ -12,7 +13,23 @@ use Cake\Network\Email\Email;
  */
 class UsersController extends AppController
 {
-
+	
+	public function isAuthorized($user){
+		if(in_array($this->request->action, ['index','add'])){
+			$this->loadModel('UserHasTypes');
+			$type = $this->UserHasTypes->findByUserId($user['id'])->first()['type_id'];
+			if($type > '3'){
+				return true;
+			}
+		}
+		return parent::isAuthorized($user);
+	}
+	
+	public function beforeFilter(Event $event){
+		parent::beforeFilter($event);
+		$this->Auth->allow(['logout', 'activate']);
+	}
+        
 	/**
 	 * Index method
 	 *
@@ -20,11 +37,20 @@ class UsersController extends AppController
 	 */
 	public function index()
 	{
-		$this->paginate = [
-            'contain' => ['Types', 'Locations']
-		];
-		$this->set('users', $this->paginate($this->Users));
-		$this->set('_serialize', ['users']);
+		$this->loadModel('UserHasTypes');
+		$user = $this->Auth->user();
+		$userType = $this->UserHasTypes->findByUserId($user['id'])->first()['type_id'];
+		
+		if($userType == '4'){
+			$this->paginate = ['contain' => ['Locations']];
+			$users = $this->Users->findByLocationId($user['location_id']);
+			$this->set('users', $this->paginate($users));
+			$this->set('_serialize', ['users']);
+		} else {
+			$this->paginate = ['contain' => ['Locations']];
+			$this->set('users', $this->paginate($this->Users));
+			$this->set('_serialize', ['users']);
+		}
 	}
 
 	/**
@@ -37,7 +63,7 @@ class UsersController extends AppController
 	public function view($id = null)
 	{
 		$user = $this->Users->get($id, [
-            'contain' => ['Types', 'Locations']
+            'contain' => ['Locations']
 		]);
 		$this->set('user', $user);
 		$this->set('_serialize', ['user']);
@@ -50,32 +76,35 @@ class UsersController extends AppController
 	 */
 	public function add()
 	{
+		$this->loadModel('UserHasTypes');
 		$user = $this->Users->newEntity();
+		$userType = $this->UserHasTypes->newEntity();
 		if ($this->request->is('post')) {
 			$user = $this->Users->patchEntity($user, $this->request->data);
-			$user->activation = rand(100000000,999999999);					//generate activation-key
+			$user->activation = NULL;
 			if ($this->Users->save($user)) {
-				//link ist nur fuer localhost bestimmt. wenn das projekt auf richtigem server lauft, so bitte hier den link aendern
-				$link = 'http://localhost/schuelerpaten/users/activate/'.$user->id.'/'.$user->activation;
-				$email = new Email('default');
-				$email	->from(['noreply@schuelerpaten.de' => 'Schülerpaten'])
-						->to($user->email)
-						->subject('Aktivierungslink fuer deine Registrierung bei Schülerpaten')
-						->send("Hallo ".$user->first_name."!<br><br>
-            					Vielen Dank für deine Registrierung bei Schülerpaten!
-            					Um deine Registrierung bei Schülerpaten abzuschliessen klicke bitte auf den folgenden Aktivierungslink:<br>
-            					<a href='".$link."'>".$link."</a><br>
-            					Sollte dieser nicht als Link erscheinen, so kannst du ihn auch in die Adresszeile deines Browsers kopieren.<br>
-            					Nach der Aktivierung kannst du dich auf unserem Portal mit deiner Email-Adresse und dem von dir gewählten Passwort einloggen um deine Informationen ueber dich einzusehen oder zu ändern, deinen Vermittlungsstatus ansehen oder deine Registrierung rückgaengig machen.<br><br>
-            					Mit freundlichen Grüßen,<br>
-            					Dein Schülerpaten-Team");
-				$this->Flash->success('Der Nutzer wurde gespeichert. Es wurde eine Aktivierungsmail an '.$user->email.' gesendet.');
-				return $this->redirect(['action' => 'index']);
+				$userType->user_id = $user->id;
+				$userType->type_id = $this->request->data['type_id'];
+				if($this->UserHasTypes->save($userType)) {
+					$this->Flash->success('New Matchmaker created.');
+					return $this->redirect(['controller' => 'Users', 'action' => 'index']);
+				} else {
+					$this->Users->delete($user);
+					$this->Flash->error('The user could not be saved. Please, try again.');
+				}
 			} else {
 				$this->Flash->error('The user could not be saved. Please, try again.');
 			}
 		}
-		$types = $this->Users->Types->find('list', ['limit' => 200]);
+                $this->loadModel('UserHasTypes');
+                $type = $this->UserHasTypes->findByUserId($this->Auth->user('id'))->first()['type_id'];
+                switch($type){
+                    case(4): $conditions = ['id <' => '4']; break; //standortadmin darf keine standort admins oder global admins erstellen
+                    case(5): $conditions = ['id <=' => '5']; break; //globaladmin darf alles erstellen
+                    default: $conditions = ['id <' => '0']; break; //auffangbedingung
+                }
+                $this->loadModel('Types');
+		$types = $this->Types->find('list', ['limit' => 10, 'empty' => false, 'conditions' => $conditions]);
 		$locations = $this->Users->Locations->find('list', ['limit' => 200]);
 		$this->set(compact('user', 'types', 'locations'));
 		$this->set('_serialize', ['user']);
@@ -90,22 +119,22 @@ class UsersController extends AppController
 	 */
 	public function edit($id = null)
 	{
-		$user = $this->Users->get($id, [
-            'contain' => []
-		]);
-		if ($this->request->is(['patch', 'post', 'put'])) {
-			$user = $this->Users->patchEntity($user, $this->request->data);
-			if ($this->Users->save($user)) {
-				$this->Flash->success('The user has been saved.');
-				return $this->redirect(['action' => 'index']);
-			} else {
-				$this->Flash->error('The user could not be saved. Please, try again.');
-			}
+            $user = $this->Users->get($id, [
+                'contain' => []
+            ]);
+            if ($this->request->is(['patch', 'post', 'put'])) {
+                $user = $this->Users->patchEntity($user, $this->request->data);
+                if ($this->Users->save($user)) {
+                    $this->Flash->success('The user has been saved.');
+                    return $this->redirect(['action' => 'index']);
+		} else {
+                    $this->Flash->error('The user could not be saved. Please, try again.');
 		}
-		$types = $this->Users->Types->find('list', ['limit' => 200]);
-		$locations = $this->Users->Locations->find('list', ['limit' => 200]);
-		$this->set(compact('user', 'types', 'locations'));
-		$this->set('_serialize', ['user']);
+            }
+            $types = $this->Users->Types->find('list', ['condition' => ['id' => '2', 'id' => '3']]);
+            $locations = $this->Users->Locations->find('list', ['limit' => 200]);
+            $this->set(compact('user', 'types', 'locations'));
+            $this->set('_serialize', ['user']);
 	}
 
 	/**
@@ -130,12 +159,36 @@ class UsersController extends AppController
 	public function login()
 	{	
 		$this->loadModel('Partners');
+		$this->loadModel('UserHasTypes');
+		//get request
 		if ($this->request->is('post')) {
 			$user = $this->Auth->identify();
 			if ($user) {
 				$this->Auth->setUser($user);
-				$partner = $this->Partners->findByUserId($this->Auth->user('id'))->first();
-				return $this->redirect($this->Auth->redirectUrl(['controller' => 'Partners', 'action' => 'view', $partner->id]));
+				$type = $this->UserHasTypes->findByUserId($user['id'])->first()['type_id'];
+				
+				/* unschön
+                                if($type == '5' || $type == '4'){
+					return $this->redirect($this->Auth->redirectUrl(['controller' => 'Users', 'action' => 'index']));
+				}*/				
+				if($this->Auth->user('activation') == NULL) {
+                                    $partner = $this->Partners->findByUserId($this->Auth->user('id'))->first();
+                                    if ($partner != null) { //user is partner
+                                        return $this->redirect($this->Auth->redirectUrl(['controller' => 'Partners', 'action' => 'view', $partner->id]));
+                                    } else {        //user is no partner
+										if($type <= 3) {
+											return $this->redirect($this->Auth->redirectUrl(['controller' => 'Students', 'action' => 'index']));
+										}
+                                        return $this->redirect($this->Auth->redirectUrl(['controller' => 'Users', 'action' => 'index']));
+                                    }
+                                }
+                                else {
+                                    $this->Flash->error('Der Account wurde noch nicht aktiviert! '
+                                        . 'Bitte kontrolliere dein Email-Postfach und ggf. auch deinen Spam-Ordner.');
+                                    $this->Auth->logout();
+                                    //set $lastUserId, damit bestätigungsmail bei nächstem versuch versandt werden kann
+                                    return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+                                }
 			}
 			$this->Flash->error('Die E-Mail-Adresse oder das Passwort ist leider nicht richtig.');
 		}
@@ -147,69 +200,43 @@ class UsersController extends AppController
 		return $this->redirect($this->Auth->logout());
 	}
 
-	public function register()
+        
+        public function sendActivationMail($id=null)
+        {
+            $user = $this->Users->get($id);
+            $link = 'http://52.28.79.204/users/activate/'.$id.'/'.$user->activation;
+            $email = new Email('default');
+            $email->from(['noreply@schuelerpaten.de' => 'Schülerpaten'])
+                ->to($user->email)
+                ->subject('Aktivierungslink für deine Registrierung bei Schülerpaten')
+                ->emailFormat('html')
+                ->template('activationMail')
+                ->viewVars(['name' => $user->first_name, 'link' => $link])
+                ->send();
+            return;
+        }
+        
+        public function sendActivationMailAgain($mail=null)
 	{
-		//registrierungsfunktion nur fuer paten!!!
-		//vermittler/matchmaker/admins muessen sich ueber /users/add
-		//von jemand anderem registrieren lassen
-		//schueler muessen dies ueber students/add tun lassen
-
-		$user = $this->Users->newEntity();
-
-		$userTypeTable = TableRegistry::get('UserHasTypes');
-		$userType = $userTypeTable->newEntity();
-
-		$partnerTable = TableRegistry::get('Partners');
-		$partner = $partnerTable->newEntity();
-		if ($this->request->is('post')) {
-			$user = $this->Users->patchEntity($user, $this->request->data);
-			$user->type_id = 1;												//type_id von Typ "Pate" -
-			//unbedingt bei typenaenderung mit aendern!
-			$user->activation = rand(100000000,999999999);					//generate activation-key
-			$this->Flash->success($user->id);
-			$userType->user_id = $user->id;
-			$userType->type_id = 1;
-			if ($this->Users->save($user)) {
-				$userType->user_id = $user->id;
-                        	$userType->type_id = 1;
-				if($userTypeTable->save($userType)){
-					//link ist nur fuer localhost bestimmt. wenn das projekt auf richtigem server lauft, so bitte hier den link aendern
-					$link = 'http://localhost/schuelerpaten/users/activate/'.$user->id.'/'.$user->activation;
-					//TODO Email funktioniert noch nicht
-					$email = new Email('default');
-					$email	->from(['noreply@schuelerpaten.de' => 'Schülerpaten'])
-						->to($user->email)
-						->subject('Aktivierungslink fuer deine Registrierung bei Schülerpaten')
-						->send("Hallo ".$user->first_name."!\n\n
-            					Vielen Dank für deine Registrierung bei Schülerpaten!
-            					Um deine Registrierung bei Schülerpaten abzuschliessen klicke bitte auf den folgenden Aktivierungslink:\n
-            					<a href='".$link."'>".$link."</a>\n
-            					Sollte dieser nicht als Link erscheinen, so kannst du ihn auch in die Adresszeile deines Browsers kopieren.\n
-            					Nach der Aktivierung kannst du dich auf unserem Portal mit deiner Email-Adresse und dem von dir gewählten Passwort einloggen um deine Informationen ueber dich einzusehen oder zu ändern, deinen Vermittlungsstatus ansehen oder deine Registrierung rückgaengig machen.\n\n
-            					Mit freundlichen Grüßen,\n
-            					Dein Schülerpaten-Team");
-					$this->Flash->success('Es wurde eine Aktivierungsmail an '.$user->email.' gesendet. Bitte folge dem dort enthaltenen Link um deine Registrierung abzuschliessen.\n
-            						Gib am besten jetzt gleich ein paar Information an, damit wir dich mit Schülern die deine Hilfe brauchen verbinden können!');
-					return $this->redirect(['controller' => 'Partners', 'action' => 'register', $user->id, $this->request->data('location_id')]);
-			} else {
-				$this->Flash->error('Bei deiner Registrierung ist wohl ein Fehler unterlaufen. Bitte probiere es gleich noch einmal.');
-			}
-			}
-			else {
-				$this->Flash->error('Bei deiner Registrierung ist wohl ein Fehler unterlaufen. Bitte probiere es gleich noch einmal.');
-			}
-		}
-		$locations = $this->Users->Locations->find('list', ['limit' => 10]);
-		$this->set(compact('user', 'locations', 'partner'));
-		$this->set('_serialize', ['user', 'partner']);
+            $user = $this->Users->findByEmail($mail)->first();
+            if ($this->request->is('post')) {
+                if ($user != null) {
+                    sendActivationMail($user['id']);
+                    $this->Flash->success('Die Bestätigungsmail mit dem Aktivierngslink wurde erneut an '.$mail.' gesendet.');
+                    return $this->redirect(['action' => 'index']);
+                } else {
+                    $this->Flash->error('Diese Email-Adresse ist nicht bei uns registriert.');
+                }
+            }
 	}
-
+        
 	public function activate($id = null, $key = null)
 	{
-		if(!$user = $this->Users->get($id)){
+		$user = $this->Users->get($id);
+		if(!$user){
 			//nutzer existiert nicht
 			$this->Flash->error('Der Nutzer mit id '. $id. ' existiert nicht');
-			return $this->redirect(['action' => 'index']);	
+			return $this->redirect(['action' => 'login']);	
 		}
 		if ($user->activation == NULL) {
 			//nutzer ist bereits aktiviert

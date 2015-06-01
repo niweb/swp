@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
 use Cake\Network\Email\Email;
+use Cake\Event\Event;
 
 /**
  * Partners Controller
@@ -13,6 +14,28 @@ use Cake\Network\Email\Email;
 class PartnersController extends AppController
 {
 
+	public function beforeFilter(Event $event){
+            parent::beforeFilter($event);
+            $this->Auth->allow('register');
+	}
+
+	public function isAuthorized($user) {
+            if(in_array($this->request->action, ['view', 'edit'])){
+                $partnerID = (int)$this->request->params['pass'][0];
+                if($this->Partners->isTheSame($partnerID, $user['id'])){
+                    return true;
+                }
+            }
+            if(in_array($this->request->action, ['index', 'add', 'view', 'edit', 'delete'])){
+                $this->loadModel('UserHasTypes');
+                $type = $this->UserHasTypes->findByUserId($user['id'])->first()['type_id'];
+                if($type == '3'){
+                    return true;
+                }
+            }
+            return parent::isAuthorized($user);
+	}
+
 	/**
 	 * Index method
 	 *
@@ -20,20 +43,31 @@ class PartnersController extends AppController
 	 */
 	public function index()
 	{
-		/*$this->paginate = [
-            'contain' => ['Locations']
-		];
-		$this->set('partners', $this->paginate($this->Partners));
-		$this->set('_serialize', ['partners']);
-		
-		$this->loadModel('Users');
-		$this->set('users', $this->paginate($this->Users));
-		$this->set('_serialize', ['users']);*/
+            /*$this->paginate = [
+                'contain' => ['Locations']
+            ];
+            $this->set('partners', $this->paginate($this->Partners));
+            $this->set('_serialize', ['partners']);
 
-		$this->paginate = ['contain' => ['Locations']];
-		$partners = $this->Partners->find('all')->contain(['Users']);
-		$this->set('partners', $this->paginate($partners));
-		$this->set('_serialize', ['partners']);
+            $this->loadModel('Users');
+            $this->set('users', $this->paginate($this->Users));
+            $this->set('_serialize', ['users']);*/
+
+            $this->loadModel('UserHasTypes');
+            $user = $this->Auth->user();
+            $userType = $this->UserHasTypes->findByUserId($user['id'])->first()['type_id'];
+
+            if($userType == '4') {
+                $this->paginate = ['contain' => ['Locations']];
+                $partners = $this->Partners->findByLocationId($user['location_id'])->contain(['Users']);
+                $this->set('partners', $this->paginate($partners));
+                $this->set('_serialize', ['partners']);
+            } else {
+                $this->paginate = ['contain' => ['Locations']];
+                $partners = $this->Partners->find('all')->contain(['Users']);
+                $this->set('partners', $this->paginate($partners));
+                $this->set('_serialize', ['partners']);
+            }
 	}
 
 	/**
@@ -45,16 +79,16 @@ class PartnersController extends AppController
 	 */
 	public function view($id = null)
 	{
-		$partner = $this->Partners->get($id, [
-            'contain' => ['Locations', 'PreferredClassranges', 'PreferredSchooltypes', 'PreferredSubjects', 'Tandems']
-		]);
-		$this->set('partner', $partner);
-		$this->set('_serialize', ['partner']);
+            $partner = $this->Partners->get($id, [
+                'contain' => ['Locations', 'PreferredClassranges', 'PreferredSchooltypes', 'PreferredSubjects', 'Tandems']
+            ]);
+            $this->set('partner', $partner);
+            $this->set('_serialize', ['partner']);
 
-		$this->loadModel('Users');
-		$user = $this->Users->get($partner->user_id);
-		$this->set('user', $user);
-		$this->set('_serialize', ['user']);
+            $this->loadModel('Users');
+            $user = $this->Users->get($partner->user_id);
+            $this->set('user', $user);
+            $this->set('_serialize', ['user']);
 	}
 
 	/**
@@ -64,19 +98,19 @@ class PartnersController extends AppController
 	 */
 	public function add()
 	{
-		$partner = $this->Partners->newEntity();
-		if ($this->request->is('post')) {
-			$partner = $this->Partners->patchEntity($partner, $this->request->data);
-			if ($this->Partners->save($partner)) {
-				$this->Flash->success('The partner has been saved.');
-				return $this->redirect(['action' => 'index']);
-			} else {
-				$this->Flash->error('The partner could not be saved. Please, try again.');
-			}
-		}
-		$locations = $this->Partners->Locations->find('list', ['limit' => 200]);
-		$this->set(compact('partner', 'locations'));
-		$this->set('_serialize', ['partner']);
+            $partner = $this->Partners->newEntity();
+            if ($this->request->is('post')) {
+                $partner = $this->Partners->patchEntity($partner, $this->request->data);
+                if ($this->Partners->save($partner)) {
+                    $this->Flash->success('The partner has been saved.');
+                    return $this->redirect(['action' => 'index']);
+                } else {
+                    $this->Flash->error('The partner could not be saved. Please, try again.');
+                }
+            }
+            $locations = $this->Partners->Locations->find('list', ['limit' => 200]);
+            $this->set(compact('partner', 'locations'));
+            $this->set('_serialize', ['partner']);
 	}
 
 	/**
@@ -88,26 +122,26 @@ class PartnersController extends AppController
 	 */
 	public function edit($id = null)
 	{
-		$partner = $this->Partners->get($id, [
-            'contain' => []
-		]);
-		$userTable = TableRegistry::get('Users');
-		if ($this->request->is(['patch', 'post', 'put'])) {
-			$partner = $this->Partners->patchEntity($partner, $this->request->data);
-			$user = $userTable->get($partner->user_id);
-			$user->first_name = $this->request->data('user.first_name');
-			$user->last_name = $this->request->data('user.last_name');
-			if ($this->Partners->save($partner) && $userTable->save($user)) {
-				$this->Flash->success('The partner has been saved.');
-				return $this->redirect(['action' => 'index']);
-			} else {
-				$this->Flash->error('The partner could not be saved. Please, try again.');
-			}
-		}
-		$user = $userTable->get($partner->user_id);
-		$locations = $this->Partners->Locations->find('list', ['limit' => 200]);
-		$this->set(compact('partner', 'locations', 'user'));
-		$this->set('_serialize', ['partner']);
+            $partner = $this->Partners->get($id, [
+                'contain' => []
+            ]);
+            $this->loadModel('Users');
+            if ($this->request->is(['patch', 'post', 'put'])) {
+                $partner = $this->Partners->patchEntity($partner, $this->request->data);
+                $user = $this->Users->get($partner->user_id);
+                $user->first_name = $this->request->data('user.first_name');
+                $user->last_name = $this->request->data('user.last_name');
+                if ($this->Partners->save($partner) && $this->Users->save($user)) {
+                    $this->Flash->success('The partner has been saved.');
+                    return $this->redirect(['action' => 'view', $partner->id]);
+                } else {
+                    $this->Flash->error('The partner could not be saved. Please, try again.');
+                }
+            }
+            $user = $this->Users->get($partner->user_id);
+            $locations = $this->Partners->Locations->find('list', ['limit' => 200]);
+            $this->set(compact('partner', 'locations', 'user'));
+            $this->set('_serialize', ['partner', 'user']);
 	}
 
 	/**
@@ -119,67 +153,57 @@ class PartnersController extends AppController
 	 */
 	public function delete($id = null)
 	{
-		$this->request->allowMethod(['post', 'delete']);
-		$partner = $this->Partners->get($id);
-		if ($this->Partners->delete($partner)) {
-			$this->Flash->success('Du bist jetzt kein Schuelerpate mehr. Wenn du deine Meinung aenderst bist du wieder willkommen.');
-		} else {
-			$this->Flash->error('The partner could not be deleted. Please, try again.');
-		}
-		return $this->redirect(['action' => 'index']);
+            if ($this->Partners->delete($partner)) {
+                $this->Flash->success('Du bist jetzt kein Schuelerpate mehr. Wenn du deine Meinung aenderst bist du wieder willkommen.');
+            } else {
+                $this->Flash->error('The partner could not be deleted. Please, try again.');
+            $this->request->allowMethod(['post', 'delete']);
+            $partner = $this->Partners->get($id);
+            }
+            return $this->redirect(['action' => 'index']);
 	}
 
 public function register()
-	{
-		//TODO partnerprofil wird nur angelegt, wenn user auf submit drueckt!
-		$partner = $this->Partners->newEntity();
-		$userTable = TableRegistry::get('Users');
-		$user = $userTable->newEntity();
-		$userTypeTable = TableRegistry::get('UserHasTypes');
-		$userType = $userTypeTable->newEntity();
-		if ($this->request->is('post')) {
-			$user->set(
-		['first_name'=>$this->request->data('user.first_name'),
-		 'last_name'=>$this->request->data('user.last_name'),
-		 'email'=>$this->request->data('user.email'),
-		 'password'=>$this->request->data('user.password'),
-		 'location_id'=>$this->request->data('user.location_id')]);
-			$user->activation = rand(100000000,999999999);
-			if($userTable->save($user)){
-				$this->Flash->success('User gespeichert');
-				$partner = $this->Partners->patchEntity($partner, $this->request->data, ['associated'=>'Users']);
-				$partner->user_id = $user->id;
-				$partner->location_id = $user->location_id;
-				$userType->user_id = $user->id;
-				$userType->type_id = 1;
-				if ($this->Partners->save($partner) && $userTypeTable->save($userType)) {
-					$link = 'http://localhost/swp/users/activate/'.$user->id.'/'.$user->activation;
-					$email = new Email('default');
-					$email	->from(['noreply@schuelerpaten.de' => 'Schülerpaten'])
-					->to($user->email)
-					->subject('Aktivierungslink fuer deine Registrierung bei Schülerpaten')
-					->send("Hallo ".$user->first_name."!\n\n
-            					Vielen Dank für deine Registrierung bei Schülerpaten!
-            					Um deine Registrierung bei Schülerpaten abzuschliessen klicke bitte auf den folgenden Aktivierungslink:\n
-            					<a href=\"".$link."\">".$link."</a>\n
-            					Sollte dieser nicht als Link erscheinen, so kannst du ihn auch in die Adresszeile deines Browsers kopieren.\n
-            					Nach der Aktivierung kannst du dich auf unserem Portal mit deiner Email-Adresse und dem von dir gewählten Passwort einloggen um deine Informationen ueber dich einzusehen oder zu ändern, deinen Vermittlungsstatus ansehen oder deine Registrierung rückgaengig machen.\n\n
-            					Mit freundlichen Grüßen,\n
-            					Dein Schülerpaten-Team");
-					$this->Flash->success('Deine Informationen wurden gespeichert. Danke!');
-					//hier nachher aufs userprofil umleiten!
-					return $this->redirect(['action' => 'view', $partner->id]);
-				} else {
-					$userTable->delete($user);
-					$this->Flash->error('Es ist leider etwas schief gelaufen. Bitte versuche es gleich noch einmal.');
-				}
-			} else {
-				$this->Flash->error('Es ist leider etwas schief gelaufen. Bitte versuche es gleich noch einmal.');
-			}
-		}
-		$locations = $this->Partners->Locations->find('list', ['limit' => 10]);
-		$this->set(compact('partner', 'locations'));
-		$this->set('_serialize', ['partner']);
-	}
+    {
+        $partner = $this->Partners->newEntity();
+        $userTable = TableRegistry::get('Users');
+        $user = $userTable->newEntity();
+        $userTypeTable = TableRegistry::get('UserHasTypes');
+        $userType = $userTypeTable->newEntity();
+        if ($this->request->is('post')) {
+            $user->first_name = $this->request->data('user.first_name');
+            $user->last_name = $this->request->data('user.last_name');
+            $user->email = $this->request->data('user.email');
+            $user->password = $this->request->data('user.password');
+            $user->location_id = $this->request->data('user.location_id');
+            $user->activation = rand(100000000,999999999);
+            if($userTable->save($user)){
+                $this->Flash->success('User gespeichert');
+                $partner = $this->Partners->patchEntity($partner, $this->request->data, ['associated'=>'Users']);
+                $partner->user_id = $user->id;
+                $partner->location_id = $user->location_id;
+                $userType->user_id = $user->id;
+                $userType->type_id = 1;
+                debug($partner);
+                debug($userType);
+                if (($this->Partners->save($partner)) && ($userTypeTable->save($userType))) {
+                    $userController = new UsersController;
+                    $userController->sendActivationMail($user->id);
+                    $this->Flash->success('Deine Informationen wurden gespeichert. Danke!');
+                    return $this->redirect(['controller'=>'Users','action' => 'login']);
+                } else {
+                    $userTable->delete($user);
+                    $userTypeTable->delete($userType);
+                    $this->Flash->error('Es ist leider etwas schief gelaufen. Bitte versuche es gleich noch einmal. (Partner oder UserTypes konnten nicht gespeichert werden)');
+                }
+            } else {
+                $this->Flash->error('Es ist leider etwas schief gelaufen. Bitte versuche es gleich noch einmal. (User konnte nicht gespeichert werden)');
+            }
+        }
+
+        $locations = $this->Partners->Locations->find('list', ['limit' => 10]);
+        $this->set(compact('partner', 'locations'));
+        $this->set('_serialize', ['partner']);
+    }
 
 }

@@ -11,6 +11,17 @@ use App\Controller\AppController;
 class StudentsController extends AppController
 {
 
+	public function isAuthorized($user){
+		if(in_array($this->request->action, ['index', 'edit', 'view', 'delete', 'add'])){
+			$this->loadModel('UserHasTypes');
+			$type = $this->UserHasTypes->findByUserId($user['id'])->first()['type_id'];
+			if($type > '1' && $type < '4'){
+				return true;
+			}
+		}
+		return parent::isAuthorized($user);
+	}
+
 	/**
 	 * Index method
 	 *

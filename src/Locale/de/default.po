@@ -1,0 +1,98 @@
+#, Allgemeine Sachen
+msgid "Location"
+msgstr "Standort"
+
+msgid "Tutorship"
+msgstr "Patenschaft"
+
+#, Überschriften im Registrierungsformular
+msgid "Become Schülerpate"
+msgstr "Werde Schülerpate"
+
+msgid "Login Details"
+msgstr "Anmeldedaten"
+
+msgid "Personal Details"
+msgstr "Zur Person"
+
+msgid "Contact Details"
+msgstr "Kontaktdetails"
+
+#, Infos über User & Partners
+msgid "First Name"
+msgstr "Vorname"
+
+msgid "Last Name"
+msgstr "Nachname"
+
+msgid "Age"
+msgstr "Alter"
+
+#, Geschlechtsoptionen
+msgid "Sex"
+msgstr "Geschlecht"
+
+msgid "male"
+msgstr "männlich"
+
+msgid "female"
+msgstr "weiblich"
+
+msgid "whatever"
+msgstr "egal"
+
+#, Patendetails
+msgid "Degree Course"
+msgstr "Studiengang"
+
+msgid "Job"
+msgstr "Beruf"
+
+msgid "Street"
+msgstr "Straße"
+
+msgid "House Number"
+msgstr "Hausnummer"
+
+msgid "House Number Addition"
+msgstr "Hausnummernzusatz"
+
+msgid "Postcode"
+msgstr "Postleitzahl"
+
+msgid "City"
+msgstr "Ort"
+
+msgid "Telephone"
+msgstr "Telefon"
+
+msgid "Mobile"
+msgstr "Mobil"
+
+#, Patendetails über Patenschaft
+msgid "How much time (in minutes) would you like to spend teaching? (at least 90)"
+msgstr "Wie viel Zeit (in Minuten) möchtest du in der Woche fürs Unterrichten investieren? (mindestens 90)"
+
+msgid "How much time (in minutes) would you like to spend additionally per month for workshops or events with your student?"
+msgstr "Wie viel Zeit (in Minuten) möchtest du im Monat zusaetzlich für Seminare oder Veranstaltungen gemeinsam mit deiner/m PatenschülerIn investieren?"
+
+msgid "For how long will you be available in the near future? (at least one year)"
+msgstr "Wie lange bist du in nächster Zeit verfügbar? (mindestens ein Jahr)"
+
+msgid "What experiences have you already made with tutoring or sponsorships?"
+msgstr "Welche Erfahrungen hast du schon mit Nachhilfe oder Patenschaften sammeln können?"
+
+msgid "Preferred Gender of your student"
+msgstr "Bevorzugtes Geschlecht deine/r SchülerIn"
+
+msgid "What kind of support would you like to get from us during your sponsorship?"
+msgstr "Welche Unterstützung wünscht du dir von uns während deiner Patenschaft?"
+
+msgid "Why did you choose us?"
+msgstr "Warum hast du dich für uns entschieden?"
+
+msgid "Is there anything else we should know about you?"
+msgstr "Gibt es sonst noch etwas, was wir über dich wissen sollten?"
+
+msgid "How did you hear about Schülerpaten?"
+msgstr "Wie bist du auf uns gekommen?"

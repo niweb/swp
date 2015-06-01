@@ -15,10 +15,12 @@
     <h2><?= h($user->id) ?></h2>
     <div class="row">
         <div class="large-5 columns strings">
+            <h6 class="subheader"><?= __('First Name') ?></h6>
+            <p><?= h($user->first_name) ?></p>
+            <h6 class="subheader"><?= __('Last Name') ?></h6>
+            <p><?= h($user->last_name) ?></p>
             <h6 class="subheader"><?= __('Email') ?></h6>
             <p><?= h($user->email) ?></p>
-            <h6 class="subheader"><?= __('Password') ?></h6>
-            <p><?= h($user->password) ?></p>
             <h6 class="subheader"><?= __('Type') ?></h6>
             <p><?= $user->has('type') ? $this->Html->link($user->type->name, ['controller' => 'Types', 'action' => 'view', $user->type->id]) : '' ?></p>
             <h6 class="subheader"><?= __('Location') ?></h6>
