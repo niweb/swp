@@ -119,7 +119,7 @@ class UsersController extends AppController
             switch($type){
                 case(4):
                     $typeConditions = ['id <' => '4', 'id !=' => '1']; //standortadmin darf keine standort admins oder global admins erstellen
-                    $locationConditions = ['id ==' => $this->Auth->user('location_id')]; //und auch nur
+                    $locationConditions = ['id =' => $this->Auth->user('location_id')]; //und auch nur
                     break;
                 case(5):
                     $typeConditions = ['id <=' => '5', 'id !=' => '1']; //globaladmin darf alles erstellen
