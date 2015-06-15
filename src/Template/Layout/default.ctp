@@ -44,55 +44,44 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                     <span><a target="_parent" href="/users/login">Login</a></span>
                     <span><a target="_parent" href="/partners/register">Registrieren</a></span>
                 </div>
-            <?php else :
-                //$this->loadModel('UserHasTypes');
-                //$type = $this->UserHasTypes->findByUserId($this->Auth->user('id'))->order(['type_id' => 'DESC'])->first()['type_id'];
-                $type=5;
-                switch($type):
-                    case 5: ?>
+				<?php else :
+                    if(isset($admin)): ?>
                         <div class="header-menu">
-                        <span><?php echo $this->Html->link(__('Users'), ['controller' => 'Users', 'action' => 'index']); ?></span>
-                        <span><?php echo $this->Html->link(__('Partners'), ['controller' => 'Partners', 'action' => 'index']); ?></span>
-                        <span><?php echo $this->Html->link(__('Students'), ['controller' => 'Students', 'action' => 'index']); ?></span>
-                        <span><?php echo $this->Html->link(__('Locations'), ['controller' => 'Locations', 'action' => 'index']); ?></span>
-                        <span><?php echo $this->Html->link(__('Types'), ['controller' => 'Types', 'action' => 'index']); ?></span>
-                        <span><?php echo $this->Html->link(__('Classranges'), ['controller' => 'Classranges', 'action' => 'index']); ?></span>
-                        <span><?php echo $this->Html->link(__('Schooltypes'), ['controller' => 'Schooltypes', 'action' => 'index']); ?></span>
-                        <span><?php echo $this->Html->link(__('Subjects'), ['controller' => 'Subjects', 'action' => 'index']); ?></span>
-                        <span><?php echo $this->Html->link(__('Status'), ['controller' => 'Status', 'action' => 'index']); ?></span>
-                        </div><div class="header-help">
-                        <span><?php echo $this->Html->link($authUser['first_name'], ['controller' => 'Users', 'action' => 'view', $authUser['id']]); ?></span>
-                        <?php break;
-                    case 4: ?>
+							<span><?php echo $this->Html->link(__('Users'), ['controller' => 'Users', 'action' => 'index']); ?></span>
+							<span><?php echo $this->Html->link(__('Partners'), ['controller' => 'Partners', 'action' => 'index']); ?></span>
+							<span><?php echo $this->Html->link(__('Students'), ['controller' => 'Students', 'action' => 'index']); ?></span>
+							<span><?php echo $this->Html->link(__('Locations'), ['controller' => 'Locations', 'action' => 'index']); ?></span>
+							<span><?php echo $this->Html->link(__('Types'), ['controller' => 'Types', 'action' => 'index']); ?></span>
+							<span><?php echo $this->Html->link(__('Classranges'), ['controller' => 'Classranges', 'action' => 'index']); ?></span>
+							<span><?php echo $this->Html->link(__('Schooltypes'), ['controller' => 'Schooltypes', 'action' => 'index']); ?></span>
+							<span><?php echo $this->Html->link(__('Subjects'), ['controller' => 'Subjects', 'action' => 'index']); ?></span>
+							<span><?php echo $this->Html->link(__('Status'), ['controller' => 'Status', 'action' => 'index']); ?></span>
+                        </div>
+						<div class="header-help">
+							<span><?php echo $this->Html->link(h($authUser['first_name'].' '.$authUser['last_name']), ['controller' => 'Users', 'action' => 'view', $authUser['id']]); ?></span>
+                    <?php elseif(isset($locationAdmin)): ?>
                         <div class="header-menu">
-                        <span><?php echo $this->Html->link(__('Users'), ['controller' => 'Users', 'action' => 'index']); ?></span>
-                        <span><?php echo $this->Html->link(__('Partners'), ['controller' => 'Partners', 'action' => 'index']); ?></span>
-                        <span><?php echo $this->Html->link(__('Students'), ['controller' => 'Students', 'action' => 'index']); ?></span>
-                        <span><?php echo $this->Html->link(__('Schooltypes'), ['controller' => 'Schooltypes', 'action' => 'index']); ?></span>
-                        <span><?php echo $this->Html->link(__('Subjects'), ['controller' => 'Subjects', 'action' => 'index']); ?></span>
-                        </div><div class="header-help">
-                        <span><?php echo $this->Html->link($authUser['first_name'], ['controller' => 'Users', 'action' => 'view', $authUser['id']]); ?></span>
-                        <?php break;
-                    case 3: ?>
+							<span><?php echo $this->Html->link(__('Users'), ['controller' => 'Users', 'action' => 'index']); ?></span>
+							<span><?php echo $this->Html->link(__('Partners'), ['controller' => 'Partners', 'action' => 'index']); ?></span>
+							<span><?php echo $this->Html->link(__('Students'), ['controller' => 'Students', 'action' => 'index']); ?></span>
+							<span><?php echo $this->Html->link(__('Schooltypes'), ['controller' => 'Schooltypes', 'action' => 'index']); ?></span>
+							<span><?php echo $this->Html->link(__('Subjects'), ['controller' => 'Subjects', 'action' => 'index']); ?></span>
+                        </div>
+						<div class="header-help">
+							<span><?php echo $this->Html->link(h($authUser['first_name'].' '.$authUser['last_name']), ['controller' => 'Users', 'action' => 'view', $authUser['id']]); ?></span>
+                    <?php elseif(isset($vermittler) or isset($matchmaker)): ?>
                         <div class="header-menu">
-                        <span><?php echo $this->Html->link(__('Partners'), ['controller' => 'Partners', 'action' => 'index']); ?></span>
-                        <span><?php echo $this->Html->link(__('Students'), ['controller' => 'Students', 'action' => 'index']); ?></span>
-                        </div><div class="header-help">
-                        <span><?php echo $this->Html->link($authUser['first_name'], ['controller' => 'Users', 'action' => 'view', $authUser['id']]); ?></span>
-                        <?php break;
-                    case 2: ?>
-                        <div class="header-menu">
-                        <span><?php echo $this->Html->link(__('Partners'), ['controller' => 'Partners', 'action' => 'index']); ?></span>
-                        <span><?php echo $this->Html->link(__('Students'), ['controller' => 'Students', 'action' => 'index']); ?></span>
-                        </div><div class="header-help">
-                        <span><?php echo $this->Html->link($authUser['first_name'], ['controller' => 'Users', 'action' => 'view', $authUser['id']]); ?></span>
-                        <?php break;
-                    default: ?>
+							<span><?php echo $this->Html->link(__('Partners'), ['controller' => 'Partners', 'action' => 'index']); ?></span>
+							<span><?php echo $this->Html->link(__('Students'), ['controller' => 'Students', 'action' => 'index']); ?></span>
+						</div>
+						<div class="header-help">
+							<span><?php echo $this->Html->link(h($authUser['first_name'].' '.$authUser['last_name']), ['controller' => 'Users', 'action' => 'view', $authUser['id']]); ?></span>
+                    <?php else : ?>
                         <div class="header-help">
-                        <span><?php echo $this->Html->link($authUser['first_name'], ['controller' => 'Partners', 'action' => 'view', $authUser['partner_id']]); ?></span>
-                <?php   break;
-                endswitch; ?>
-                        <span><a target="_parent" href="/users/logout">Logout</a></span></div>
+							<span><?php echo $this->Html->link(h($authUser['first_name'].' '.$authUser['last_name']), ['controller' => 'Partners', 'action' => 'view', $authPartner['id']]); ?></span>
+					<?php endif; ?>
+                        <span><a target="_parent" href="/users/logout">Logout</a></span>
+					</div>
             <?php endif; ?>	
         </div>
     </header>

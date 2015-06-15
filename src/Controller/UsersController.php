@@ -80,11 +80,15 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
+		$this->loadModel('UserHasTypes');
+		$this->loadModel('Types');
         $user = $this->Users->get($id, [
             'contain' => ['Locations']
         ]);
-        $this->set('user', $user);
-        $this->set('_serialize', ['user']);
+		$typeID = $this->UserHasTypes->findByUserId($user->id)->first()['type_id'];
+		$type = $this->Types->get($typeID);
+        $this->set(compact('user', 'type'));
+        $this->set('_serialize', ['user', 'type']);
     }
 
     /**

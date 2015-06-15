@@ -10,6 +10,11 @@ use App\Controller\AppController;
  */
 class StatusController extends AppController
 {
+    
+    public function isAuthorized($user) {
+        if(isset($admin)) return true;
+        return parent::isAuthorized($user);
+    }
 
     /**
      * Index method

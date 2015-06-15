@@ -1,15 +1,11 @@
 <div class="actions columns large-2 medium-3">
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
-        <?php if(isset($matchmaker)) : ?>
-			<li><?= $this->Html->link(__('Edit Student'), ['action' => 'edit', $student->id]) ?> </li>
-			<li><?= $this->Form->postLink(__('Delete Student'), ['action' => 'delete', $student->id], ['confirm' => __('Are you sure you want to delete # {0}?', $student->id)]) ?> </li>
-			<li><?= $this->Html->link(__('List Students'), ['controller' => 'Students', 'action' => 'index']) ?></li>
-			<li><?= $this->Html->link(__('New Student'), ['controller' => 'Students', 'action' => 'add']) ?></li>
-			<li><?= $this->Html->link(__('List Partners'), ['controller' => 'Partners', 'action' => 'index']) ?></li>
-			<li><?= $this->Html->link(__('New Partner'), ['controller' => 'Partners', 'action' => 'add']) ?></li>
-			<li><?= $this->Html->link(__('List Tandems'), ['controller' => 'Tandems', 'action' => 'index']) ?></li>
-		<?php endif; ?>
+        <?php if(isset($vermittler) or isset($locationAdmin) or isset($admin)) : ?>
+            <li><?= $this->Html->link(__('Edit Student'), ['action' => 'edit', $student->id]) ?> </li>
+            <li><?= $this->Form->postLink(__('Delete Student'), ['action' => 'delete', $student->id], ['confirm' => __('Are you sure you want to delete # {0}?', $student->id)]) ?> </li>
+            <li><?= $this->Html->link(__('List Students'), ['action' => 'index']) ?> </li>
+        <?php endif; ?>
     </ul>
 </div>
 <div class="students view large-10 medium-9 columns">

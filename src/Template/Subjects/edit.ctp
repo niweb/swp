@@ -8,8 +8,6 @@
             )
         ?></li>
         <li><?= $this->Html->link(__('List Subjects'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Locations'), ['controller' => 'Locations', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Location'), ['controller' => 'Locations', 'action' => 'add']) ?> </li>
     </ul>
 </div>
 <div class="subjects form large-10 medium-9 columns">
@@ -18,7 +16,7 @@
         <legend><?= __('Edit Subject') ?></legend>
         <?php
             echo $this->Form->input('name');
-            echo $this->Form->input('location_id', ['options' => $locations, 'empty' => true]);
+            echo $this->Form->input('location_id', ['options' => $locations, 'empty' => false]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

@@ -2,11 +2,10 @@
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
         <li><?= $this->Html->link(__('New Status'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Partners'), ['controller' => 'Partners', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Partner'), ['controller' => 'Partners', 'action' => 'add']) ?> </li>
     </ul>
 </div>
 <div class="status index large-10 medium-9 columns">
+    <div class="warning"><?= __('dont_delete_{0}',h(__('Status')))?></div>
     <table cellpadding="0" cellspacing="0">
     <thead>
         <tr>

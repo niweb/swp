@@ -95,7 +95,7 @@ class PartnersController extends AppController
                 $this->set('partners', $this->paginate($partners));
                 $this->set('_serialize', ['partners']);
             } else {
-                $this->paginate = ['contain' => ['Locations']];
+                $this->paginate = ['contain' => ['Locations', 'Users']];
                 $partners = $this->Partners->find('all')->contain(['Users']);
                 $this->set('partners', $this->paginate($partners));
                 $this->set('_serialize', ['partners']);

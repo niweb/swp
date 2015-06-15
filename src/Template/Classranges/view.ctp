@@ -4,7 +4,6 @@
         <li><?= $this->Html->link(__('Edit Classrange'), ['action' => 'edit', $classrange->id]) ?> </li>
         <li><?= $this->Form->postLink(__('Delete Classrange'), ['action' => 'delete', $classrange->id], ['confirm' => __('Are you sure you want to delete # {0}?', $classrange->id)]) ?> </li>
         <li><?= $this->Html->link(__('List Classranges'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Classrange'), ['action' => 'add']) ?> </li>
     </ul>
 </div>
 <div class="classranges view large-10 medium-9 columns">

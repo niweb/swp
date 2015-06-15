@@ -25,9 +25,9 @@ class UsersTable extends Table
 		$this->displayField('id');
 		$this->primaryKey('id');
 		$this->addBehavior('Timestamp');
-            $this->belongsTo('Locations', [
-            'foreignKey' => 'location_id'
-            ]);
+		$this->belongsTo('Locations', [
+		'foreignKey' => 'location_id'
+		]);
 	}
 
 	/**

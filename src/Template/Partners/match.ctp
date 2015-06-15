@@ -1,11 +1,7 @@
 <div class="actions columns large-5 medium-3">
-    <h3><?= __('Match Partner') ?></h3>
+    <h3><?= h($partner->user->first_name.' '.$partner->user->last_name) ?></h3>
     <h6 class="subheader"><?= __('Status')?></h6>
     <p><?= $partner->has('status') ? h($partner->status->name) : 'Kein Status'?></p>
-    <h6 class="subheader"><?= __('first_name') ?></h6>
-    <p><?= h($partner->user->first_name) ?></p>
-    <h6 class="subheader"><?= __('last_name') ?></h6>
-    <p><?= h($partner->user->last_name) ?></p>
     <h6 class="subheader"><?= __('sex') ?></h6>
     <p><?= h($partner->sex) ?></p>
     <h6 class="subheader"><?= __('age') ?></h6>

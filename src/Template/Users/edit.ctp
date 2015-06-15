@@ -7,6 +7,7 @@
                 ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]
             )
         ?></li>
+        <li><?= $this->Html->link(__('View User'), ['action' => 'view', $user->id]) ?></li>
         <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?></li>
     </ul>
 </div>

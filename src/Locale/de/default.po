@@ -2,23 +2,35 @@
 msgid "Users"
 msgstr "Benutzer"
 
+msgid "User"
+msgstr "Benutzer"
+
 msgid "Students"
+msgstr "Schüler"
+
+msgid "Student"
 msgstr "Schüler"
 
 msgid "Partners"
 msgstr "Paten"
 
+msgid "Partner"
+msgstr "Pate"
+
 msgid "Locations"
 msgstr "Standorte"
-
-msgid "Tandems"
-msgstr "Patenschaften"
 
 msgid "Location"
 msgstr "Standort"
 
+msgid "Tandems"
+msgstr "Patenschaften"
+
 msgid "Types"
 msgstr "Benutzertypen"
+
+msgid "Type"
+msgstr "Benutzertyp"
 
 msgid "Classranges"
 msgstr "Klassenstufen"
@@ -35,10 +47,22 @@ msgstr "Status"
 msgid "Tutorship"
 msgstr "Patenschaft"
 
+msgid "created"
+msgstr "erstellt"
+
 
 #, Allgemeine Aktionen
 msgid "Delete"
 msgstr "Löschen"
+
+msgid "Are you sure you want to delete {0}?"
+msgstr "Willst du wirklich {0} löschen?"
+
+msgid "Are you sure you want to delete # {0}?"
+msgstr "Willst du wirklich #{0} löschen?"
+
+msgid "dont_delete_{0}"
+msgstr "Achtung! Wird ein {0} gelöscht, kann es zu schweren Fehlern im System kommen! Bitte nicht leichtsinnig verwenden!"
 
 msgid "Cancel"
 msgstr "Abbrechen"
@@ -72,6 +96,9 @@ msgstr "Paten löschen"
 msgid "New Partner"
 msgstr "Neuen Paten anlegen"
 
+msgid "View Partner"
+msgstr "Diesen Paten anzeigen"
+
 #, Schüler
 msgid "List Students"
 msgstr "Alle Schüler anzeigen"
@@ -79,11 +106,17 @@ msgstr "Alle Schüler anzeigen"
 msgid "New Student"
 msgstr "Neuen Schüler anlegen"
 
+msgid "Add Student"
+msgstr "Schüler hinzufügen"
+
 msgid "Edit Student"
 msgstr "Schüler bearbeiten"
 
 msgid "Delete Student"
 msgstr "Schüler löschen"
+
+msgid "View Student"
+msgstr "Diesen Schüler anzeigen"
 
 #, User
 msgid "List Users"
@@ -92,11 +125,131 @@ msgstr "Alle Benutzer anzeigen"
 msgid "New User"
 msgstr "Neuen Benutzer anlegen"
 
+msgid "Add User"
+msgstr "Benutzer hinzufügen"
+
 msgid "Edit User"
 msgstr "Benutzer bearbeiten"
 
 msgid "Delete User"
 msgstr "Benutzer löschen"
+
+msgid "View User"
+msgstr "Diesen Benutzer anzeigen"
+
+#, Locations
+msgid "List Locations"
+msgstr "Alle Standorte anzeigen"
+
+msgid "Edit Location"
+msgstr "Standort bearbeiten"
+
+msgid "Delete Location"
+msgstr "Standort löschen"
+
+msgid "New Location"
+msgstr "Neuen Standort anlegen"
+
+msgid "Add Location"
+msgstr "Standort hinzufügen"
+
+msgid "View Location"
+msgstr "Diesen Standort anzeigen"
+
+#, Types
+msgid "List Types"
+msgstr "Alle Benutzertypen anzeigen"
+
+msgid "Edit Type"
+msgstr "Benutzertypen bearbeiten"
+
+msgid "Delete Type"
+msgstr "Benutzertypen löschen"
+
+msgid "New Type"
+msgstr "Neuen Benutzertypen anlegen"
+
+msgid "Add Type"
+msgstr "Benutzertyp hinzufügen"
+
+msgid "View Type"
+msgstr "Diesen Benutzertypen anzeigen"
+
+#, Classrange
+msgid "List Classranges"
+msgstr "Alle Klassenstufen anzeigen"
+
+msgid "Edit Classrange"
+msgstr "Klassenstufe bearbeiten"
+
+msgid "Delete Classrange"
+msgstr "Klassenstufe löschen"
+
+msgid "New Classrange"
+msgstr "Neue Klassenstufe anlegen"
+
+msgid "Add Classrange"
+msgstr "Klassenstufe hinzufügen"
+
+msgid "View Classrange"
+msgstr "Diese Klassenstufe anzeigen"
+
+#, Schooltype
+msgid "List Schooltypes"
+msgstr "Alle Schularten anzeigen"
+
+msgid "Edit Schooltype"
+msgstr "Schulart bearbeiten"
+
+msgid "Delete Schooltype"
+msgstr "Schulart löschen"
+
+msgid "New Schooltype"
+msgstr "Neue Schulart anlegen"
+
+msgid "Add Schooltype"
+msgstr "Schulart hinzufügen"
+
+msgid "View Schooltype"
+msgstr "Diese Schulart anzeigen"
+
+#, Status
+msgid "List Status"
+msgstr "Alle Status anzeigen"
+
+msgid "Edit Status"
+msgstr "Status bearbeiten"
+
+msgid "Delete Status"
+msgstr "Status löschen"
+
+msgid "New Status"
+msgstr "Neuen Status anlegen"
+
+msgid "Add Status"
+msgstr "Status hinzufügen"
+
+msgid "View Status"
+msgstr "Diesen Status anzeigen"
+
+#, Subject
+msgid "List Subjects"
+msgstr "Alle Schulfächer anzeigen"
+
+msgid "Edit Subject"
+msgstr "Schulfach bearbeiten"
+
+msgid "Delete Subject"
+msgstr "Schulfach löschen"
+
+msgid "New Subject"
+msgstr "Neues Schulfach anlegen"
+
+msgid "Add Subject"
+msgstr "Schulfach hinzufügen"
+
+msgid "View Subject"
+msgstr "Dieses Schulfach anzeigen"
 
 #, Tandems
 msgid "List Tandems"
@@ -130,6 +283,15 @@ msgstr "Nachname"
 
 msgid "age"
 msgstr "Alter"
+
+msgid "email"
+msgstr "E-Mail"
+
+msgid "e-mail"
+msgstr "E-Mail"
+
+msgid "password"
+msgstr "Passwort"
 
 #, Geschlechtsoptionen
 msgid "Sex"
@@ -195,6 +357,9 @@ msgstr "Schulfach"
 msgid "max_grade"
 msgstr "Höchste Klassenstufe"
 
+msgid "min_grade"
+msgstr "Niedrigste Klassenstufe"
+
 msgid "teach_time"
 msgstr "Wie viel Zeit (in Minuten) möchtest du in der Woche fürs Unterrichten investieren? (mindestens 90)"
 
@@ -219,6 +384,9 @@ msgstr "Warum hast du dich für uns entschieden?"
 msgid "additional_informations"
 msgstr "Gibt es sonst noch etwas, was wir über dich wissen sollten?"
 
+msgid "additional_information"
+msgstr "Gibt es sonst noch etwas, was wir über dich wissen sollten?"
+
 msgid "reason_for_schuelerpaten"
 msgstr "Wie bist du auf uns gekommen?"
 
@@ -226,3 +394,31 @@ msgstr "Wie bist du auf uns gekommen?"
 
 msgid "Are you sure you want to match {0} with {1}?"
 msgstr "Möchtest du {0} und {1} wirklich matchen?"
+
+#, Relations
+msgid "Related PreferredClassranges"
+msgstr "Bevorzugte Klassenstufen"
+
+msgid "Related PreferredSchooltypes"
+msgstr "Bevorzugte Schularten"
+
+msgid "Related PreferredSubjects"
+msgstr "Bevorzugte Fächer"
+
+msgid "Related Tandems"
+msgstr "Patenschaften"
+
+msgid "Related Partners"
+msgstr "Paten"
+
+msgid "Related Students"
+msgstr "Schüler"
+
+msgid "Related Schooltypes"
+msgstr "Schularten"
+
+msgid "Related Subjects"
+msgstr "Schulfächer"
+
+msgid "Related Users"
+msgstr "Benutzer"

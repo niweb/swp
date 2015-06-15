@@ -7,6 +7,7 @@
                 ['confirm' => __('Are you sure you want to delete # {0}?', $classrange->id)]
             )
         ?></li>
+        <li><?= $this->Html->link(__('View Classrange'), ['action' => 'view', $classrange->id]) ?></li>
         <li><?= $this->Html->link(__('List Classranges'), ['action' => 'index']) ?></li>
     </ul>
 </div>

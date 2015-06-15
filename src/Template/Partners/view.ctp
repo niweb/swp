@@ -8,14 +8,11 @@
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
         <li><?= $this->Html->link(__('Edit Partner'), ['action' => 'edit', $partner->id]) ?> </li>
-		<?php if(isset($matchmaker)) : ?>
-			<li><?= $this->Form->postLink(__('Delete Partner'), ['action' => 'delete', $partner->id], ['confirm' => __('Are you sure you want to delete # {0}?', $partner->id)]) ?> </li>
-			<li><?= $this->Html->link(__('List Students'), ['controller' => 'Students', 'action' => 'index']) ?></li>
-			<li><?= $this->Html->link(__('New Student'), ['controller' => 'Students', 'action' => 'add']) ?></li>
-			<li><?= $this->Html->link(__('List Partners'), ['controller' => 'Partners', 'action' => 'index']) ?></li>
-			<li><?= $this->Html->link(__('New Partner'), ['controller' => 'Partners', 'action' => 'add']) ?></li>
-			<li><?= $this->Html->link(__('List Tandems'), ['controller' => 'Tandems', 'action' => 'index']) ?></li>
-		<?php endif; ?>
+        <?php if(isset($vermittler) or isset($locationAdmin) or isset($admin)) : ?>
+                <li><?= $this->Form->postLink(__('Delete Partner'), ['action' => 'delete', $partner->id], ['confirm' => __('Are you sure you want to delete {0}?', h($partner->user->first_name.' '.$partner->user->last_name))]) ?> </li>
+        <?php elseif(isset($matchmaker) or isset($vermittler) or isset($locationAdmin) or isset($admin)) : ?>
+            <li><?= $this->Html->link(__('List Partners'), ['controller' => 'Partners', 'action' => 'index']) ?></li>
+        <?php endif; ?>
     </ul>
 </div>
 <div class="partners view large-10 medium-9 columns">
@@ -51,23 +48,23 @@
             <p><?= h($partner->telephone) ?></p>
             <h6 class="subheader"><?= __('Mobile') ?></h6>
             <p><?= h($partner->mobile) ?></p>
-            <h6 class="subheader"><?= __('How much time (in minutes) would you like to spend teaching? (at least 90)') ?></h6>
+            <h6 class="subheader"><?= __('teach_time') ?></h6>
             <p><?= $this->Number->format($partner->teach_time) ?></p>
-            <h6 class="subheader"><?= __('How much time (in minutes) would you like to spend additionally per month for workshops or events with your student?') ?></h6>
+            <h6 class="subheader"><?= __('extra_time') ?></h6>
             <p><?= $this->Number->format($partner->extra_time) ?></p>
-            <h6 class="subheader"><?= __('For how long will you be available in the near future? (at least one year)') ?></h6>
+            <h6 class="subheader"><?= __('spend_time') ?></h6>
             <p><?= h($partner->spend_time) ?></p>
-            <h6 class="subheader"><?= __('What experiences have you already made with tutoring or sponsorships?') ?></h6>
+            <h6 class="subheader"><?= __('experience') ?></h6>
             <p><?= h($partner->experience) ?></p>
-            <h6 class="subheader"><?= __('Preferred Gender of your student') ?></h6>
+            <h6 class="subheader"><?= __('preferred_gender') ?></h6>
             <p><?= h($partner->preferred_gender) ?></p>
-            <h6 class="subheader"><?= __('What kind of support would you like to get from us during your sponsorship?') ?></h6>
+            <h6 class="subheader"><?= __('support_wish') ?></h6>
             <p><?= h($partner->support_wish) ?></p>
-            <h6 class="subheader"><?= __('Why did you choose us?') ?></h6>
+            <h6 class="subheader"><?= __('reason_for_decision') ?></h6>
             <p><?= h($partner->reason_for_decision) ?></p>
-            <h6 class="subheader"><?= __('Is there anything else we should know about you?') ?></h6>
+            <h6 class="subheader"><?= __('additional_informations') ?></h6>
             <p><?= h($partner->additional_informations) ?></p>
-            <h6 class="subheader"><?= __('How did you hear about Schülerpaten?') ?></h6>
+            <h6 class="subheader"><?= __('reason_for_schuelerpaten') ?></h6>
             <p><?= h($partner->reason_for_schuelerpaten) ?></p>
         </div>
     </div>
@@ -222,4 +219,3 @@
     var center  = new OpenLayers.LonLat( 13.40495,52.52000 ).transform(epsg4326, projectTo);
     map.setCenter (center, zoom);  
 </script>
-

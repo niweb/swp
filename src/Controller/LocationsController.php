@@ -44,7 +44,7 @@ class LocationsController extends AppController
         'contain' => ['Partners', 'Schooltypes', 'Students', 'Subjects', 'Users']
             ]);
             $this->set('location', $location);
-            $this->set('_serialize', ['location']);
+            $this->set('_serialize', ['location','partners']);
     }
 
     /**

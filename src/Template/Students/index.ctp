@@ -1,13 +1,11 @@
 <div class="actions columns large-2 medium-3">
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
-        <?php if(isset($matchmaker)) : ?>
-			<li><?= $this->Html->link(__('List Students'), ['controller' => 'Students', 'action' => 'index']) ?></li>
-			<li><?= $this->Html->link(__('New Student'), ['controller' => 'Students', 'action' => 'add']) ?></li>
-			<li><?= $this->Html->link(__('List Partners'), ['controller' => 'Partners', 'action' => 'index']) ?></li>
-			<li><?= $this->Html->link(__('New Partner'), ['controller' => 'Partners', 'action' => 'add']) ?></li>
-			<li><?= $this->Html->link(__('List Tandems'), ['controller' => 'Tandems', 'action' => 'index']) ?></li>
-		<?php endif; ?>
+        <?php if(isset($vermittler) or isset($locationAdmin) or isset($admin)) : ?>
+            <li><?= $this->Html->link(__('New Student'), ['controller' => 'Students', 'action' => 'add']) ?></li>
+        <?php else: ?>
+            <li><?= __('No Actions')?></li>
+        <?php endif; ?>
     </ul>
 </div>
 <div class="students index large-10 medium-9 columns">
@@ -19,7 +17,7 @@
             <th><?= $this->Paginator->sort('last_name', __('last_name')) ?></th>
             <th><?= $this->Paginator->sort('telephone', __('telephone')) ?></th>
             <th><?= $this->Paginator->sort('mobile', __('mobile')) ?></th>
-            <th><?= $this->Paginator->sort('location_id', __('location_id')) ?></th>
+            <?php if(isset($admin)):?><th><?= $this->Paginator->sort('location_id', __('location_id')) ?></th><?php endif; ?>
             <th class="actions"><?= __('Actions') ?></th>
         </tr>
     </thead>
@@ -31,9 +29,9 @@
             <td><?= h($student->last_name) ?></td>
             <td><?= h($student->telephone) ?></td>
             <td><?= h($student->mobile) ?></td>
-            <td>
+            <?php if(isset($admin)): ?><td>
                 <?= $student->has('location') ? $this->Html->link($student->location->name, ['controller' => 'Locations', 'action' => 'view', $student->location->id]) : '' ?>
-            </td>
+            </td><?php endif; ?>
             <td class="actions">
                 <?= $this->Html->link(__('View'), ['action' => 'view', $student->id]) ?>
                 <?= $this->Html->link(__('Edit'), ['action' => 'edit', $student->id]) ?>

@@ -12,9 +12,10 @@
         <legend><?= __('Add Schooltype') ?></legend>
         <?php
             echo $this->Form->input('name');
-            echo $this->Form->input('maximum_class');
-            echo $this->Form->input('minimum_class');
-            echo $this->Form->input('location_id', ['options' => $locations, 'empty' => true]);
+            echo $this->Form->input('maximum_class',['label' => __('max_grade')]);
+            echo $this->Form->input('minimum_class',['label' => __('min_grade')]);
+            if(isset($admin)) echo $this->Form->input('location_id', ['options' => $locations, 'empty' => false]);
+            else echo $this->Form->input('location_id', ['options' => $authUser->location_id, 'empty' => false]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

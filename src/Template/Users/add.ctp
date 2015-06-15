@@ -2,13 +2,6 @@
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
 		<li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?></li>
-        <!--
-		<li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Types'), ['controller' => 'Types', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Type'), ['controller' => 'Types', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Locations'), ['controller' => 'Locations', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Location'), ['controller' => 'Locations', 'action' => 'add']) ?> </li>
-		-->
     </ul>
 </div>
 <div class="users form large-10 medium-9 columns">
@@ -16,12 +9,12 @@
     <fieldset>
         <legend><?= __('Add User') ?></legend>
         <?php
-			echo $this->Form->input(__('first_name'));
-			echo $this->Form->input(__('last_name'));
-            echo $this->Form->input(__('email'));
-            echo $this->Form->input(__('password'));
-            echo $this->Form->input(__('type_id'), ['options' => $types, 'empty' => false]);
-            echo $this->Form->input(__('location_id'), ['options' => $locations, 'empty' => false]);
+            echo $this->Form->input('first_name', ['label' => __('first_name')]);
+            echo $this->Form->input('last_name', ['label' => __('last_name')]);
+            echo $this->Form->input('email', ['label' => __('email')]);
+            echo $this->Form->input('password', ['label' => __('password')]);
+            echo $this->Form->input('type_id', ['label' => __('type_id'), 'options' => $types, 'empty' => false]);
+            echo $this->Form->input('location_id', ['label' => __('location_id'), 'options' => $locations, 'empty' => false]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

@@ -1,7 +1,7 @@
 <div class="actions columns large-2 medium-3">
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
-		<?php if(isset($locationAdmin) OR isset($globalAdmin)) : ?>
+		<?php if(isset($locationAdmin) OR isset($admin)) : ?>
 			<li><?= $this->Html->link(__('New User'), ['action' => 'add']); ?></li>
 		<?php else : ?>
 			<li><?= __('No Actions') ?></li>
@@ -12,22 +12,26 @@
     <table cellpadding="0" cellspacing="0">
     <thead>
         <tr>
-            <th><?= $this->Paginator->sort('id') ?></th>
-            <th><?= $this->Paginator->sort('email') ?></th>
-            <th><?= $this->Paginator->sort('created') ?></th>
-            <th><?= $this->Paginator->sort('location_id') ?></th>
+            <th><?= $this->Paginator->sort('first_name', __('first_name')) ?></th>
+            <th><?= $this->Paginator->sort('last_name', __('last_name')) ?></th>
+            <th><?= $this->Paginator->sort('email', __('email')) ?></th>
+            <th><?= $this->Paginator->sort('created', __('created')) ?></th>
+            <?php if(isset($admin)):?> <th><?= $this->Paginator->sort('location_id', __('Location')) ?></th><?php endif; ?>
             <th class="actions"><?= __('Actions') ?></th>
         </tr>
     </thead>
     <tbody>
     <?php foreach ($users as $user): ?>
         <tr>
-            <td><?= $this->Number->format($user->id) ?></td>
+            <td><?= $user->first_name ?></td>
+            <td><?= $user->last_name ?></td>
             <td><?= h($user->email) ?></td>
             <td><?= h($user->created) ?></td>
-            <td>
-                <?= $user->has('location') ? $this->Html->link($user->location->name, ['controller' => 'Locations', 'action' => 'view', $user->location->id]) : '' ?>
-            </td>
+            <?php if(isset($admin)):?> 
+                <td>
+                    <?= $user->has('location') ? $this->Html->link($user->location->name, ['controller' => 'Locations', 'action' => 'view', $user->location->id]) : '' ?>
+                </td>
+            <?php endif; ?>
             <td class="actions">
                 <?= $this->Html->link(__('View'), ['action' => 'view', $user->id]) ?>
                 <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>

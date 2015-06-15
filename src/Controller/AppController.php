@@ -44,20 +44,20 @@ class AppController extends Controller
 		// Mache 'Users' fürs einloggen etc verantworlich
 		// Login-Seite zu finden unter /users/login
 		$this->loadComponent('Auth', [
-			'authorize' => ['Controller'],
-	     	'authenticate' => [
-	        	'Form' => [
-	        		'fields' => [
-	        			'username' => 'email',
-	        			'password' => 'password'
-	        			]
-	        			]
-	        			],
-	        'loginAction' => [
-	        	'controller' => 'Users',
-	        	'action' => 'login'
-	        	]
-	        	]);
+                    'authorize' => ['Controller'],
+                    'authenticate' => [
+                        'Form' => [
+                            'fields' => [
+                                'password' => 'password',
+                                'username' => 'email',
+                            ]
+                        ]
+                    ],
+                    'loginAction' => [
+                        'controller' => 'Users',
+                        'action' => 'login'
+                    ]
+                ]);
 	        	 
 	        	$this->Auth->allow(['dislay']);
 				
@@ -70,7 +70,7 @@ class AppController extends Controller
 				
 		if($authUser) {
 			$this->loadModel('UserHasTypes');
-			$authUserType = $this->UserHasTypes->findByUserId($this->Auth->user('id'))->first()['type_id'];
+			$authUserType = $this->UserHasTypes->findByUserId($this->Auth->user('id'))->order(['type_id' => 'DESC'])->first()['type_id'];
 			$this->set('authUserType', $authUserType);
 			
 			if($authUserType == '5') {
@@ -79,7 +79,10 @@ class AppController extends Controller
 			} else if($authUserType == '4'){
 				$locationAdmin = $authUser;
 				$this->set('locationAdmin', $locationAdmin);
-			} else if($authUserType == '3' || $authUserType == '2') {
+			} else if($authUserType == '3') {
+				$vermittler = $authUser;
+				$this->set('vermittler', $vermittler);
+            } else if($authUserType == '2') {
 				$matchmaker = $authUser;
 				$this->set('matchmaker', $matchmaker);
 			} else {
@@ -97,7 +100,7 @@ class AppController extends Controller
 	
 	public function isAuthorized($user){
 		$this->loadModel('UserHasTypes');
-		$type = $this->UserHasTypes->findByUserId($user['id'])->first()['type_id'];
+		$type = $this->UserHasTypes->findByUserId($user['id'])->order(['type_id' => 'DESC'])->first()['type_id'];
 		if($type == '5' || $type == '4') {
 			return true;
 		}
