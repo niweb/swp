@@ -242,73 +242,79 @@ public function register($loc = null) /* location-id */
                 $userType->type_id = 1;
                 $userTypeSaved = $userTypeTable->save($userType);
 
-                //preferredclassranges-eintrag
-                $pClassrangesTable = TableRegistry::get('PreferredClassranges');
-                $allPClassrangesSaved = true;
-                foreach(($this->request->data('preferredClassranges')) as $classrangeId => $checked){
-                    if($checked == '1'){
-                        $pClassrange = $pClassrangesTable->newEntity();
-                        $pClassrange->partner_id = $partner->id;
-                        $pClassrange->classrange_id = $classrangeId;
-                        $pClassrangeSaved = $pClassrangesTable->save($pClassrange);
-                        $allPClassrangesSaved = $pClassrangeSaved ? true : false;
+                if($partnerSaved AND $userSaved){
+                    //preferredclassranges-eintrag
+                    $pClassrangesTable = TableRegistry::get('PreferredClassranges');
+                    $allPClassrangesSaved = true;
+                    foreach(($this->request->data('preferredClassranges')) as $classrangeId => $checked){
+                        if($checked == '1'){
+                            $pClassrange = $pClassrangesTable->newEntity();
+                            $pClassrange->partner_id = $partner->id;
+                            $pClassrange->classrange_id = $classrangeId;
+                            $pClassrangeSaved = $pClassrangesTable->save($pClassrange);
+                            $allPClassrangesSaved = $pClassrangeSaved ? true : false;
+                        }
                     }
-                }
 
-                //preferredschooltypes-eintrag
-                $pSchooltypesTable = TableRegistry::get('PreferredSchooltypes');
-                $allPSchooltypesSaved = true;
-                foreach(($this->request->data('preferredSchooltypes')) as $schooltypeId => $checked){
-                    if($checked == '1'){
-                        $pSchooltype = $pSchooltypesTable->newEntity();
-                        $pSchooltype->partner_id = $partner->id;
-                        $pSchooltype->schooltype_id = $schooltypeId;
-                        $pSchooltypeSaved = $pSchooltypesTable->save($pSchooltype);
-                        $allPSchooltypesSaved = $pSchooltypeSaved ? true : false;
+                    //preferredschooltypes-eintrag
+                    $pSchooltypesTable = TableRegistry::get('PreferredSchooltypes');
+                    $allPSchooltypesSaved = true;
+                    foreach(($this->request->data('preferredSchooltypes')) as $schooltypeId => $checked){
+                        if($checked == '1'){
+                            $pSchooltype = $pSchooltypesTable->newEntity();
+                            $pSchooltype->partner_id = $partner->id;
+                            $pSchooltype->schooltype_id = $schooltypeId;
+                            $pSchooltypeSaved = $pSchooltypesTable->save($pSchooltype);
+                            $allPSchooltypesSaved = $pSchooltypeSaved ? true : false;
+                        }
                     }
-                }
 
-                //preferredsubjects-eintrag
-                $pSubjectsTable = TableRegistry::get('PreferredSubjects');
-                $allPSubjectsSaved = true;
-                foreach(($this->request->data('preferredSubjects')) as $subjectId => $gradeLimit){
-                    if(($gradeLimit != 0) AND ($gradeLimit != null)){
-                        $pSubject = $pSubjectsTable->newEntity();
-                        $pSubject->partner_id = $partner->id;
-                        $pSubject->subject_id = $subjectId;
-                        $pSubject->maximum_class = $gradeLimit;
-                        $pSubjectSaved = $pSubjectsTable->save($pSubject);
-                        $allPSubjectsSaved = $pSubjectSaved ? true : false;
+                    //preferredsubjects-eintrag
+                    $pSubjectsTable = TableRegistry::get('PreferredSubjects');
+                    $allPSubjectsSaved = true;
+                    foreach(($this->request->data('preferredSubjects')) as $subjectId => $gradeLimit){
+                        if(($gradeLimit != 0) AND ($gradeLimit != null)){
+                            $pSubject = $pSubjectsTable->newEntity();
+                            $pSubject->partner_id = $partner->id;
+                            $pSubject->subject_id = $subjectId;
+                            $pSubject->maximum_class = $gradeLimit;
+                            $pSubjectSaved = $pSubjectsTable->save($pSubject);
+                            $allPSubjectsSaved = $pSubjectSaved ? true : false;
+                        }
                     }
-                }
 
-                $allPreferencesSaved = $allPClassrangesSaved AND $allPSchooltypesSaved AND $allPSubjectsSaved;
+                    $allPreferencesSaved = $allPClassrangesSaved AND $allPSchooltypesSaved AND $allPSubjectsSaved;
 
-                //add preferredSubjects: überprüfung ob maximum_class empty oder 0
-                if ($partnerSaved AND $userTypeSaved AND $allPreferencesSaved) {
-                    //everything saved? then send activationMail
-                    $userController = new UsersController;
-                    $userController->sendActivationMail($user->id);
-                    $this->Flash->success('Deine Informationen wurden gespeichert. Danke!');
-                    return $this->redirect(['controller'=>'Users','action' => 'login']);
-                } else {
-                    //otherwise delete everything!
-                    $this->loadModel('PreferredClassranges');
-                    $this->loadModel('PreferredSchooltypes');
-                    $this->loadModel('PreferredSubjects');
-                    $this->PreferredClassranges->deleteAll(['partner_id' => $partner['id']]);
-                    $this->PreferredSchooltypes->deleteAll(['partner_id' => $partner['id']]);
-                    $this->PreferredSubjects->deleteAll(['partner_id' => $partner['id']]);
-                    
+                    //add preferredSubjects: überprüfung ob maximum_class empty oder 0
+                    if ($allPreferencesSaved) {
+                        //everything saved? then send activationMail
+                        $userController = new UsersController;
+                        $userController->sendActivationMail($user->id);
+                        $this->Flash->success('Deine Informationen wurden gespeichert. Danke!');
+                        return $this->redirect(['controller'=>'Users','action' => 'login']);
+                    } else {
+                        //otherwise delete everything!
+                        $this->loadModel('PreferredClassranges');
+                        $this->loadModel('PreferredSchooltypes');
+                        $this->loadModel('PreferredSubjects');
+						$this->Partners->delete($partner);
+                        $this->PreferredClassranges->deleteAll(['partner_id' => $partner['id']]);
+                        $this->PreferredSchooltypes->deleteAll(['partner_id' => $partner['id']]);
+                        $this->PreferredSubjects->deleteAll(['partner_id' => $partner['id']]);
+
+                        $this->Flash->error('Es ist leider ein Fehler aufgetreten. Bitte überprüfe deine Eingaben und probiere es gleich noch einmal.');
+                    }
+                }else {
+
                     $userTable->delete($user);
                     $this->Partners->delete($partner);
                     $userTypeTable->delete($userType);
-                    
-                    $this->Flash->error('Es ist leider ein Fehler aufgetreten. Bitte überprüfe deine Eingaben und probiere es gleich noch einmal.');
+
+                    $this->Flash->error('Es ist leider etwas schief gelaufen. Bitte versuche es gleich noch einmal. (User konnte nicht gespeichert werden)');
                 }
             }else {
-				$this->Flash->error('Es ist leider etwas schief gelaufen. Bitte versuche es gleich noch einmal. (User konnte nicht gespeichert werden)');
-			}
+                $this->Flash->error('Es ist leider etwas schief gelaufen. Bitte versuche es gleich noch einmal. (User konnte nicht gespeichert werden)');
+            }
         } 
 
         //set variables for view

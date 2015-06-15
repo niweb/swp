@@ -8,6 +8,7 @@
                             ['confirm' => __('Are you sure you want to delete # {0}?', $partner->id)]
                     )
             ?></li>
+            <li><?= $this->Html->link(__('View Partner'), ['controller' => 'Partners', 'action' => 'view', $partner->id]) ?></li>
             <li><?= $this->Html->link(__('List Partners'), ['controller' => 'Partners', 'action' => 'index']) ?></li>
         <?php else: ?>
             <li><?=__('No Actions')?></li>
