@@ -1,15 +1,10 @@
 <div class="actions columns large-2 medium-3">
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
-		<?php if(isset($locationAdmin)) : ?>
+		<?php if(isset($locationAdmin) OR isset($globalAdmin)) : ?>
 			<li><?= $this->Html->link(__('New User'), ['action' => 'add']); ?></li>
 		<?php else : ?>
-			<li><?= $this->Html->link(__('List Students'), ['controller' => 'Students', 'action' => 'index']) ?></li>
-			<li><?= $this->Html->link(__('New Student'), ['controller' => 'Students', 'action' => 'add']) ?></li>
-			<li><?= $this->Html->link(__('List Partners'), ['controller' => 'Partners', 'action' => 'index']) ?></li>
-			<li><?= $this->Html->link(__('New Partner'), ['controller' => 'Partners', 'action' => 'add']) ?></li>
-			<li><?= $this->Html->link(__('List Tandems'), ['controller' => 'Tandems', 'action' => 'index']) ?></li>
-			<li><?= $this->Html->link(__('New Tandem'), ['controller' => 'Tandems', 'action' => 'add']) ?></li>
+			<li><?= __('No Actions') ?></li>
 		<?php endif; ?>
     </ul>
 </div>

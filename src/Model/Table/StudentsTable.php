@@ -22,7 +22,7 @@ class StudentsTable extends Table
 	public function initialize(array $config)
 	{
 		$this->table('students');
-		$this->displayField('name');
+		$this->displayField('first_name');
 		$this->primaryKey('id');
 		$this->belongsTo('Locations', [
             'foreignKey' => 'location_id'
@@ -45,12 +45,35 @@ class StudentsTable extends Table
 		->allowEmpty('id', 'create');
 
 		$validator
-		->requirePresence('name', 'create')
+		->requirePresence('first_name', 'create')
 		->notEmpty('name');
 
 		$validator
-		->requirePresence('lastname', 'create')
+		->requirePresence('last_name', 'create')
 		->notEmpty('lastname');
+		
+		$validator
+		->requirePresence('sex', 'create')
+		->notEmpty('sex');
+		
+		$validator
+		->requirePresence('street', 'create')
+		->notEmpty('street');
+		
+		$validator
+		->requirePresence('house_number', 'create')
+		->notEmpty('house_number');
+		
+		$validator
+		->allowEmpty('house_number_addition');
+		
+		$validator
+		->requirePresence('postcode', 'create')
+		->notEmpty('postcode');
+
+		$validator
+		->requirePresence('city', 'create')
+		->notEmpty('city');
 
 		$validator
 		->requirePresence('telephone', 'create')

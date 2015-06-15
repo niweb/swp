@@ -17,14 +17,14 @@ class UsersController extends AppController
     public function isAuthorized($user){
         if(in_array($this->request->action, ['index','add'])){
             $this->loadModel('UserHasTypes');
-            $type = $this->UserHasTypes->findByUserId($user['id'])->first()['type_id'];
-            if($type > '3'){
+            $type = $this->UserHasTypes->findByUserId($user['id'])->order(['type_id' => 'DESC'])->first()['type_id'];
+            if( $type > 3 ){
                     return true;
             }
         }
         if(in_array($this->request->action, ['edit', 'view'])){
             $actionId = (int)$this->request->params['pass'][0];
-            if($this->Users->isTheSame($actionId, $user['id'])){
+            if($actionId == $user['id']){
                 return true;
             } else {
                 $this->loadModel('UserHasTypes');
@@ -45,7 +45,7 @@ class UsersController extends AppController
 
     public function beforeFilter(Event $event){
         parent::beforeFilter($event);
-        $this->Auth->allow(['logout', 'activate']);
+        $this->Auth->allow(['logout', 'activate', 'sendActivationMailAgain', 'reset', 'resetPass']);
     }
 
     /**
@@ -57,7 +57,7 @@ class UsersController extends AppController
     {
         $this->loadModel('UserHasTypes');
         $user = $this->Auth->user();
-        $userType = $this->UserHasTypes->findByUserId($user['id'])->first()['type_id'];
+        $userType = $this->UserHasTypes->findByUserId($user['id'])->order(['type_id' => 'DESC'])->first()['type_id'];
 
         if($userType == '4'){
             $this->paginate = ['contain' => ['Locations']];
@@ -158,7 +158,8 @@ class UsersController extends AppController
                 $this->Flash->error('The user could not be saved. Please, try again.');
             }
         }
-        $types = $this->Users->Types->find('list', ['condition' => ['id' => '2', 'id' => '3']]);
+        $this->loadModel('Types');
+        $types = $this->Types->find('list', ['condition' => ['id' => '2', 'id' => '3']]);
         $locations = $this->Users->Locations->find('list', ['limit' => 200]);
         $this->set(compact('user', 'types', 'locations'));
         $this->set('_serialize', ['user']);
@@ -175,7 +176,21 @@ class UsersController extends AppController
     {
             $this->request->allowMethod(['post', 'delete']);
             $user = $this->Users->get($id);
+            
+            //check if user is partner
+            $this->loadModel('UserHasTypes');
+            $type = $this->UserHasTypes->findByUserId($this->Auth->user('id'))->order(['type_id' => 'ASC'])->first()['type_id'];
+            if($type == 1){
+                $this->loadModel('Partners');
+                $partnerId = $this->Partners->findByUserId($id)->first()['id'];
+                $partnersController = new PartnersController;
+                $partnersController->delete($partnerId);
+            }
+            
+            //userHasTypes wird noch nicht mit gelöscht!
+            
             if ($this->Users->delete($user)) {
+                
                     $this->Flash->success('The user has been deleted.');
             } else {
                     $this->Flash->error('The user could not be deleted. Please, try again.');
@@ -200,13 +215,15 @@ class UsersController extends AppController
                             }*/				
                             if($this->Auth->user('activation') == NULL) {
                                 $partner = $this->Partners->findByUserId($this->Auth->user('id'))->first();
-                                if ($partner != null) { //user is partner
+                                if ($partner != null) { //user ist partner
                                     return $this->redirect($this->Auth->redirectUrl(['controller' => 'Partners', 'action' => 'view', $partner->id]));
-                                } else {        //user is no partner
-                                                                            if($type <= 3) {
-                                                                                    return $this->redirect($this->Auth->redirectUrl(['controller' => 'Students', 'action' => 'index']));
-                                                                            }
-                                    return $this->redirect($this->Auth->redirectUrl(['controller' => 'Users', 'action' => 'index']));
+                                } else {                //user ist kein partner
+                                    if($type <= 3) {    //user ist matchmaker oder vermittler
+                                            return $this->redirect($this->Auth->redirectUrl(['controller' => 'Partners', 'action' => 'index']));
+                                    }
+                                    else {  //user ist admin (loc oder glob)
+                                        return $this->redirect($this->Auth->redirectUrl(['controller' => 'Users', 'action' => 'index']));
+                                    }
                                 }
                             }
                             else {
@@ -240,19 +257,33 @@ class UsersController extends AppController
             ->template('activationMail')
             ->viewVars(['name' => $user->first_name, 'link' => $link])
             ->send();
+        if(!$email){
+            $this->Flash->error('Die Bestätigungsemail konnte nicht versandt werden');
+        } else {
+            $this->Flash->success('Die Bestätigungsemail wurde versandt');
+        }
         return;
     }
 
-    public function sendActivationMailAgain($mail=null)
+    public function sendActivationMailAgain()
     {
-        $user = $this->Users->findByEmail($mail)->first();
-        if ($this->request->is('post')) {
-            if ($user != null) {
-                sendActivationMail($user['id']);
-                $this->Flash->success('Die Bestätigungsmail mit dem Aktivierngslink wurde erneut an '.$mail.' gesendet.');
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error('Diese Email-Adresse ist nicht bei uns registriert.');
+        if ($this->request->is('post')){
+            $email = $this->request->data['email'];
+            $user = $this->Users->findByEmail($email)->first();
+            if ($this->request->is('post')) {
+                if ($user != null) {
+                    if($user->activation == null) {
+                        $this->Flash->error('Diese Email-Adresse wurde bereits bestätigt.');
+                        return $this->redirect(['action' => 'login']);
+                    } else {
+                        $this->sendActivationMail($user->id);
+                        $this->Flash->success(h('Die Bestätigungsmail mit dem Aktivierungslink wurde erneut an '.$email.' gesendet.'));
+                        return $this->redirect(['action' => 'index']);
+                    }
+                } else {
+                    $this->Flash->error('Diese Email-Adresse ist nicht bei uns registriert.');
+                    return;
+                }
             }
         }
     }
@@ -273,15 +304,77 @@ class UsersController extends AppController
         if ($user->activation == $key){
                 //nutzer aktivierung
                 $user->activation = NULL;
-                if($this->Users->save($user)){
-                        $this->Flash->success('Deine Email-Adresse wurde erfolgreich bestätigt. Du kannst dich jetzt einloggen.');
-                        return $this->redirect(['action' => 'login']);
+				$this->loadModel('Partners');
+				$partner = $this->Partners->findByUserId($user->id)->first();
+				$partner['status_id'] = 2;
+                if($this->Users->save($user) && $this->Partners->save($partner)){
+					$this->Flash->success('Deine Email-Adresse wurde erfolgreich bestätigt. Du kannst dich jetzt einloggen.');
+					return $this->redirect(['action' => 'login']);
                 }
         }
 
-        //aktivierungs-key stimmt nicht mit info aus DB ueberein oder user konnte nicht gespeichert werden
+        //aktivierungs-key stimmt nicht mit info aus DB überein oder user konnte nicht gespeichert werden
         $this->Flash->error('Bei der Bestätigung deiner Email-Adresse ist leider etwas schief gelaufen. Bitte versuche es später erneut.');
         return $this->redirect(['action' => 'index']);
     }
+	
+	public function reset(){
+		if ($this->request->is('post')){
+			$email = $this->request->data['email'];
+			$user = $this->Users->findByEmail($email)->first();
+			if($user != null) {
+				$user->reset = rand(100000000,999999999);
+				if($this->Users->save($user)){
+					$this->sendReset($user);
+					return $this->redirect(['action' => 'login']);
+				} else {
+					$this->Flash->error('Es ist ein Fehler aufgetreten. Versuchen Sie es später erneut.');
+				}
+				
+			} else {
+				$this->Flash->error('Es existiert kein Nutzer mit dieser Mail');
+				return;
+			}
+		}
+	}
+	
+	public function sendReset($user = null){
+		$link = 'http://52.28.79.204/users/resetPass/'.$user->id.'/'.$user->reset;
+		$email = new Email('default');
+		$email->from(['noreply@schuelerpaten.de' => 'Schülerpaten'])
+            ->to($user->email)
+            ->subject('Passwort zurücksetzen bei Schülerpaten')
+            ->emailFormat('html')
+            ->template('resetPassMail')
+            ->viewVars(['name' => $user->first_name, 'link' => $link])
+            ->send();
+		if(!$email){
+			$this->Flash->error('Die Email konnte nicht versandt werden');
+		} else {
+            $this->Flash->success('Die Email wurde versandt');
+        }
+	}
+	
+	public function resetPass($id = null, $reset = null) {
+		$user = $this->Users->get($id);
+		if(!$user){
+			$this->Flash->error('Nutzer existiert nicht.');
+			return $this->redirect(['action' => 'login']);
+		} else if($user->reset == NULL) {
+			$this->Flash->error('Der Link ist nicht mehr aktiv');
+		} else if($user->reset == $reset) {
+			if ($this->request->is('post')) {
+				$password = $this->request->data['password'];
+				$user->set('password', $password);
+				if($this->Users->save($user)){
+					$this->Flash->success('Passwort wurde erfolgreich geändert');
+					return $this->redirect(['action' => 'login']);
+				} else {
+					$this->Flash->error('Passwort konnte nicht geändert werden');
+					return;
+				}
+			}
+		}
+	}
 
 }

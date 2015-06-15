@@ -17,3 +17,27 @@ Stack Trace:
 #14 {main}
 
 
+2015-06-13 14:40:10 Error: [Cake\Console\Exception\MissingShellException] Shell class for "All" could not be found.
+Exception Attributes: array (
+  'class' => 'All',
+)
+Stack Trace:
+#0 /var/www/swp/vendor/cakephp/cakephp/src/Console/ShellDispatcher.php(201): Cake\Console\ShellDispatcher->findShell('all')
+#1 /var/www/swp/vendor/cakephp/cakephp/src/Console/ShellDispatcher.php(175): Cake\Console\ShellDispatcher->_dispatch()
+#2 /var/www/swp/vendor/cakephp/cakephp/src/Console/ShellDispatcher.php(126): Cake\Console\ShellDispatcher->dispatch()
+#3 /var/www/swp/bin/cake.php(33): Cake\Console\ShellDispatcher::run(Array)
+#4 {main}
+
+
+2015-06-13 14:40:23 Error: [Cake\Console\Exception\MissingShellException] Shell class for "StudentClassranges" could not be found.
+Exception Attributes: array (
+  'class' => 'StudentClassranges',
+)
+Stack Trace:
+#0 /var/www/swp/vendor/cakephp/cakephp/src/Console/ShellDispatcher.php(201): Cake\Console\ShellDispatcher->findShell('student_classra...')
+#1 /var/www/swp/vendor/cakephp/cakephp/src/Console/ShellDispatcher.php(175): Cake\Console\ShellDispatcher->_dispatch()
+#2 /var/www/swp/vendor/cakephp/cakephp/src/Console/ShellDispatcher.php(126): Cake\Console\ShellDispatcher->dispatch()
+#3 /var/www/swp/bin/cake.php(33): Cake\Console\ShellDispatcher::run(Array)
+#4 {main}
+
+

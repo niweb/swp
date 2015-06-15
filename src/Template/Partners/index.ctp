@@ -10,7 +10,6 @@
 			<li><?= $this->Html->link(__('List Partners'), ['controller' => 'Partners', 'action' => 'index']) ?></li>
 			<li><?= $this->Html->link(__('New Partner'), ['controller' => 'Partners', 'action' => 'add']) ?></li>
 			<li><?= $this->Html->link(__('List Tandems'), ['controller' => 'Tandems', 'action' => 'index']) ?></li>
-			<li><?= $this->Html->link(__('New Tandem'), ['controller' => 'Tandems', 'action' => 'add']) ?></li>
 		<?php endif; ?>
     </ul>
 </div>
@@ -18,13 +17,13 @@
     <table cellpadding="0" cellspacing="0">
     <thead>
         <tr>
-            <th><?= $this->Paginator->sort('id') ?></th>
-            <th><?= $this->Paginator->sort('first_name') ?></th>
-            <th><?= $this->Paginator->sort('last_name') ?></th>
-            <th><?= $this->Paginator->sort('age') ?></th>
-            <th><?= $this->Paginator->sort('sex') ?></th>
-            <th><?= $this->Paginator->sort('degree_course') ?></th>
-            <th><?= $this->Paginator->sort('job') ?></th>
+            <th><?= $this->Paginator->sort('id', __('id')) ?></th>
+            <th><?= $this->Paginator->sort('Users.first_name', __('first_name')) ?></th>
+            <th><?= $this->Paginator->sort('Users.last_name', __('last_name')) ?></th>
+            <th><?= $this->Paginator->sort('age', __('age')) ?></th>
+            <th><?= $this->Paginator->sort('sex', __('sex')) ?></th>
+            <th><?= $this->Paginator->sort('degree_course', __('degree_course')) ?></th>
+            <th><?= $this->Paginator->sort('job', __('job')) ?></th>
             <th class="actions"><?= __('Actions') ?></th>
         </tr>
     </thead>
@@ -39,9 +38,12 @@
             <td><?= h($partner->degree_course) ?></td>
             <td><?= h($partner->job) ?></td>
             <td class="actions">
+                <?= $this->Html->link(__('Match'), ['action' => 'match', $partner->id]) ?>
                 <?= $this->Html->link(__('View'), ['action' => 'view', $partner->id]) ?>
                 <?= $this->Html->link(__('Edit'), ['action' => 'edit', $partner->id]) ?>
+				<?= $this->Html->link(__('Status'), ['action' => 'status', $partner->id]) ?>
                 <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $partner->id], ['confirm' => __('Are you sure you want to delete # {0}?', $partner->id)]) ?>
+                <?= $this->Html->link(__('Choose'), ['action' => 'choose_students', $partner->id]) ?>
             </td>
         </tr>
 

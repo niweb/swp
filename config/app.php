@@ -198,9 +198,9 @@ return [
     'Email' => [
         'default' => [
             'transport' => 'default',
-            'from' => 'you@localhost',
-//'charset' => 'utf-8',
-//'headerCharset' => 'utf-8',
+            'from' => 'noreply@schuelerpaten.de',
+            'charset' => 'utf-8',
+            'headerCharset' => 'utf-8',
 ],
 ],
 
@@ -222,8 +222,8 @@ return [
  * the following line and set the port accordingly
  */
 //'port' => 'nonstandard_port_number',
-            'username' => 'root',
-            'password' => '',
+            'username' => 'schuelerpate',
+            'password' => 'swp',
             'database' => 'schuelerpaten',
             'encoding' => 'utf8',
             'timezone' => 'UTC',

@@ -1,9 +1,112 @@
-#, Allgemeine Sachen
+#, Allgemeine Sachen & Titel
+msgid "Users"
+msgstr "Benutzer"
+
+msgid "Students"
+msgstr "Schüler"
+
+msgid "Partners"
+msgstr "Paten"
+
+msgid "Locations"
+msgstr "Standorte"
+
+msgid "Tandems"
+msgstr "Patenschaften"
+
 msgid "Location"
 msgstr "Standort"
 
+msgid "Types"
+msgstr "Benutzertypen"
+
+msgid "Classranges"
+msgstr "Klassenstufen"
+
+msgid "Schooltypes"
+msgstr "Schularten"
+
+msgid "Subjects"
+msgstr "Schulfächer"
+
+msgid "Status"
+msgstr "Status"
+
 msgid "Tutorship"
 msgstr "Patenschaft"
+
+
+#, Allgemeine Aktionen
+msgid "Delete"
+msgstr "Löschen"
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgid "Submit"
+msgstr "Bestätigen"
+
+msgid "View"
+msgstr "Ansehen"
+
+msgid "Edit"
+msgstr "Bearbeiten"
+
+msgid "No Actions"
+msgstr "Keine Aktionen verfügbar"
+
+#, Action-Column
+msgid "Actions"
+msgstr "Aktionen"
+
+#, Paten
+msgid "List Partners"
+msgstr "Alle Paten anzeigen"
+
+msgid "Edit Partner"
+msgstr "Paten bearbeiten"
+
+msgid "Delete Partner"
+msgstr "Paten löschen"
+
+msgid "New Partner"
+msgstr "Neuen Paten anlegen"
+
+#, Schüler
+msgid "List Students"
+msgstr "Alle Schüler anzeigen"
+
+msgid "New Student"
+msgstr "Neuen Schüler anlegen"
+
+msgid "Edit Student"
+msgstr "Schüler bearbeiten"
+
+msgid "Delete Student"
+msgstr "Schüler löschen"
+
+#, User
+msgid "List Users"
+msgstr "Alle Benutzer anzeigen"
+
+msgid "New User"
+msgstr "Neuen Benutzer anlegen"
+
+msgid "Edit User"
+msgstr "Benutzer bearbeiten"
+
+msgid "Delete User"
+msgstr "Benutzer löschen"
+
+#, Tandems
+msgid "List Tandems"
+msgstr "Alle Patenschaften anzeigen"
+
+#, Tabellenüberschriften
+msgid "Created"
+msgstr "Erstellt"
+
+
 
 #, Überschriften im Registrierungsformular
 msgid "Become Schülerpate"
@@ -19,17 +122,20 @@ msgid "Contact Details"
 msgstr "Kontaktdetails"
 
 #, Infos über User & Partners
-msgid "First Name"
+msgid "first_name"
 msgstr "Vorname"
 
-msgid "Last Name"
+msgid "last_name"
 msgstr "Nachname"
 
-msgid "Age"
+msgid "age"
 msgstr "Alter"
 
 #, Geschlechtsoptionen
 msgid "Sex"
+msgstr "Geschlecht"
+
+msgid "Gender"
 msgstr "Geschlecht"
 
 msgid "male"
@@ -42,57 +148,81 @@ msgid "whatever"
 msgstr "egal"
 
 #, Patendetails
-msgid "Degree Course"
+msgid "degree_course"
 msgstr "Studiengang"
 
-msgid "Job"
+msgid "job"
 msgstr "Beruf"
 
-msgid "Street"
+msgid "street"
 msgstr "Straße"
 
-msgid "House Number"
+msgid "house_number"
 msgstr "Hausnummer"
 
-msgid "House Number Addition"
+msgid "house_number_addition"
 msgstr "Hausnummernzusatz"
 
-msgid "Postcode"
+msgid "postcode"
 msgstr "Postleitzahl"
 
-msgid "City"
+msgid "city"
 msgstr "Ort"
 
-msgid "Telephone"
+msgid "telephone"
 msgstr "Telefon"
 
-msgid "Mobile"
+msgid "mobile"
 msgstr "Mobil"
 
 #, Patendetails über Patenschaft
-msgid "How much time (in minutes) would you like to spend teaching? (at least 90)"
+
+msgid "preferred_classranges"
+msgstr "Welche Klassenstufen möchtest du unterrichten?"
+
+msgid "preferred_schooltypes"
+msgstr "Welche Schulart sollte dein/e SchülerIn besuchen?"
+
+msgid "preferred_subjects"
+msgstr "Welche Fächer möchtest du unterrichten?"
+
+msgid "preferred_subjects_addition"
+msgstr "Bitte nenne uns auch die höchste Klassenstufe, die du in dem jeweiligen Fach unterrichten möchtest. Möchtest du ein Fach nicht unterrichten, lasse das Feld einfach frei"
+
+msgid "subject"
+msgstr "Schulfach"
+
+msgid "max_grade"
+msgstr "Höchste Klassenstufe"
+
+msgid "teach_time"
 msgstr "Wie viel Zeit (in Minuten) möchtest du in der Woche fürs Unterrichten investieren? (mindestens 90)"
 
-msgid "How much time (in minutes) would you like to spend additionally per month for workshops or events with your student?"
+msgid "extra_time"
 msgstr "Wie viel Zeit (in Minuten) möchtest du im Monat zusaetzlich für Seminare oder Veranstaltungen gemeinsam mit deiner/m PatenschülerIn investieren?"
 
-msgid "For how long will you be available in the near future? (at least one year)"
+msgid "spend_time"
 msgstr "Wie lange bist du in nächster Zeit verfügbar? (mindestens ein Jahr)"
 
-msgid "What experiences have you already made with tutoring or sponsorships?"
+msgid "experience"
 msgstr "Welche Erfahrungen hast du schon mit Nachhilfe oder Patenschaften sammeln können?"
 
-msgid "Preferred Gender of your student"
+msgid "preferred_gender"
 msgstr "Bevorzugtes Geschlecht deine/r SchülerIn"
 
-msgid "What kind of support would you like to get from us during your sponsorship?"
+msgid "support_wish"
 msgstr "Welche Unterstützung wünscht du dir von uns während deiner Patenschaft?"
 
-msgid "Why did you choose us?"
+msgid "reason_for_decision"
 msgstr "Warum hast du dich für uns entschieden?"
 
-msgid "Is there anything else we should know about you?"
+msgid "additional_informations"
 msgstr "Gibt es sonst noch etwas, was wir über dich wissen sollten?"
 
-msgid "How did you hear about Schülerpaten?"
+msgid "reason_for_schuelerpaten"
 msgstr "Wie bist du auf uns gekommen?"
+
+#, Matching
+
+msgid "Are you sure you want to match {0} with {1}?"
+msgstr "Möchtest du {0} und {1} wirklich matchen?"

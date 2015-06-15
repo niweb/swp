@@ -47,7 +47,7 @@ Router::scope('/', function ($routes) {
 	 * its action called 'display', and we pass a param to select the view file
 	 * to use (in this case, src/Template/Pages/home.ctp)...
 	 */
-	$routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+	$routes->connect('/', ['controller' => 'Users', 'action' => 'login']);
 
 	/**
 	 * ...and connect the rest of 'Pages' controller's URLs.
@@ -72,9 +72,10 @@ Router::scope('/', function ($routes) {
 	 */
 	$routes->fallbacks('InflectedRoute');
 
-	$routes->connect('/register/', ['controller' => 'Users', 'action' => 'register']);
+	$routes->connect('/register/*', ['controller' => 'Partners', 'action' => 'register']);
 	$routes->connect('/login/', ['controller' => 'Users', 'action' => 'login']);
 	$routes->connect('/logout/', ['controller' => 'Users', 'action' => 'logout']);
+        $routes->connect('/partners/add', ['controller' => 'Partners', 'action' => 'register']);
 });
 
 /**

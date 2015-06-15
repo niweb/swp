@@ -42,11 +42,11 @@ class PreferredSubjectsTable extends Table
 	{
 		$validator
 		->add('id', 'valid', ['rule' => 'numeric'])
-		->allowEmpty('id', 'create');
+		->notEmpty('id', 'create');
 
 		$validator
 		->add('maximum_class', 'valid', ['rule' => 'numeric'])
-		->allowEmpty('maximum_class');
+		->notEmpty('maximum_class');
 
 		return $validator;
 	}

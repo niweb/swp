@@ -41,5 +41,9 @@ class Partner extends Entity
         'preferred_schooltypes' => true,
         'preferred_subjects' => true,
         'tandems' => true,
+		'lat' => true,
+		'lng' => true,
+		'status_id' => true,
+		'status_text' => true,
 	];
 }

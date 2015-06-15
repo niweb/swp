@@ -9,7 +9,6 @@
 			<li><?= $this->Html->link(__('List Partners'), ['controller' => 'Partners', 'action' => 'index']) ?></li>
 			<li><?= $this->Html->link(__('New Partner'), ['controller' => 'Partners', 'action' => 'add']) ?></li>
 			<li><?= $this->Html->link(__('List Tandems'), ['controller' => 'Tandems', 'action' => 'index']) ?></li>
-			<li><?= $this->Html->link(__('New Tandem'), ['controller' => 'Tandems', 'action' => 'add']) ?></li>
 		<?php endif; ?>
     </ul>
 </div>
@@ -18,9 +17,15 @@
     <div class="row">
         <div class="large-5 columns strings">
             <h6 class="subheader"><?= __('Partner') ?></h6>
-            <p><?= $tandem->has('partner') ? $this->Html->link($tandem->partner->name, ['controller' => 'Partners', 'action' => 'view', $tandem->partner->id]) : '' ?></p>
+            <p><?= $tandem->has('partner') ? $this->Html->link($tandem->partner->user->first_name, ['controller' => 'Partners', 'action' => 'view', $tandem->partner->id]) : '' ?></p>
             <h6 class="subheader"><?= __('Student') ?></h6>
-            <p><?= $tandem->has('student') ? $this->Html->link($tandem->student->name, ['controller' => 'Students', 'action' => 'view', $tandem->student->id]) : '' ?></p>
+            <p><?= $tandem->has('student') ? $this->Html->link($tandem->student->first_name, ['controller' => 'Students', 'action' => 'view', $tandem->student->id]) : '' ?></p>
+			<h6 class="subheader"><?= __('Activated') ?></h6>
+			<p><?= h($tandem->activated) ?></p>
+			<?php if($tandem->deactivated) : ?>
+				<h6 class="subheader"><?= __('Deactivated') ?></h6>
+				<p><?= h($tandem->activated) ?></p>
+			<?php endif; ?>
         </div>
         <div class="large-2 columns numbers end">
             <h6 class="subheader"><?= __('Id') ?></h6>
@@ -28,7 +33,7 @@
         </div>
         <div class="large-2 columns booleans end">
             <h6 class="subheader"><?= __('Active') ?></h6>
-            <p><?= $tandem->active ? __('Yes') : __('No'); ?></p>
+            <p><?= $tandem->deactivated ? __('No') : __('Yes'); ?></p>
         </div>
     </div>
 </div>

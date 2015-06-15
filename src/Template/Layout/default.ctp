@@ -36,24 +36,64 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 <body>
     <header>
         <div class="header-title">
-            <span><?= $this->fetch('title') ?></span>
+             <!---<span><?= $this->fetch('title') ?></span>------>
+            <span>Schülerpaten</span>
         </div>
-        <div class="header-help">
-			<?php if(!isset($authUser)) : ?>
-				<span><a target="_parent" href="/users/login">Login</a></span>
-				<span><a target="_parent" href="/partners/register">Registrieren</a></span>
-			<?php else : ?>
-				<?php if(isset($admin)) : ?>
-					<span><?php echo $this->Html->link('admin', ['controller' => 'Users', 'action' => 'index']);?></span>
-				<?php elseif(isset($locationAdmin)) : ?>
-					<span><?php echo $this->Html->link('Standortadmin', ['controller' => 'Users', 'action' => 'index']);?></span>
-				<?php elseif(isset($matchmaker)) : ?>
-					<span><?php echo $this->Html->link('Matchmaker', ['controller' => 'Students', 'action' => 'index']);?></span>
-				<?php else : ?>
-					<span><?php echo $this->Html->link($authUser['first_name'], ['controller' => 'Partners', 'action' => 'view', $authPartner['id']]); ?></span>
-				<?php endif; ?>
-				<span><a target="_parent" href="/users/logout">Logout</a></span>
-			<?php endif; ?>	
+            <?php if(!isset($authUser)) : ?>
+                <div class="header-help">
+                    <span><a target="_parent" href="/users/login">Login</a></span>
+                    <span><a target="_parent" href="/partners/register">Registrieren</a></span>
+                </div>
+            <?php else :
+                //$this->loadModel('UserHasTypes');
+                //$type = $this->UserHasTypes->findByUserId($this->Auth->user('id'))->order(['type_id' => 'DESC'])->first()['type_id'];
+                $type=5;
+                switch($type):
+                    case 5: ?>
+                        <div class="header-menu">
+                        <span><?php echo $this->Html->link(__('Users'), ['controller' => 'Users', 'action' => 'index']); ?></span>
+                        <span><?php echo $this->Html->link(__('Partners'), ['controller' => 'Partners', 'action' => 'index']); ?></span>
+                        <span><?php echo $this->Html->link(__('Students'), ['controller' => 'Students', 'action' => 'index']); ?></span>
+                        <span><?php echo $this->Html->link(__('Locations'), ['controller' => 'Locations', 'action' => 'index']); ?></span>
+                        <span><?php echo $this->Html->link(__('Types'), ['controller' => 'Types', 'action' => 'index']); ?></span>
+                        <span><?php echo $this->Html->link(__('Classranges'), ['controller' => 'Classranges', 'action' => 'index']); ?></span>
+                        <span><?php echo $this->Html->link(__('Schooltypes'), ['controller' => 'Schooltypes', 'action' => 'index']); ?></span>
+                        <span><?php echo $this->Html->link(__('Subjects'), ['controller' => 'Subjects', 'action' => 'index']); ?></span>
+                        <span><?php echo $this->Html->link(__('Status'), ['controller' => 'Status', 'action' => 'index']); ?></span>
+                        </div><div class="header-help">
+                        <span><?php echo $this->Html->link($authUser['first_name'], ['controller' => 'Users', 'action' => 'view', $authUser['id']]); ?></span>
+                        <?php break;
+                    case 4: ?>
+                        <div class="header-menu">
+                        <span><?php echo $this->Html->link(__('Users'), ['controller' => 'Users', 'action' => 'index']); ?></span>
+                        <span><?php echo $this->Html->link(__('Partners'), ['controller' => 'Partners', 'action' => 'index']); ?></span>
+                        <span><?php echo $this->Html->link(__('Students'), ['controller' => 'Students', 'action' => 'index']); ?></span>
+                        <span><?php echo $this->Html->link(__('Schooltypes'), ['controller' => 'Schooltypes', 'action' => 'index']); ?></span>
+                        <span><?php echo $this->Html->link(__('Subjects'), ['controller' => 'Subjects', 'action' => 'index']); ?></span>
+                        </div><div class="header-help">
+                        <span><?php echo $this->Html->link($authUser['first_name'], ['controller' => 'Users', 'action' => 'view', $authUser['id']]); ?></span>
+                        <?php break;
+                    case 3: ?>
+                        <div class="header-menu">
+                        <span><?php echo $this->Html->link(__('Partners'), ['controller' => 'Partners', 'action' => 'index']); ?></span>
+                        <span><?php echo $this->Html->link(__('Students'), ['controller' => 'Students', 'action' => 'index']); ?></span>
+                        </div><div class="header-help">
+                        <span><?php echo $this->Html->link($authUser['first_name'], ['controller' => 'Users', 'action' => 'view', $authUser['id']]); ?></span>
+                        <?php break;
+                    case 2: ?>
+                        <div class="header-menu">
+                        <span><?php echo $this->Html->link(__('Partners'), ['controller' => 'Partners', 'action' => 'index']); ?></span>
+                        <span><?php echo $this->Html->link(__('Students'), ['controller' => 'Students', 'action' => 'index']); ?></span>
+                        </div><div class="header-help">
+                        <span><?php echo $this->Html->link($authUser['first_name'], ['controller' => 'Users', 'action' => 'view', $authUser['id']]); ?></span>
+                        <?php break;
+                    default: ?>
+                        <div class="header-help">
+                        <span><?php echo $this->Html->link($authUser['first_name'], ['controller' => 'Partners', 'action' => 'view', $authUser['partner_id']]); ?></span>
+                <?php   break;
+                endswitch; ?>
+                        <span><a target="_parent" href="/users/logout">Logout</a></span></div>
+            <?php endif; ?>	
         </div>
     </header>
     <div id="container">

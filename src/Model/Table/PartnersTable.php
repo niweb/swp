@@ -30,6 +30,9 @@ class PartnersTable extends Table
             $this->belongsTo('Locations', [
             'foreignKey' => 'location_id'
             ]);
+            $this->belongsTo('Status', [
+            'foreignKey' => 'status_id'
+            ]);
             $this->hasMany('PreferredClassranges', [
             'foreignKey' => 'partner_id'
             ]);
@@ -103,7 +106,10 @@ class PartnersTable extends Table
 
 		$validator
                 ->add('teach_time', 'valid', ['rule' => 'numeric'])
-		->add('teach_time', 'validValue', ['rule' => ['range',90,10080]])
+		->add('teach_time', 'validValue', [
+                    'rule' => ['range',90,10080],
+                    'message' => 'Du musst mindestens 90 Minuten Zeit in der Woche haben.',
+                    ])
 		->requirePresence('teach_time', 'create')
 		->notEmpty('teach_time');
 
@@ -136,6 +142,19 @@ class PartnersTable extends Table
 		$validator
 		->requirePresence('reason_for_schuelerpaten', 'create')
 		->notEmpty('reason_for_schuelerpaten');
+		
+		$validator
+		->allowEmpty('lat');
+		
+		$validator
+		->allowEmpty('lng');
+		
+		$validator
+		->requirePresence('status_id', 'create')
+		->notEmpty('status_id');
+		
+		$validator
+		->allowEmpty('status_text');
 
 		return $validator;
 	}

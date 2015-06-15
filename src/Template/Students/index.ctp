@@ -7,7 +7,6 @@
 			<li><?= $this->Html->link(__('List Partners'), ['controller' => 'Partners', 'action' => 'index']) ?></li>
 			<li><?= $this->Html->link(__('New Partner'), ['controller' => 'Partners', 'action' => 'add']) ?></li>
 			<li><?= $this->Html->link(__('List Tandems'), ['controller' => 'Tandems', 'action' => 'index']) ?></li>
-			<li><?= $this->Html->link(__('New Tandem'), ['controller' => 'Tandems', 'action' => 'add']) ?></li>
 		<?php endif; ?>
     </ul>
 </div>
@@ -15,12 +14,12 @@
     <table cellpadding="0" cellspacing="0">
     <thead>
         <tr>
-            <th><?= $this->Paginator->sort('id') ?></th>
-            <th><?= $this->Paginator->sort('name') ?></th>
-            <th><?= $this->Paginator->sort('lastname') ?></th>
-            <th><?= $this->Paginator->sort('telephone') ?></th>
-            <th><?= $this->Paginator->sort('mobile') ?></th>
-            <th><?= $this->Paginator->sort('location_id') ?></th>
+            <th><?= $this->Paginator->sort('id', __('id')) ?></th>
+            <th><?= $this->Paginator->sort('first_name', __('first_name')) ?></th>
+            <th><?= $this->Paginator->sort('last_name', __('last_name')) ?></th>
+            <th><?= $this->Paginator->sort('telephone', __('telephone')) ?></th>
+            <th><?= $this->Paginator->sort('mobile', __('mobile')) ?></th>
+            <th><?= $this->Paginator->sort('location_id', __('location_id')) ?></th>
             <th class="actions"><?= __('Actions') ?></th>
         </tr>
     </thead>
@@ -28,8 +27,8 @@
     <?php foreach ($students as $student): ?>
         <tr>
             <td><?= $this->Number->format($student->id) ?></td>
-            <td><?= h($student->name) ?></td>
-            <td><?= h($student->lastname) ?></td>
+            <td><?= h($student->first_name) ?></td>
+            <td><?= h($student->last_name) ?></td>
             <td><?= h($student->telephone) ?></td>
             <td><?= h($student->mobile) ?></td>
             <td>

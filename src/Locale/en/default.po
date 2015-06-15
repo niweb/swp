@@ -1,0 +1,117 @@
+#, Allgemeine Sachen
+msgid "Location"
+msgstr "Location"
+
+msgid "Tutorship"
+msgstr "Tutorship"
+
+#, Überschriften im Registrierungsformular
+msgid "Become Schülerpate"
+msgstr "Become Schülerpate"
+
+msgid "Login Details"
+msgstr "Login Details"
+
+msgid "Personal Details"
+msgstr "Personal Details"
+
+msgid "Contact Details"
+msgstr "Contact Details"
+
+#, Infos über User & Partners
+msgid "first_name"
+msgstr "First Name"
+
+msgid "last_name"
+msgstr "Last Name"
+
+msgid "age"
+msgstr "Age"
+
+#, Geschlechtsoptionen
+msgid "Sex"
+msgstr "Gender"
+
+msgid "male"
+msgstr "male"
+
+msgid "female"
+msgstr "female"
+
+msgid "whatever"
+msgstr "whatever"
+
+#, Patendetails
+msgid "degree_course"
+msgstr "Degree Course"
+
+msgid "job"
+msgstr "Job"
+
+msgid "street"
+msgstr "Street"
+
+msgid "house_number"
+msgstr "House Number"
+
+msgid "house_number_addition"
+msgstr "House Number Addition"
+
+msgid "postcode"
+msgstr "Postcode"
+
+msgid "city"
+msgstr "City"
+
+msgid "telephone"
+msgstr "Telephone"
+
+msgid "mobile"
+msgstr "Mobile"
+
+#, Patendetails über Patenschaft
+
+msgid "preferred_classranges"
+msgstr "Which years would you like to tutor?"
+
+msgid "preferred_schooltypes"
+msgstr "What kind of school type should your student attend?"
+
+msgid "preferred_subjects"
+msgstr "Which subjects would you teach?"
+
+msgid "preferred_subjects_addition"
+msgstr "Please also tell us up to which year you would teach each subject. If you don't want to teach a subject at all just leave the field blank."
+
+msgid "subject"
+msgstr "Subject"
+
+msgid "max_grade"
+msgstr "Highest Year"
+
+msgid "teach_time"
+msgstr "How much time (in minutes) would you like to spend teaching? (at least 90)"
+
+msgid "extra_time"
+msgstr "How much time (in minutes) would you like to spend additionally per month for workshops or events with your student?"
+
+msgid "spend_time"
+msgstr "For how long will you be available in the near future? (at least one year)"
+
+msgid "experience"
+msgstr "What experiences have you already made with tutoring or sponsorships?"
+
+msgid "preferred_gender"
+msgstr "Preferred Gender of your student"
+
+msgid "support_wish"
+msgstr "What kind of support would you like to get from us during your sponsorship?"
+
+msgid "reason_for_decision"
+msgstr "Why did you choose us?"
+
+msgid "additional_informations"
+msgstr "Is there anything else we should know about you?"
+
+msgid "reason_for_schuelerpaten"
+msgstr "How did you hear about Schülerpaten?"

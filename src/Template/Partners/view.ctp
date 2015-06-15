@@ -15,20 +15,20 @@
 			<li><?= $this->Html->link(__('List Partners'), ['controller' => 'Partners', 'action' => 'index']) ?></li>
 			<li><?= $this->Html->link(__('New Partner'), ['controller' => 'Partners', 'action' => 'add']) ?></li>
 			<li><?= $this->Html->link(__('List Tandems'), ['controller' => 'Tandems', 'action' => 'index']) ?></li>
-			<li><?= $this->Html->link(__('New Tandem'), ['controller' => 'Tandems', 'action' => 'add']) ?></li>
 		<?php endif; ?>
     </ul>
 </div>
 <div class="partners view large-10 medium-9 columns">
-    <h2><?= h($user->first_name) ?></h2>
+    <h2><?= h($partner->user->first_name) ?>
+        <?= h($partner->user->last_name) ?></h2>
     <div class="row">
         <div class="large-5 columns strings">
-            <h6 class="subheader"><?= __('Id') ?></h6>
-            <p><?= $this->Number->format($partner->id) ?></p>
-            <h6 class="subheader"><?= __('First Name') ?></h6>
-            <p><?= h($user->first_name) ?></p>
-            <h6 class="subheader"><?= __('Last Name') ?></h6>
-            <p><?= h($user->last_name) ?></p>
+            <h6 class="subheader"><?= __('Status')?></h6>
+            <p><?= $partner->has('status') ? h($partner->status->name) : 'Kein Status'?></p>
+            <h6 class="subheader"><?= __('E-Mail') ?></h6>
+            <p><?= h($partner->user->email) ?></p>
+            <h6 class="subheader"><?= __('Location') ?></h6>
+            <p><?= $partner->has('location') ? $this->Html->link($partner->location->name, ['controller' => 'Locations', 'action' => 'view', $partner->location->id]) : 'Kein Standort zugewiesen' ?></p>
             <h6 class="subheader"><?= __('Sex') ?></h6>
             <p><?= h($partner->sex) ?></p>
             <h6 class="subheader"><?= __('Age') ?></h6>
@@ -69,10 +69,6 @@
             <p><?= h($partner->additional_informations) ?></p>
             <h6 class="subheader"><?= __('How did you hear about Schülerpaten?') ?></h6>
             <p><?= h($partner->reason_for_schuelerpaten) ?></p>
-            <h6 class="subheader"><?= __('Location') ?></h6>
-            <p><?= $partner->has('location') ? $this->Html->link($partner->location->name, ['controller' => 'Locations', 'action' => 'view', $partner->location->id]) : '' ?></p>
-            <h6 class="subheader"><?= __('User') ?></h6>
-            <p><?= $partner->has('user') ? $this->Html->link($partner->user->email, ['controller' => 'Users', 'action' => 'view', $partner->user->id]) : '' ?></p>
         </div>
     </div>
 </div>
@@ -182,28 +178,28 @@
     <table cellpadding="0" cellspacing="0">
         <tr>
             <th><?= __('Id') ?></th>
-            <th><?= __('Partner Id') ?></th>
             <th><?= __('Student Id') ?></th>
             <th><?= __('Active') ?></th>
-            <th class="actions"><?= __('Actions') ?></th>
+			<?php if($authUserType > 1) : ?>
+				<th class="actions"><?= __('Actions') ?></th>
+			<?php endif; ?>
         </tr>
         <?php foreach ($partner->tandems as $tandems): ?>
-        <tr>
-            <td><?= h($tandems->id) ?></td>
-            <td><?= h($tandems->partner_id) ?></td>
-            <td><?= h($tandems->student_id) ?></td>
-            <td><?= h($tandems->active) ?></td>
-
-            <td class="actions">
-                <?= $this->Html->link(__('View'), ['controller' => 'Tandems', 'action' => 'view', $tandems->id]) ?>
-
-                <?= $this->Html->link(__('Edit'), ['controller' => 'Tandems', 'action' => 'edit', $tandems->id]) ?>
-
-                <?= $this->Form->postLink(__('Delete'), ['controller' => 'Tandems', 'action' => 'delete', $tandems->id], ['confirm' => __('Are you sure you want to delete # {0}?', $tandems->id)]) ?>
-
-            </td>
-        </tr>
-
+			<tr>
+				<td><?= h($tandems->id) ?></td>
+				<td><?= h($tandems->student->first_name) ?></td>
+				<td><?= h($tandems->activated) ?></td>
+				<?php if($tandems->deactivated != NULL) : ?>
+					<td><?= h($tandems->activated) ?></td>
+				<?php endif; ?>	
+				<?php if($authUserType > 1) : ?>
+					<td class="actions">
+						<?= $this->Html->link(__('View'), ['controller' => 'Tandems', 'action' => 'view', $tandems->id]) ?>
+						<?= $this->Html->link(__('Edit'), ['controller' => 'Tandems', 'action' => 'edit', $tandems->id]) ?>
+						<?= $this->Form->postLink(__('Delete'), ['controller' => 'Tandems', 'action' => 'delete', $tandems->id], ['confirm' => __('Are you sure you want to delete # {0}?', $tandems->id)]) ?>
+					</td>
+				<?php endif; ?>
+			</tr>
         <?php endforeach; ?>
     </table>
     <?php endif; ?>

@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\I18n\Time;
 
 /**
  * Tandems Controller
@@ -12,7 +13,7 @@ class TandemsController extends AppController
 {
 
 	public function isAuthorized($user){
-		if(in_array($this->request->action, ['index', 'view', 'add', 'edit', 'delete'])){
+		if(in_array($this->request->action, ['index', 'view', 'add', 'edit', 'delete', 'deactivate'])){
 			$this->loadModel('UserHasTypes');
 			$type = $this->UserHasTypes->findByUserId($user['id'])->first()['type_id'];
 			if($type > '1'){
@@ -28,12 +29,14 @@ class TandemsController extends AppController
 	 * @return void
 	 */
 	public function index()
-	{
-            $this->paginate = [
-                'contain' => ['Partners', 'Students']
-            ];
-            $this->set('tandems', $this->paginate($this->Tandems));
-            $this->set('_serialize', ['tandems']);
+	{	
+        $this->paginate = [
+			'contain' => ['Partners.Users', 'Students']
+		];	
+		$location = $this->Auth->user('location_id');
+		$query = $this->Tandems->find()->contain(['Partners.Users'])->where(['Partners.location_id' => $location]);
+		$this->set('tandems', $this->paginate($query));
+		$this->set('_serialize', ['tandems']);
 	}
 
 	/**
@@ -46,7 +49,7 @@ class TandemsController extends AppController
 	public function view($id = null)
 	{
             $tandem = $this->Tandems->get($id, [
-                'contain' => ['Partners', 'Students']
+                'contain' => ['Partners.Users', 'Students']
             ]);
             $this->set('tandem', $tandem);
             $this->set('_serialize', ['tandem']);
@@ -57,9 +60,8 @@ class TandemsController extends AppController
 	 *
 	 * @return void Redirects on successful add, renders view otherwise.
 	 */
-	public function add()
+	/*public function add()
 	{
-		$this->loadModel('Users');
 		$tandem = $this->Tandems->newEntity();
 		if ($this->request->is('post')) {
 			$tandem = $this->Tandems->patchEntity($tandem, $this->request->data);
@@ -70,11 +72,12 @@ class TandemsController extends AppController
 				$this->Flash->error('The tandem could not be saved. Please, try again.');
 			}
 		}
-		$partners = $this->Tandems->Partners->find('list', ['limit' => 200, 'keyField' => 'id', 'valueField' => 'id']);
-		$students = $this->Tandems->Students->find('list', ['limit' => 200, 'keyField' => 'id', 'valueField' => 'first_name || last_name']);
+		$location = $this->Auth->user('location_id');
+		$partners = $this->Tandems->Partners->find('list', ['limit' => 200, 'keyField' => 'id', 'valueField' => 'user.first_name'])->contain(['Users'])->where(['Partners.location_id' => $location]);
+		$students = $this->Tandems->Students->find('list', ['limit' => 200, 'keyField' => 'id', 'valueField' => 'first_name'])->where(['Students.location_id' => $location]);
 		$this->set(compact('tandem', 'partners', 'students'));
 		$this->set('_serialize', ['tandem']);
-	}
+	}*/
 
 	/**
 	 * Edit method
@@ -118,6 +121,18 @@ class TandemsController extends AppController
 			$this->Flash->success('The tandem has been deleted.');
 		} else {
 			$this->Flash->error('The tandem could not be deleted. Please, try again.');
+		}
+		return $this->redirect(['action' => 'index']);
+	}
+	
+	public function deactivate($id = null){
+		$tandem = $this->Tandems->get($id);
+		$time = Time::now();
+		$tandem->deactivated = $time;
+		if($this->Tandems->save($tandem)){
+			$this->Flash->success('Tandem deaktiviert!');
+		} else {
+			$this->Flash->error('Tandem konnte nicht deaktiviert werden');
 		}
 		return $this->redirect(['action' => 'index']);
 	}

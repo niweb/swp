@@ -8,10 +8,6 @@
             )
         ?></li>
         <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Types'), ['controller' => 'Types', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Type'), ['controller' => 'Types', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Locations'), ['controller' => 'Locations', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Location'), ['controller' => 'Locations', 'action' => 'add']) ?> </li>
     </ul>
 </div>
 <div class="users form large-10 medium-9 columns">
