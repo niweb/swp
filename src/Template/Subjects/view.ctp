@@ -12,8 +12,6 @@
         <div class="large-5 columns strings">
             <h6 class="subheader"><?= __('Name') ?></h6>
             <p><?= h($subject->name) ?></p>
-            <h6 class="subheader"><?= __('Location') ?></h6>
-            <p><?= $subject->has('location') ? $this->Html->link($subject->location->name, ['controller' => 'Locations', 'action' => 'view', $subject->location->id]) : '' ?></p>
         </div>
         <div class="large-2 columns numbers end">
             <h6 class="subheader"><?= __('Id') ?></h6>

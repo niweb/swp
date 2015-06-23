@@ -40,11 +40,11 @@ class LocationsController extends AppController
      */
     public function view($id = null)
     {
-            $location = $this->Locations->get($id, [
-        'contain' => ['Partners', 'Schooltypes', 'Students', 'Subjects', 'Users']
-            ]);
-            $this->set('location', $location);
-            $this->set('_serialize', ['location','partners']);
+        $location = $this->Locations->get($id, [
+            'contain' => ['Partners', 'Schooltypes', 'Students', 'Subjects', 'Users']
+        ]);
+        $this->set('location', $location);
+        $this->set('_serialize', ['location','partners']);
     }
 
     /**

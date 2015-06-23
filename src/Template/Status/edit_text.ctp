@@ -17,8 +17,7 @@
     <fieldset>
         <legend><?= __('Edit Status') ?></legend>
         <?php
-            echo $this->Form->input('name');
-			echo $this->Form->textarea('text');
+            echo $this->Form->textarea('text');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

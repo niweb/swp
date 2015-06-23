@@ -21,23 +21,23 @@ class LocationsTable extends Table
 	 */
 	public function initialize(array $config)
 	{
-		$this->table('locations');
-		$this->displayField('name');
-		$this->primaryKey('id');
-		$this->hasMany('Partners', [
-            'foreignKey' => 'location_id'
+            $this->table('locations');
+            $this->displayField('name');
+            $this->primaryKey('id');
+            $this->hasMany('Partners', [
+                'foreignKey' => 'location_id'
             ]);
             $this->hasMany('Schooltypes', [
-            'foreignKey' => 'location_id'
+                'foreignKey' => 'location_id'
             ]);
             $this->hasMany('Students', [
-            'foreignKey' => 'location_id'
+                'foreignKey' => 'location_id'
             ]);
             $this->hasMany('Subjects', [
-            'foreignKey' => 'location_id'
+                'foreignKey' => 'location_id'
             ]);
             $this->hasMany('Users', [
-            'foreignKey' => 'location_id'
+                'foreignKey' => 'location_id'
             ]);
 	}
 

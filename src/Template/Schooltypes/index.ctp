@@ -8,10 +8,9 @@
     <table cellpadding="0" cellspacing="0">
     <thead>
         <tr>
-            <th><?= $this->Paginator->sort('id') ?></th>
             <th><?= $this->Paginator->sort('name') ?></th>
-            <th><?= $this->Paginator->sort('maximum_class', __('max_grade')) ?></th>
             <th><?= $this->Paginator->sort('minimum_class', __('min_grade')) ?></th>
+            <th><?= $this->Paginator->sort('maximum_class', __('max_grade')) ?></th>
             <?php if(isset($admin)): ?>
             <th><?= $this->Paginator->sort('location_id') ?></th>
             <?php endif; ?>
@@ -21,10 +20,9 @@
     <tbody>
     <?php foreach ($schooltypes as $schooltype): ?>
         <tr>
-            <td><?= $this->Number->format($schooltype->id) ?></td>
             <td><?= h($schooltype->name) ?></td>
-            <td><?= $this->Number->format($schooltype->maximum_class) ?></td>
             <td><?= $this->Number->format($schooltype->minimum_class) ?></td>
+            <td><?= $this->Number->format($schooltype->maximum_class) ?></td>
             
             <?php if(isset($admin)): ?>
             <td>
@@ -33,7 +31,6 @@
             <?php endif; ?>
             
             <td class="actions">
-                <?= $this->Html->link(__('View'), ['action' => 'view', $schooltype->id]) ?>
                 <?= $this->Html->link(__('Edit'), ['action' => 'edit', $schooltype->id]) ?>
                 <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $schooltype->id], ['confirm' => __('Are you sure you want to delete # {0}?', $schooltype->id)]) ?>
             </td>

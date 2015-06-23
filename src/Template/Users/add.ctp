@@ -13,8 +13,7 @@
             echo $this->Form->input('last_name', ['label' => __('last_name')]);
             echo $this->Form->input('email', ['label' => __('email')]);
             echo $this->Form->input('password', ['label' => __('password')]);
-            echo $this->Form->input('type_id', ['label' => __('type_id'), 'options' => $types, 'empty' => false]);
-            echo $this->Form->input('location_id', ['label' => __('location_id'), 'options' => $locations, 'empty' => false]);
+            echo $this->Form->input('type_id', ['label' => __('Type'), 'options' => $types, 'empty' => false]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

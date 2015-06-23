@@ -98,11 +98,11 @@ class PartnersTable extends Table
 		->notEmpty('city');
 
 		$validator
-		->requirePresence('telephone', 'create')
-		->notEmpty('telephone');
+		->requirePresence('mobile', 'create')
+		->notEmpty('mobile');
 
 		$validator
-		->allowEmpty('mobile');
+		->allowEmpty('telephone');
 
 		$validator
                 ->add('teach_time', 'valid', ['rule' => 'numeric'])

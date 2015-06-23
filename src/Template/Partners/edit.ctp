@@ -3,13 +3,15 @@
     <ul class="side-nav">
         <?php if(isset($vermittler) or isset($locationAdmin) or isset($admin)) : ?>
             <li><?= $this->Form->postLink(
-                            __('Delete'),
+                            __('Delete Partner'),
                             ['action' => 'delete', $partner->id],
                             ['confirm' => __('Are you sure you want to delete # {0}?', $partner->id)]
                     )
             ?></li>
             <li><?= $this->Html->link(__('View Partner'), ['controller' => 'Partners', 'action' => 'view', $partner->id]) ?></li>
-            <li><?= $this->Html->link(__('List Partners'), ['controller' => 'Partners', 'action' => 'index']) ?></li>
+            <li><?= $this->Html->link(__('List verified Partners'), ['controller' => 'Partners', 'action' => 'index', 'verified']) ?></li>
+            <li><?= $this->Html->link(__('List waiting and matched Partners'), ['controller' => 'Partners', 'action' => 'index', 'active']) ?></li>
+            <li><?= $this->Html->link(__('List quit and denied Partners'), ['controller' => 'Partners', 'action' => 'index', 'inactive']) ?></li>
         <?php else: ?>
             <li><?=__('No Actions')?></li>
         <?php endif; ?>
@@ -22,7 +24,6 @@
         <?php
             echo $this->Form->input('user.first_name', ['value' => $user->first_name, 'label' => __('first_name')]);
             echo $this->Form->input('user.last_name', ['value' => $user->last_name, 'label' => __('last_name')]);
-            echo ($type > 1) ? $this->Form->input('status_id', ['options' => $status, 'empty' => false, 'label' => __('Status')]) : '';
             echo $this->Form->input('age', ['value' => $partner->age, 'label' => __('age')]);
             echo $this->Form->input('sex', ['value' => $partner->sex, 'label' => __('Sex')]);
             echo $this->Form->input('degree_course', ['value' => $partner->degree_course, 'label' => __('degree_course')]);

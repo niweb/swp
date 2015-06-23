@@ -27,8 +27,11 @@ class StudentsTable extends Table
 		$this->belongsTo('Locations', [
             'foreignKey' => 'location_id'
             ]);
-            $this->hasMany('Tandems', [
-            'foreignKey' => 'student_id'
+		$this->hasMany('Tandems', [
+			'foreignKey' => 'student_id'
+			]);
+		$this->belongsTo('StudentStatus', [
+            'foreignKey' => 'status_id'
             ]);
 	}
 
@@ -76,11 +79,11 @@ class StudentsTable extends Table
 		->notEmpty('city');
 
 		$validator
-		->requirePresence('telephone', 'create')
-		->notEmpty('telephone');
+		->requirePresence('mobile', 'create')
+		->notEmpty('mobile');
 
 		$validator
-		->allowEmpty('mobile');
+		->allowEmpty('telephone');
 
 		return $validator;
 	}

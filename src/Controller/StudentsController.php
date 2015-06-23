@@ -47,7 +47,7 @@ class StudentsController extends AppController
 	
 		if($type < '5'){
 			$this->paginate = [
-            'contain' => ['Locations']
+            'contain' => ['Locations', 'StudentStatus']
 			];
 			$students = $this->Students->findByLocationId($user['location_id']);
 			$this->set('students', $this->paginate($students));
@@ -71,10 +71,19 @@ class StudentsController extends AppController
 	public function view($id = null)
 	{
 		$student = $this->Students->get($id, [
-            'contain' => ['Locations', 'Tandems']
+            'contain' => ['Tandems.Partners.Users', 'StudentStatus']
 		]);
-		$this->set('student', $student);
-		$this->set('_serialize', ['student']);
+		$this->loadModel('StudentSubjects');
+		$this->loadModel('StudentClassranges');
+		$this->loadModel('Classranges');
+		$this->loadModel('Subjects');
+		$subject = $this->StudentSubjects->findByStudentId($id)->contain('Subjects')->first();
+		$subject1 = $this->Subjects->get($subject['subject1']);
+		$subject2 = $this->Subjects->get($subject['subject2']);
+		$subject3 = $this->Subjects->get($subject['subject3']);
+		$classrange = $this->StudentClassranges->findByStudentId($id)->contain('Classranges')->first();
+		$this->set(compact('student', 'subject1', 'subject2', 'subject3', 'classrange'));
+		$this->set('_serialize', ['student', 'subject1', 'subject2', 'subject3', 'classrange']);
 	}
 
 	/**
@@ -154,9 +163,14 @@ class StudentsController extends AppController
 				$this->Flash->error('The student could not be saved. Please, try again.');
 			}
 		}
-		
-		$this->set('student', $student);
-		$this->set('_serialize', ['student']);
+		$this->loadModel('StudentStatus');
+		$this->loadModel('Subjects');
+		$this->loadModel('Classranges');
+		$status = $this->StudentStatus->find('list');
+		$subjects = $this->Subjects->find('list');
+		$classranges = $this->Classranges->find('list');
+		$this->set(compact('student', 'status', 'subjects', 'classranges'));
+		$this->set('_serialize', ['student', 'status', 'subjects', 'classranges']);
 	}
 
 	/**

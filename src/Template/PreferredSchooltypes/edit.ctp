@@ -19,7 +19,6 @@
     <fieldset>
         <legend><?= __('Edit Preferred Schooltype') ?></legend>
         <?php
-            echo $this->Form->input('partner_id', ['options' => $partners, 'empty' => true]);
             echo $this->Form->input('schooltype_id', ['options' => $schooltypes, 'empty' => true]);
         ?>
     </fieldset>

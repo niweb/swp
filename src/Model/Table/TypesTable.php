@@ -21,11 +21,11 @@ class TypesTable extends Table
 	 */
 	public function initialize(array $config)
 	{
-		$this->table('types');
-		$this->displayField('name');
-		$this->primaryKey('id');
-		$this->hasMany('Users', [
-            'foreignKey' => 'type_id'
+            $this->table('types');
+            $this->displayField('name');
+            $this->primaryKey('id');
+            $this->hasMany('Users', [
+                'foreignKey' => 'type_id'
             ]);
 	}
 

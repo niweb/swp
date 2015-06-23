@@ -4,9 +4,9 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Status Entity.
+ * StudentStatus Entity.
  */
-class Status extends Entity
+class StudentStatus extends Entity
 {
 
     /**
@@ -16,6 +16,5 @@ class Status extends Entity
      */
     protected $_accessible = [
         'name' => true,
-        'text' => true,
     ];
 }

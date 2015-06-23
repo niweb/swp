@@ -23,6 +23,12 @@ msgstr "Standorte"
 msgid "Location"
 msgstr "Standort"
 
+msgid "Location-Admin"
+msgstr "Standort-Admin"
+
+msgid "Location-Admins"
+msgstr "Standort-Admins"
+
 msgid "Tandems"
 msgstr "Patenschaften"
 
@@ -34,6 +40,9 @@ msgstr "Benutzertyp"
 
 msgid "Classranges"
 msgstr "Klassenstufen"
+
+msgid "Classrange"
+msgstr "Klassenstufe"
 
 msgid "Schooltypes"
 msgstr "Schularten"
@@ -50,6 +59,12 @@ msgstr "Patenschaft"
 msgid "created"
 msgstr "erstellt"
 
+msgid "previous"
+msgstr "vorherige"
+
+msgid "next"
+msgstr "nächste"
+
 
 #, Allgemeine Aktionen
 msgid "Delete"
@@ -60,6 +75,9 @@ msgstr "Willst du wirklich {0} löschen?"
 
 msgid "Are you sure you want to delete # {0}?"
 msgstr "Willst du wirklich #{0} löschen?"
+
+msgid "Are you sure you want to deactivate # {0}?"
+msgstr "Willst du wirklich #{0} deaktivieren?"
 
 msgid "dont_delete_{0}"
 msgstr "Achtung! Wird ein {0} gelöscht, kann es zu schweren Fehlern im System kommen! Bitte nicht leichtsinnig verwenden!"
@@ -76,16 +94,25 @@ msgstr "Ansehen"
 msgid "Edit"
 msgstr "Bearbeiten"
 
-msgid "No Actions"
-msgstr "Keine Aktionen verfügbar"
-
 #, Action-Column
 msgid "Actions"
 msgstr "Aktionen"
 
+msgid "No Actions"
+msgstr "Keine Aktionen verfügbar"
+
 #, Paten
 msgid "List Partners"
 msgstr "Alle Paten anzeigen"
+
+msgid "List verified Partners"
+msgstr "Alle verifizierten Paten anzeigen"
+
+msgid "List waiting and matched Partners"
+msgstr "Alle wartenden und vermittelten Paten anzeigen"
+
+msgid "List quit and denied Partners"
+msgstr "Alle ehemaligen Paten anzeigen"
 
 msgid "Edit Partner"
 msgstr "Paten bearbeiten"
@@ -252,14 +279,37 @@ msgid "View Subject"
 msgstr "Dieses Schulfach anzeigen"
 
 #, Tandems
+msgid "Tandem"
+msgstr "Patenschaft"
+
 msgid "List Tandems"
 msgstr "Alle Patenschaften anzeigen"
+
+msgid "Deactivate Tandem"
+msgstr "Patenschaft deaktivieren"
+
+msgid "Reactivate Tandem"
+msgstr "Patenschaft wieder aktivieren"
+
+msgid "View Tandem"
+msgstr "Diese Patenschaft anzeigen"
+
+msgid "Activated"
+msgstr "Aktiviert"
+
+msgid "Deactivated"
+msgstr "Deaktiviert"
+
+msgid "Deactivate"
+msgstr "Deaktivieren"
+
+msgid "Reactivate"
+msgstr "Wieder aktivieren"
+
 
 #, Tabellenüberschriften
 msgid "Created"
 msgstr "Erstellt"
-
-
 
 #, Überschriften im Registrierungsformular
 msgid "Become Schülerpate"
@@ -297,7 +347,13 @@ msgstr "Passwort"
 msgid "Sex"
 msgstr "Geschlecht"
 
+msgid "sex"
+msgstr "Geschlecht"
+
 msgid "Gender"
+msgstr "Geschlecht"
+
+msgid "gender"
 msgstr "Geschlecht"
 
 msgid "male"

@@ -1,7 +1,7 @@
 <div class="actions columns large-2 medium-3">
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
-        <?php if(isset($vermittler) or isset($locationAdmin) or isset($admin)) : ?>
+        <?php if(isset($matchmaker) or isset($vermittler) or isset($locationAdmin) or isset($admin)) : ?>
             <li><?= $this->Html->link(__('New Student'), ['controller' => 'Students', 'action' => 'add']) ?></li>
         <?php else: ?>
             <li><?= __('No Actions')?></li>
@@ -12,11 +12,10 @@
     <table cellpadding="0" cellspacing="0">
     <thead>
         <tr>
-            <th><?= $this->Paginator->sort('id', __('id')) ?></th>
             <th><?= $this->Paginator->sort('first_name', __('first_name')) ?></th>
             <th><?= $this->Paginator->sort('last_name', __('last_name')) ?></th>
-            <th><?= $this->Paginator->sort('telephone', __('telephone')) ?></th>
-            <th><?= $this->Paginator->sort('mobile', __('mobile')) ?></th>
+            <th><?= $this->Paginator->sort('sex', __('sex')) ?></th>
+            <th><?= $this->Paginator->sort('status_id', __('Status')) ?></th>
             <?php if(isset($admin)):?><th><?= $this->Paginator->sort('location_id', __('location_id')) ?></th><?php endif; ?>
             <th class="actions"><?= __('Actions') ?></th>
         </tr>
@@ -24,11 +23,10 @@
     <tbody>
     <?php foreach ($students as $student): ?>
         <tr>
-            <td><?= $this->Number->format($student->id) ?></td>
             <td><?= h($student->first_name) ?></td>
             <td><?= h($student->last_name) ?></td>
-            <td><?= h($student->telephone) ?></td>
-            <td><?= h($student->mobile) ?></td>
+            <td><?= (($student->sex)=='m') ? __('male') : __('female')?></td>
+            <td><?= h($student->student_status->name) ?></td>
             <?php if(isset($admin)): ?><td>
                 <?= $student->has('location') ? $this->Html->link($student->location->name, ['controller' => 'Locations', 'action' => 'view', $student->location->id]) : '' ?>
             </td><?php endif; ?>

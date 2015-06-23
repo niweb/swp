@@ -9,15 +9,13 @@
     </ul>
 </div>
 <div class="students view large-10 medium-9 columns">
-    <h2><?= h($student->name) ?></h2>
+    <h2><?= h($student->first_name . ' ' . $student->last_name) ?></h2>
     <div class="row">
         <div class="large-5 columns strings">
-            <h6 class="subheader"><?= __('first_name') ?></h6>
-            <p><?= h($student->first_name) ?></p>
-            <h6 class="subheader"><?= __('last_name') ?></h6>
-            <p><?= h($student->last_name) ?></p>
+            <h6 class="subheader"><?= __('Status') ?></h6>
+            <p><?= h($student->student_status->name) ?></p>
             <h6 class="subheader"><?= __('sex') ?></h6>
-            <p><?= h($student->sex) ?></p>
+            <p><?= (($student->sex)=='m') ? __('male') : __('female')?></p>
             <h6 class="subheader"><?= __('street') ?></h6>
             <p><?= h($student->street) ?></p>
             <h6 class="subheader"><?= __('house_number') ?></h6>
@@ -32,12 +30,12 @@
             <p><?= h($student->telephone) ?></p>
             <h6 class="subheader"><?= __('mobile') ?></h6>
             <p><?= h($student->mobile) ?></p>
-            <h6 class="subheader"><?= __('lat') ?></h6>
-            <p><?= h($student->lat) ?></p>
-            <h6 class="subheader"><?= __('lng') ?></h6>
-            <p><?= h($student->lng) ?></p>
-            <h6 class="subheader"><?= __('Location') ?></h6>
-            <p><?= $student->has('location') ? $this->Html->link($student->location->name, ['controller' => 'Locations', 'action' => 'view', $student->location->id]) : '' ?></p>
+			<h6 class="subheader"><?= __('Classrange') ?></h6>
+            <p><?= h($classrange->classrange->name) ?></p>
+			<h6 class="subheader"><?= __('Subjects') ?></h6>
+            <p><?= (isset($subject1)) ? h($subject1->name) : '' ?></p>
+            <p><?= (isset($subject2)) ? h($subject2->name) : '' ?></p>
+            <p><?= (isset($subject3)) ? h($subject3->name) : '' ?></p>
         </div>
         <div class="large-2 columns numbers end">
             <h6 class="subheader"><?= __('Id') ?></h6>
@@ -51,20 +49,20 @@
     <?php if (!empty($student->tandems)): ?>
     <table cellpadding="0" cellspacing="0">
         <tr>
-            <th><?= __('Id') ?></th>
-            <th><?= __('Partner Id') ?></th>
-            <th><?= __('Student Id') ?></th>
-            <th><?= __('Active') ?></th>
+            <th><?= __('Partner') ?></th>
+            <th><?= __('Activated') ?></th>
+			<th><?= __('Deactivated') ?></th>
             <th class="actions"><?= __('Actions') ?></th>
         </tr>
         <?php foreach ($student->tandems as $tandems): ?>
         <tr>
-            <td><?= h($tandems->id) ?></td>
-            <td><?= h($tandems->partner_id) ?></td>
-            <td><?= h($tandems->student_id) ?></td>
+
+            <td><?= $this->Html->link(h($tandems->partner->user->first_name.' '.$tandems->partner->user->last_name), ['controller' => 'Partners', 'action' => 'view', $tandems->partner->id]) ?></td>
             <td><?= h($tandems->activated) ?></td>
 			<?php if($tandems->deactivated != NULL) : ?>
 				<td><?= h($tandems->deactivated) ?></td>
+			<?php else : ?>
+				<td></td>
 			<?php endif; ?>
 
             <td class="actions">

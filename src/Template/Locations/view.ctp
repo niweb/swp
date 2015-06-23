@@ -8,25 +8,14 @@
 </div>
 <div class="locations view large-10 medium-9 columns">
     <h2><?= h($location->name) ?></h2>
-    <div class="row">
-        <div class="large-5 columns strings">
-            <h6 class="subheader"><?= __('Name') ?></h6>
-            <p><?= h($location->name) ?></p>
-        </div>
-        <div class="large-2 columns numbers end">
-            <h6 class="subheader"><?= __('Id') ?></h6>
-            <p><?= $this->Number->format($location->id) ?></p>
-        </div>
-    </div>
 </div>
 <!----------------------------------
 <div class="related row">
-    <div class="column large-12">
-    <h4 class="subheader"><?= __('Related Partners') ?></h4>
+    <div class="column large-7">
     <?php if (!empty($location->partners)): ?>
+    <h4 class="subheader"><?= __('Related Partners') ?></h4>
     <table cellpadding="0" cellspacing="0">
         <tr>
-            <th><?= __('Id') ?></th>
             <th><?= __('first_name') ?></th>
             <th><?= __('last_name') ?></th>
             <th><?= __('Age') ?></th>
@@ -35,7 +24,6 @@
         </tr>
         <?php foreach ($location->partners as $partners): ?>
         <tr>
-            <td><?= h($partners->id) ?></td>
             <td><?= h($partners->user->first_name) ?></td>
             <td><?= h($partners->user->last_name) ?></td>
             <td><?= h($partners->age) ?></td>
@@ -58,52 +46,16 @@
 </div>
 ------------------------------------------------->
 <div class="related row">
-    <div class="column large-12">
-    <h4 class="subheader"><?= __('Related Schooltypes') ?></h4>
-    <?php if (!empty($location->schooltypes)): ?>
-    <table cellpadding="0" cellspacing="0">
-        <tr>
-            <th><?= __('Id') ?></th>
-            <th><?= __('Name') ?></th>
-            <th><?= __('max_grade') ?></th>
-            <th><?= __('min_grade') ?></th>
-            <th class="actions"><?= __('Actions') ?></th>
-        </tr>
-        <?php foreach ($location->schooltypes as $schooltypes): ?>
-        <tr>
-            <td><?= h($schooltypes->id) ?></td>
-            <td><?= h($schooltypes->name) ?></td>
-            <td><?= h($schooltypes->maximum_class) ?></td>
-            <td><?= h($schooltypes->minimum_class) ?></td>
-
-            <td class="actions">
-                <?= $this->Html->link(__('View'), ['controller' => 'Schooltypes', 'action' => 'view', $schooltypes->id]) ?>
-
-                <?= $this->Html->link(__('Edit'), ['controller' => 'Schooltypes', 'action' => 'edit', $schooltypes->id]) ?>
-
-                <?= $this->Form->postLink(__('Delete'), ['controller' => 'Schooltypes', 'action' => 'delete', $schooltypes->id], ['confirm' => __('Are you sure you want to delete # {0}?', $schooltypes->id)]) ?>
-
-            </td>
-        </tr>
-
-        <?php endforeach; ?>
-    </table>
-    <?php endif; ?>
-    </div>
-</div>
-<div class="related row">
-    <div class="column large-12">
-    <h4 class="subheader"><?= __('Related Subjects') ?></h4>
+    <div class="column large-7">
     <?php if (!empty($location->subjects)): ?>
+    <h4 class="subheader"><?= __('Related Subjects') ?></h4>
     <table cellpadding="0" cellspacing="0">
         <tr>
-            <th><?= __('Id') ?></th>
             <th><?= __('Name') ?></th>
             <th class="actions"><?= __('Actions') ?></th>
         </tr>
         <?php foreach ($location->subjects as $subjects): ?>
         <tr>
-            <td><?= h($subjects->id) ?></td>
             <td><?= h($subjects->name) ?></td>
 
             <td class="actions">
@@ -120,14 +72,40 @@
     </table>
     <?php endif; ?>
     </div>
-</div>
-<div class="related row">
-    <div class="column large-12">
-    <h4 class="subheader"><?= __('Related Students') ?></h4>
-    <?php if (!empty($location->students)): ?>
+    
+    <div class="column large-7">
+    <?php if (!empty($location->schooltypes)): ?>
+    <h4 class="subheader"><?= __('Related Schooltypes') ?></h4>
     <table cellpadding="0" cellspacing="0">
         <tr>
-            <th><?= __('Id') ?></th>
+            <th><?= __('Name') ?></th>
+            <th><?= __('max_grade') ?></th>
+            <th><?= __('min_grade') ?></th>
+            <th class="actions"><?= __('Actions') ?></th>
+        </tr>
+        <?php foreach ($location->schooltypes as $schooltypes): ?>
+        <tr>
+            <td><?= h($schooltypes->name) ?></td>
+            <td><?= h($schooltypes->maximum_class) ?></td>
+            <td><?= h($schooltypes->minimum_class) ?></td>
+
+            <td class="actions">
+                <?= $this->Html->link(__('View'), ['controller' => 'Schooltypes', 'action' => 'view', $schooltypes->id]) ?>
+                <?= $this->Html->link(__('Edit'), ['controller' => 'Schooltypes', 'action' => 'edit', $schooltypes->id]) ?>
+                <?= $this->Form->postLink(__('Delete'), ['controller' => 'Schooltypes', 'action' => 'delete', $schooltypes->id], ['confirm' => __('Are you sure you want to delete # {0}?', $schooltypes->id)]) ?>
+            </td>
+        </tr>
+
+        <?php endforeach; ?>
+    </table>
+    <?php endif; ?>
+    </div>
+    
+    <div class="column large-7">
+    <?php if (!empty($location->students)): ?>
+    <h4 class="subheader"><?= __('Related Students') ?></h4>
+    <table cellpadding="0" cellspacing="0">
+        <tr>
             <th><?= __('first_name') ?></th>
             <th><?= __('last_name') ?></th>
             <th><?= __('Telephone') ?></th>
@@ -136,7 +114,6 @@
         </tr>
         <?php foreach ($location->students as $students): ?>
         <tr>
-            <td><?= h($students->id) ?></td>
             <td><?= h($students->first_name) ?></td>
             <td><?= h($students->last_name) ?></td>
             <td><?= h($students->telephone) ?></td>
@@ -156,14 +133,12 @@
     </table>
     <?php endif; ?>
     </div>
-</div>
-<div class="related row">
-    <div class="column large-12">
-    <h4 class="subheader"><?= __('Related Users') ?></h4>
+    
+    <div class="column large-7">
     <?php if (!empty($location->users)): ?>
+    <h4 class="subheader"><?= __('Related Users') ?></h4>
     <table cellpadding="0" cellspacing="0">
         <tr>
-            <th><?= __('Id') ?></th>
             <th><?= __('first_name') ?></th>
             <th><?= __('last_name') ?></th>
             <th><?= __('Email') ?></th>
@@ -172,7 +147,6 @@
         </tr>
         <?php foreach ($location->users as $users): ?>
         <tr>
-            <td><?= h($users->id) ?></td>
             <td><?= h($users->first_name) ?></td>
             <td><?= h($users->last_name) ?></td>
             <td><?= h($users->email) ?></td>

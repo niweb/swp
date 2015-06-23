@@ -1,16 +1,16 @@
 <?php
 namespace App\Model\Table;
 
-use App\Model\Entity\Status;
+use App\Model\Entity\StudentStatus;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Status Model
+ * StudentStatus Model
  */
-class StatusTable extends Table
+class StudentStatusTable extends Table
 {
 
     /**
@@ -21,12 +21,9 @@ class StatusTable extends Table
      */
     public function initialize(array $config)
     {
-        $this->table('status');
+        $this->table('student_status');
         $this->displayField('name');
         $this->primaryKey('id');
-        $this->hasMany('Partners', [
-            'foreignKey' => 'status_id'
-        ]);
     }
 
     /**
@@ -44,9 +41,6 @@ class StatusTable extends Table
         $validator
             ->requirePresence('name', 'create')
             ->notEmpty('name');
-			
-		$validator
-			->allowEmpty('text');
 
         return $validator;
     }

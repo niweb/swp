@@ -1,6 +1,3 @@
-<head>
-     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-</head>
 <div class="actions columns large-2 medium-3">
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
@@ -32,64 +29,13 @@
 			echo $this->Form->input('city', ['label' => __('city'), 'onchange'=>'save_city(this.value)']);
             echo $this->Form->input('telephone', ['label' => __('telephone')]);
             echo $this->Form->input('mobile', ['label' => __('mobile')]);
-            echo $this->Form->input('lat', ['label' => __('lat'), 'id'=>'lat', /*'type'=>'hidden'*/]);
-            echo $this->Form->input('lng', ['label' => __('lng'), 'id'=>'lng'/*,'type'=>'hidden'*/]);
+			echo $this->Form->input('status_id', ['label' => __('status_id'), 'options' => $status]);
+			echo $this->Form->input('classranges', ['label' => __('classranges'), 'options' => $classranges]);
+			echo $this->Form->input('subject1', ['label' => __('subject1'), 'options' => $subjects]);
+			echo $this->Form->input('subject2', ['label' => __('subject2'), 'options' => $subjects]);
+			echo $this->Form->input('subject3', ['label' => __('subject3'), 'options' => $subjects]);
         ?>
     </fieldset>
-  <div id="results_coords"></div>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
 </div>
-<script>
-var street;
-var postcode;
-var city;
-    function save_street(val){
-        street=val;
-    }
-    function save_postcode(val){
-        postcode=val;
-    }
-    function save_city(val){
-        city=val;
-     //   document.getElementById("lng").value='';
-       // document.getElementById("lat").value='';
-        address=street+','+city+','+postcode;
-        addr_search(address);
-    }
-    function addr_search(wert) {
-        $.getJSON('http://nominatim.openstreetmap.org/search?format=json&limit=3&q=' + wert, function (data) {
-        var items = [];
-        var latitude;
-        var longitude;
-
-        $.each(data, function (key, val) {
-            latitude=document.getElementById('lat');
-            latitude.value=val.lat;
-            longitude=document.getElementById('lng');
-            longitude.value=val.lon;
-           /* var str = JSON.stringify([val.lat, val.lon]);
-            items.push(str);
-
-
-            items.push("<li><a href='#' onclick='alert(" + str + ");'>" + val.display_name + '</a></li>');*/
-        });
-   
-
-     $('#results_coords').empty();
-        if (items.length !== 0) {
-            $('<p>', {
-                html: "Wählen Sie bitte die Straße des Schülern aus:"
-            }).appendTo('#results_coords');
-            $('<ul/>', {
-                'class': 'my-new-list',
-                html: items.join('')
-            }).appendTo('#results_coords');
-        } else {
-            $('<p>', {
-                html: "No results found"
-            }).appendTo('#results_coords');
-            }
-        });
-    }
-</script>

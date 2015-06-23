@@ -65,33 +65,59 @@ class AppController extends Controller
 	}
 	
 	public function setVariables(){
-		$authUser = $this->Auth->user();
-		$this->set('authUser', $authUser);
-				
-		if($authUser) {
+            $authUser = $this->Auth->user();
+            $this->set('authUser', $authUser);
+			
+            switch($authUser['type_id']){
+                case(5):
+                    $admin = $authUser;
+                    $this->set('admin', $admin);
+                    break;
+                case(4):
+                    $locationAdmin = $authUser;
+                    $this->set('locationAdmin', $locationAdmin);
+                    break;
+                case(3):
+                    $vermittler = $authUser;
+                    $this->set('vermittler', $vermittler);
+                    break;
+                case(2):
+                    $matchmaker = $authUser;
+                    $this->set('matchmaker', $matchmaker);
+                    break;
+                default:
+                    $this->loadModel('Partners');
+                    $authPartner = $this->Partners->findByUserId($this->Auth->user('id'))->first();
+                    $this->set('authPartner', $authPartner);
+                    break;
+            }
+		
+            /*
+            
+            if($authUser) {
 			$this->loadModel('UserHasTypes');
 			$authUserType = $this->UserHasTypes->findByUserId($this->Auth->user('id'))->order(['type_id' => 'DESC'])->first()['type_id'];
 			$this->set('authUserType', $authUserType);
-			
-			if($authUserType == '5') {
-				$admin = $authUser;
-				$this->set('admin', $admin);
-			} else if($authUserType == '4'){
-				$locationAdmin = $authUser;
-				$this->set('locationAdmin', $locationAdmin);
-			} else if($authUserType == '3') {
-				$vermittler = $authUser;
-				$this->set('vermittler', $vermittler);
+            
+            if($authUserType == '5') {
+            
+                    $admin = $authUser;
+                    $this->set('admin', $admin);
+            } else if($authUserType == '4'){
+                    $locationAdmin = $authUser;
+                    $this->set('locationAdmin', $locationAdmin);
+            } else if($authUserType == '3') {
+                    $vermittler = $authUser;
+                    $this->set('vermittler', $vermittler);
             } else if($authUserType == '2') {
-				$matchmaker = $authUser;
-				$this->set('matchmaker', $matchmaker);
-			} else {
-				$this->loadModel('Partners');
-				$authPartner = $this->Partners->findByUserId($this->Auth->user('id'))->first();
-				$this->set('authPartner', $authPartner);
-			}
-		
-		}
+                    $matchmaker = $authUser;
+                    $this->set('matchmaker', $matchmaker);
+            } else {
+                    $this->loadModel('Partners');
+                    $authPartner = $this->Partners->findByUserId($this->Auth->user('id'))->first();
+                    $this->set('authPartner', $authPartner);
+            }
+             */
 	}
 
 	public function beforeFilter(Event $event){

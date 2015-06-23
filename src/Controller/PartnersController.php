@@ -71,9 +71,10 @@ class PartnersController extends AppController
 	/**
 	 * Index method
 	 *
+         * @param string|null $view welche paten werden angezeigt - 'all', 'verified', 'waiting', 'active', 'inactive'.
 	 * @return void
 	 */
-	public function index()
+	public function index($view=null)
 	{
             /*$this->paginate = [
                 'contain' => ['Locations']
@@ -84,18 +85,46 @@ class PartnersController extends AppController
             $this->loadModel('Users');
             $this->set('users', $this->paginate($this->Users));
             $this->set('_serialize', ['users']);*/
+            
+            switch($view){
+                case 'all':
+                    //alle alle
+                    $condition = [];
+                    break;
+                case 'verified':
+                    //alle ab verifiziert
+                    $condition = ['status_id >=' => 2];
+                    break;
+                case 'waiting':
+                    //alle wartenden
+                    $condition = ['status_id =' => 5];
+                    break;
+                case 'active':
+                    //alle wartenden und vermittelten
+                    $condition = ['status_id >=' => 5, 'status_id <=' => 6];
+                    break;
+                case 'inactive':
+                    //alle aufgehört und abgelehnten
+                    $condition = ['status_id >=' => 7, 'status_id <=' => 8];
+                    break;
+                default:
+                    //keiner
+                    $condition = ['status_id <' => 0];
+            }
 
             $this->loadModel('UserHasTypes');
             $user = $this->Auth->user();
             $userType = $this->UserHasTypes->findByUserId($user['id'])->first()['type_id'];
 
             if($userType > '1' && $userType < '5') {
-                $this->paginate = ['contain' => ['Locations', 'Users']];
-                $partners = $this->Partners->findByLocationId($user['location_id'])->contain(['Users']);
+                $condition['Users.location_id ='] = $user['location_id'];
+                $this->paginate = ['contain' => ['Locations', 'Users', 'Status']];
+                $partners = $this->Partners->find('all', ['limit' => 500, 'conditions' => $condition])->contain(['Users', 'Status']);
                 $this->set('partners', $this->paginate($partners));
                 $this->set('_serialize', ['partners']);
             } else {
-                $this->paginate = ['contain' => ['Locations', 'Users']];
+                //unwichtig weil globadmin eigentlich nie paten sieht
+                $this->paginate = ['contain' => ['Locations', 'Users', 'Status']];
                 $partners = $this->Partners->find('all')->contain(['Users']);
                 $this->set('partners', $this->paginate($partners));
                 $this->set('_serialize', ['partners']);
@@ -112,7 +141,7 @@ class PartnersController extends AppController
 	public function view($id = null)
 	{
             $partner = $this->Partners->get($id, [
-                'contain' => ['Locations', 'PreferredClassranges', 'PreferredSchooltypes', 'PreferredSubjects', 'Tandems.Students', 'Status', 'Users']
+                'contain' => ['PreferredClassranges.Classranges', 'PreferredSchooltypes.Schooltypes', 'PreferredSubjects.Subjects', 'Tandems.Students', 'Status', 'Users']
             ]);
             $this->set('partner', $partner);
             $this->set('_serialize', ['partner']);
@@ -183,6 +212,12 @@ class PartnersController extends AppController
             $this->set('_serialize', ['partner', 'user']);
 	}
 
+	/*public function deactivate($id = null){
+		$this->request->allowMethod(['post', 'deactivate']);
+		$partner = $this->Partners->get($id);
+		
+	}*/
+	
 	/**
 	 * Delete method
 	 *
@@ -202,9 +237,9 @@ class PartnersController extends AppController
 			$this->PreferredSchooltypes->deleteAll(['partner_id' => $id]);
 			$this->PreferredSubjects->deleteAll(['partner_id' => $id]);
 			
-			$this->Flash->success('Du bist jetzt kein Schuelerpate mehr. Wenn du deine Meinung aenderst bist du wieder willkommen.');
+			$this->Flash->success('Pate wurde gelöscht');
 		} else {
-			$this->Flash->error('The partner could not be deleted. Please, try again.');
+			$this->Flash->error('Pate konnte nicht gelöscht werden');
 		}
 		return $this->redirect(['action' => 'index']);
 	}
@@ -222,6 +257,7 @@ public function register($loc = null) /* location-id */
             $user->last_name = $this->request->data('user.last_name');
             $user->email = $this->request->data('user.email');
             $user->password = $this->request->data('user.password');
+            $user->type_id = 1;
             $user->location_id = $loc;
             $user->activation = rand(100000000,999999999);
             $userSaved = $userTable->save($user);
@@ -399,19 +435,5 @@ public function register($loc = null) /* location-id */
 		$this->set('_serialize', ['partner', 'status']);
 	}
 
-    public function choose_students($id=null){
-            $partner = $this->Partners->get($id, [
-                'contain' => ['Locations', 'PreferredClassranges', 'PreferredSchooltypes', 'PreferredSubjects', 'Tandems.Students', 'Status', 'Users']
-            ]);
-            $this->loadModel('Students');
-            $this->loadModel('PreferredSubjects');
-            $students= $this->Students->find('all',['limit'=>5])
-              ->where(['sex =' => $partner->preferred_gender,
-                        'last_name' =>'der Kleine'
-                        ]);
-            $this->set('student', $students->first());           
-            $this->set(compact('students'));
-            $this->set('partner', $partner);
-            $this->set('_serialize', ['partner','student']);
-    }
+  
 }

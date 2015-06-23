@@ -1,17 +1,17 @@
-<head><title>OpenLayers Marker Popups</title>
-  <style>
-    #mapdiv {height: 350px; width: 100%;}
-  </style>
-
-</head>
 <div class="actions columns large-2 medium-3">
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
-        <li><?= $this->Html->link(__('Edit Partner'), ['action' => 'edit', $partner->id]) ?> </li>
         <?php if(isset($vermittler) or isset($locationAdmin) or isset($admin)) : ?>
-                <li><?= $this->Form->postLink(__('Delete Partner'), ['action' => 'delete', $partner->id], ['confirm' => __('Are you sure you want to delete {0}?', h($partner->user->first_name.' '.$partner->user->last_name))]) ?> </li>
-        <?php elseif(isset($matchmaker) or isset($vermittler) or isset($locationAdmin) or isset($admin)) : ?>
+            <li><?= $this->Html->link(__('Edit Partner'), ['action' => 'edit', $partner->id]) ?> </li>    
+            <li><?= $this->Form->postLink(__('Delete Partner'), ['action' => 'delete', $partner->id], ['confirm' => __('Are you sure you want to delete {0}?', h($partner->user->first_name.' '.$partner->user->last_name))]) ?> </li>
+        <?php endif; ?>
+            <li><?= $this->Form->postLink(__('Change Status of Partner'), ['action' => 'status', $partner->id]) ?> </li>
+        <?php if(isset($matchmaker)): ?>
             <li><?= $this->Html->link(__('List Partners'), ['controller' => 'Partners', 'action' => 'index']) ?></li>
+        <?php elseif(isset($vermittler) or isset($locationAdmin) OR isset($admin)): ?>
+            <li><?= $this->Html->link(__('List verified Partners'), ['controller' => 'Partners', 'action' => 'index', 'verified']) ?></li>
+            <li><?= $this->Html->link(__('List waiting and matched Partners'), ['controller' => 'Partners', 'action' => 'index', 'active']) ?></li>
+            <li><?= $this->Html->link(__('List quit and denied Partners'), ['controller' => 'Partners', 'action' => 'index', 'inactive']) ?></li>
         <?php endif; ?>
     </ul>
 </div>
@@ -24,10 +24,12 @@
             <p><?= $partner->has('status') ? h($partner->status->name) : 'Kein Status'?></p>
             <h6 class="subheader"><?= __('E-Mail') ?></h6>
             <p><?= h($partner->user->email) ?></p>
+            <?php if (isset($admin)): ?>
             <h6 class="subheader"><?= __('Location') ?></h6>
             <p><?= $partner->has('location') ? $this->Html->link($partner->location->name, ['controller' => 'Locations', 'action' => 'view', $partner->location->id]) : 'Kein Standort zugewiesen' ?></p>
+            <?php endif; ?>
             <h6 class="subheader"><?= __('Sex') ?></h6>
-            <p><?= h($partner->sex) ?></p>
+            <p><?= (($partner->sex)=='m') ? __('male') : __('female')?></p>
             <h6 class="subheader"><?= __('Age') ?></h6>
             <p><?= $this->Number->format($partner->age) ?></p>
             <h6 class="subheader"><?= __('Degree Course') ?></h6>
@@ -202,20 +204,3 @@
     <?php endif; ?>
     </div>
 </div>
-<div id="mapdiv"></div>
-
-<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
-
-<script type="text/javascript" language="JavaScript">
- 
-
-    map = new OpenLayers.Map('mapdiv');  //create map at div with id=mapdiv
-    map.addLayer(new OpenLayers.Layer.OSM());
-
-    epsg4326 =  new OpenLayers.Projection("EPSG:4326"); //WGS 1984 projection
-    projectTo = map.getProjectionObject(); //The map projection (Spherical Mercator)
-
-    var zoom=14;
-    var center  = new OpenLayers.LonLat( 13.40495,52.52000 ).transform(epsg4326, projectTo);
-    map.setCenter (center, zoom);  
-</script>

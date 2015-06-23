@@ -12,10 +12,12 @@
     <table cellpadding="0" cellspacing="0">
     <thead>
         <tr>
+            <!---<th><!?= $this->Paginator->sort('type_id', __('type')) ?></th>--->
             <th><?= $this->Paginator->sort('first_name', __('first_name')) ?></th>
             <th><?= $this->Paginator->sort('last_name', __('last_name')) ?></th>
             <th><?= $this->Paginator->sort('email', __('email')) ?></th>
             <th><?= $this->Paginator->sort('created', __('created')) ?></th>
+            <th><?= $this->Paginator->sort('type_id', __('Type')) ?></th>
             <?php if(isset($admin)):?> <th><?= $this->Paginator->sort('location_id', __('Location')) ?></th><?php endif; ?>
             <th class="actions"><?= __('Actions') ?></th>
         </tr>
@@ -23,10 +25,12 @@
     <tbody>
     <?php foreach ($users as $user): ?>
         <tr>
+            <!----<td><!?= $user->Types->name ?></td>--->
             <td><?= $user->first_name ?></td>
             <td><?= $user->last_name ?></td>
             <td><?= h($user->email) ?></td>
             <td><?= h($user->created) ?></td>
+            <td><?= $user->type->name ?></td>
             <?php if(isset($admin)):?> 
                 <td>
                     <?= $user->has('location') ? $this->Html->link($user->location->name, ['controller' => 'Locations', 'action' => 'view', $user->location->id]) : '' ?>

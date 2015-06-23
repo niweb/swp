@@ -16,16 +16,17 @@ class User extends Entity
 	 * @var array
 	 */
 	protected $_accessible = [
-        'first_name' => true, 
-	'last_name' => true,
-	'email' => true,
-        'password' => true,
-        'location_id' => true,
+            'first_name' => true, 
+            'last_name' => true,
+            'email' => true,
+            'password' => true,
+            'location_id' => true,
+            'type_id' => true,
 	];
 
 	protected function _setPassword($value)
 	{
-		$hasher = new DefaultPasswordHasher();
-		return $hasher->hash($value);
+            $hasher = new DefaultPasswordHasher();
+            return $hasher->hash($value);
 	}
 }

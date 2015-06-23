@@ -127,12 +127,24 @@ class TandemsController extends AppController
 	
 	public function deactivate($id = null){
 		$tandem = $this->Tandems->get($id);
-		$time = Time::now();
+		$time = time();
 		$tandem->deactivated = $time;
 		if($this->Tandems->save($tandem)){
 			$this->Flash->success('Tandem deaktiviert!');
 		} else {
 			$this->Flash->error('Tandem konnte nicht deaktiviert werden');
+		}
+		return $this->redirect(['action' => 'index']);
+	}
+        
+        public function reactivate($id = null){
+		$tandem = $this->Tandems->get($id);
+		$time = time();
+		$tandem->deactivated = null;
+		if($this->Tandems->save($tandem)){
+			$this->Flash->success('Tandem wieder aktiviert!');
+		} else {
+			$this->Flash->error('Tandem konnte nicht wieder aktiviert werden');
 		}
 		return $this->redirect(['action' => 'index']);
 	}

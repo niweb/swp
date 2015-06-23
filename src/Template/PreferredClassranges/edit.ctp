@@ -19,7 +19,6 @@
     <fieldset>
         <legend><?= __('Edit Preferred Classrange') ?></legend>
         <?php
-            echo $this->Form->input('partner_id', ['options' => $partners, 'empty' => true]);
             echo $this->Form->input('classrange_id', ['options' => $classranges, 'empty' => true]);
         ?>
     </fieldset>

@@ -16,9 +16,9 @@ class UsersController extends AppController
 
     public function isAuthorized($user){
         if(in_array($this->request->action, ['index','add'])){
-            $this->loadModel('UserHasTypes');
-            $type = $this->UserHasTypes->findByUserId($user['id'])->order(['type_id' => 'DESC'])->first()['type_id'];
-            if( $type > 3 ){
+            //$this->loadModel('UserHasTypes');
+            //$type = $this->UserHasTypes->findByUserId($user['id'])->order(['type_id' => 'DESC'])->first()['type_id'];
+            if($user['type_id'] > 3 ){
                     return true;
             }
         }
@@ -26,17 +26,14 @@ class UsersController extends AppController
             $actionId = (int)$this->request->params['pass'][0];
             if($actionId == $user['id']){
                 return true;
-            } else {
-                $this->loadModel('UserHasTypes');
-                $type = $this->UserHasTypes->findByUserId($user['id'])->first()['type_id'];
-                if ($type = 5) {
+            }
+            elseif ($user['type_id'] == 5) {
+                return true;
+            }
+            elseif ($user['type_id'] == 4) {
+            $actionUser = $this->Users->get($actionId);
+                if(($actionUser['location_id'] == $user['location_id'])){
                     return true;
-                }
-                elseif ($type = 4) {
-                    $actionUser = $this->Users->get($id);
-                    if($this->Users->isTheSame($actionUser['location_id'], $user['location_id'])){
-                        return true;
-                    }
                 }
             }
         }
@@ -55,20 +52,22 @@ class UsersController extends AppController
      */
     public function index()
     {
-        $this->loadModel('UserHasTypes');
+        //kann nur von loc und glob admin gesehen werden
+        
         $user = $this->Auth->user();
-        $userType = $this->UserHasTypes->findByUserId($user['id'])->order(['type_id' => 'DESC'])->first()['type_id'];
+        //$this->loadModel('UserHasTypes');
+        //$userType = $this->UserHasTypes->findByUserId($user['id'])->order(['type_id' => 'DESC'])->first()['type_id'];
 
-        if($userType == '4'){
-            $this->paginate = ['contain' => ['Locations']];
-            $users = $this->Users->findByLocationId($user['location_id']);
-            $this->set('users', $this->paginate($users));
-            $this->set('_serialize', ['users']);
+        if($user['type_id'] == '4'){
+            $conditions = ['type_id <' => 4, 'location_id =' => $user['location_id']];
         } else {
-            $this->paginate = ['contain' => ['Locations']];
-            $this->set('users', $this->paginate($this->Users));
-            $this->set('_serialize', ['users']);
+            $conditions = ['type_id >' => 3];
         }
+        
+        $this->paginate = ['contain' => ['Locations', 'Types']];
+        $users = $this->Users->find('all', ['limit' => 200, 'empty' => false, 'conditions' => $conditions]);
+        $this->set('users', $this->paginate($users));
+        $this->set('_serialize', ['users']);
     }
 
     /**
@@ -80,15 +79,15 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
-		$this->loadModel('UserHasTypes');
-		$this->loadModel('Types');
+        //$this->loadModel('UserHasTypes');
+        //$this->loadModel('Types');
         $user = $this->Users->get($id, [
-            'contain' => ['Locations']
+            'contain' => ['Locations', 'Types']
         ]);
-		$typeID = $this->UserHasTypes->findByUserId($user->id)->first()['type_id'];
-		$type = $this->Types->get($typeID);
-        $this->set(compact('user', 'type'));
-        $this->set('_serialize', ['user', 'type']);
+        //$typeID = $this->UserHasTypes->findByUserId($user->id)->first()['type_id'];
+        //$type = $this->Types->get($typeID);
+        $this->set(compact('user'));
+        $this->set('_serialize', ['user']);
     }
 
     /**
@@ -104,40 +103,37 @@ class UsersController extends AppController
             if ($this->request->is('post')) {
                     $user = $this->Users->patchEntity($user, $this->request->data);
                     $user->activation = NULL;
+					$user->location_id = $this->Auth->user('location_id');
                     if ($this->Users->save($user)) {
                             $userType->user_id = $user->id;
                             $userType->type_id = $this->request->data['type_id'];
                             if($this->UserHasTypes->save($userType)) {
-                                    $this->Flash->success('New Matchmaker created.');
-                                    return $this->redirect(['controller' => 'Users', 'action' => 'index']);
+                                $this->Flash->success('New Matchmaker created.');
+                                return $this->redirect(['controller' => 'Users', 'action' => 'index']);
                             } else {
-                                    $this->Users->delete($user);
-                                    $this->Flash->error('The user could not be saved. Please, try again.');
+                                $this->Users->delete($user);
+                                $this->Flash->error('The user could not be saved. Please, try again.');
                             }
                     } else {
                             $this->Flash->error('The user could not be saved. Please, try again.');
                     }
             }
             $this->loadModel('UserHasTypes');
-            $type = $this->UserHasTypes->findByUserId($this->Auth->user('id'))->first()['type_id'];
+            $type = $this->UserHasTypes->findByUserId($this->Auth->user('id'))->order(['type_id' => 'DESC'])->first()['type_id'];
             switch($type){
                 case(4):
                     $typeConditions = ['id <' => '4', 'id !=' => '1']; //standortadmin darf keine standort admins oder global admins erstellen
-                    $locationConditions = ['id =' => $this->Auth->user('location_id')]; //und auch nur
                     break;
                 case(5):
-                    $typeConditions = ['id <=' => '5', 'id !=' => '1']; //globaladmin darf alles erstellen
-                    $locationConditions = ['id !=' => '-200']; //wert der nie erreicht wird
+                    $typeConditions = ['id <=' => '5', 'id >=' => '4']; //globaladmin erstellt nur loc und glob admin
                     break;
                 default: //auffangbedingung
                     $typeConditions = ['id <' => '0', 'id !=' => '1'];
-                    $locationConditions = ['id <' => '0'];
                     break;
             }
             $this->loadModel('Types');
             $types = $this->Types->find('list', ['limit' => 200, 'empty' => false, 'conditions' => $typeConditions]);
-            $locations = $this->Users->Locations->find('list', ['limit' => 200, 'empty' => false, 'conditions' => $locationConditions]);
-            $this->set(compact('user', 'types', 'locations'));
+            $this->set(compact('user', 'types'));
             $this->set('_serialize', ['user']);
     }
 
@@ -162,9 +158,26 @@ class UsersController extends AppController
                 $this->Flash->error('The user could not be saved. Please, try again.');
             }
         }
+        
+        $this->loadModel('UserHasTypes');
+        $type = $this->UserHasTypes->findByUserId($this->Auth->user('id'))->order(['type_id' => 'DESC'])->first()['type_id'];
+        switch($type){
+            case(4):
+                $typeConditions = ['id <' => '4']; //standortadmin darf keine standort admins oder global admins bearbeiten
+                $locationConditions = ['id =' => $this->Auth->user('location_id')]; //und auch nur an dem standort von dem er ist
+                break;
+            case(5):
+                $typeConditions = ['id <=' => '5']; //globaladmin darf standortadmin und anderen global admin bearbeiten
+                $locationConditions = ['id !=' => '-200']; //wert der nie erreicht wird
+                break;
+            default: //auffangbedingung
+                $typeConditions = ['id <' => '0', 'id !=' => '1'];
+                $locationConditions = ['id <' => '0'];
+                break;
+        }
         $this->loadModel('Types');
-        $types = $this->Types->find('list', ['condition' => ['id' => '2', 'id' => '3']]);
-        $locations = $this->Users->Locations->find('list', ['limit' => 200]);
+        $types = $this->Types->find('list', ['limit' => 200, 'empty' => false, 'conditions' => $typeConditions]);
+        $locations = $this->Users->Locations->find('list', ['limit' => 200, 'empty' => false, 'conditions' => $locationConditions]);
         $this->set(compact('user', 'types', 'locations'));
         $this->set('_serialize', ['user']);
     }
@@ -222,8 +235,11 @@ class UsersController extends AppController
                                 if ($partner != null) { //user ist partner
                                     return $this->redirect($this->Auth->redirectUrl(['controller' => 'Partners', 'action' => 'view', $partner->id]));
                                 } else {                //user ist kein partner
-                                    if($type <= 3) {    //user ist matchmaker oder vermittler
-                                            return $this->redirect($this->Auth->redirectUrl(['controller' => 'Partners', 'action' => 'index']));
+                                    if($type == 2) {    //user ist matchmaker
+                                            return $this->redirect($this->Auth->redirectUrl(['controller' => 'Partners', 'action' => 'index', 'waiting']));
+                                    }
+                                    elseif($type == 3){ //user ist vermittler
+                                        return $this->redirect($this->Auth->redirectUrl(['controller' => 'Partners', 'action' => 'index', 'active']));
                                     }
                                     else {  //user ist admin (loc oder glob)
                                         return $this->redirect($this->Auth->redirectUrl(['controller' => 'Users', 'action' => 'index']));

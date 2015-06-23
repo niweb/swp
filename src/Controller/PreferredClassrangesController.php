@@ -71,13 +71,14 @@ class PreferredClassrangesController extends AppController
 	 * @return void Redirects on successful edit, renders view otherwise.
 	 * @throws \Cake\Network\Exception\NotFoundException When record not found.
 	 */
-	public function edit($id = null)
+	public function edit($id = null, $partner_id = null)
 	{
 		$preferredClassrange = $this->PreferredClassranges->get($id, [
             'contain' => []
 		]);
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$preferredClassrange = $this->PreferredClassranges->patchEntity($preferredClassrange, $this->request->data);
+			$preferredClassrange->partner_id = $partner_id;
 			if ($this->PreferredClassranges->save($preferredClassrange)) {
 				$this->Flash->success('The preferred classrange has been saved.');
 				return $this->redirect(['action' => 'index']);

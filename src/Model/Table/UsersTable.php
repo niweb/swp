@@ -26,7 +26,10 @@ class UsersTable extends Table
 		$this->primaryKey('id');
 		$this->addBehavior('Timestamp');
 		$this->belongsTo('Locations', [
-		'foreignKey' => 'location_id'
+                    'foreignKey' => 'location_id'
+		]);
+                $this->belongsTo('Types', [
+                    'foreignKey' => 'type_id'
 		]);
 	}
 
@@ -73,7 +76,7 @@ class UsersTable extends Table
 	public function buildRules(RulesChecker $rules)
 	{
 		$rules->add($rules->isUnique(['email']));
-		//$rules->add($rules->existsIn(['type_id'], 'Types'));
+		$rules->add($rules->existsIn(['type_id'], 'Types'));
 		$rules->add($rules->existsIn(['location_id'], 'Locations'));
 		return $rules;
 	}

@@ -1,9 +1,3 @@
-<head><title>OpenLayers Marker Popups</title>
-  <style>
-    #mapdiv {height: 350px; width: 100%;}
-  </style>
-
-</head>
 <div class="partners form large-10 medium-9 columns">
     <?php if($location_name == null): ?>
     <fieldset>
@@ -40,7 +34,7 @@
             echo $this->Form->input('house_number_addition',['label' => __('house_number_addition')]);
             echo $this->Form->input('postcode', ['label' => __('postcode'), 'required' => true]);
             echo $this->Form->input('city', ['label' => __('city'),'required' => true]);
-            echo $this->Form->input('telephone', ['label' => __('telephone'),'required' => true]);
+            echo $this->Form->input('telephone', ['label' => __('telephone')]);
             echo $this->Form->input('mobile',['label' => __('mobile')]);
         ?>
         <h3><?= __('Tutorship') ?></h3>
@@ -97,143 +91,6 @@
     
         ?>
     </fieldset>
-
-
-     <div id="mapdiv"></div>
-     
-     <?php echo $location_name; ?>
-    </br>
-
-
-
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
     <?php endif; ?>
-<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
-
-<script type="text/javascript" language="JavaScript">
-    var location_name="<?php echo $location_name; ?>";
-    
-
-    map = new OpenLayers.Map('mapdiv');  //create map at div
-    map.addLayer(new OpenLayers.Layer.OSM());
-
-    epsg4326 =  new OpenLayers.Projection("EPSG:4326"); //WGS 1984 projection
-    projectTo = map.getProjectionObject(); //The map projection (Spherical Mercator)
-
-    var zoom=12;
-  if(location_name=='Berlin'){
-    var center  = new OpenLayers.LonLat( 13.40495,52.52000 ).transform(epsg4326, projectTo);  
-  }else if(location_name=="Frankfurt"){
-    var center  = new OpenLayers.LonLat( 8.68212,50.11092 ).transform(epsg4326, projectTo);
-  }else if(location_name=="Ruhr"){
-     var center  = new OpenLayers.LonLat( 7.62827,51.36591 ).transform(epsg4326, projectTo);
-  }else if(location_name=="Braunschweig"){
-     var center  = new OpenLayers.LonLat( 10.52677,52.26887 ).transform(epsg4326, projectTo);
-  }
-    
-  map.setCenter (center, zoom);  
-
-  function add_marker(longitude,latitude, description){
-   var vectorLayer = new OpenLayers.Layer.Vector("Overlay");
-    
-    // Define markers as "features" of the vector layer:
-   var feature = new OpenLayers.Feature.Vector(
-            new OpenLayers.Geometry.Point( 13.391260,52.552200 ).transform(epsg4326, projectTo),
-            {description:'This is the value of<br>the description attribute'} ,
-            {externalGraphic: '/img/marker.png', graphicHeight: 25, graphicWidth: 21, graphicXOffset:-12, graphicYOffset:-25  }
-        );    
-    vectorLayer.addFeatures(feature);
-  }
-</script>
- <!-- <script>
-
-     function initialize_location(coords){
-         var lng= coords.longitude;
-         var lat= coords.latitude;
-        var lonLat = new OpenLayers.LonLat( lng,lat ).transform(epsg4326, projectTo);
-     //    document.getElementById('position').innerHTML = 'lat: ' + lat + 'longi: ' +lng;
-
-             map.setCenter (lonLat, zoom);
-
-          }
-
-
-
-
-    map = new OpenLayers.Map("mapdiv");
-    map.addLayer(new OpenLayers.Layer.OSM());
-    
-    epsg4326 =  new OpenLayers.Projection("EPSG:4326"); //WGS 1984 projection
-    projectTo = map.getProjectionObject(); //The map projection (Spherical Mercator)
-   
-    var lonLat = new OpenLayers.LonLat( 13.391260,52.552200 ).transform(epsg4326, projectTo);
-          
-    
-    var zoom=14;
-   
-
-    var vectorLayer = new OpenLayers.Layer.Vector("Overlay");
-    
-    // Define markers as "features" of the vector layer:
-   var feature = new OpenLayers.Feature.Vector(
-            new OpenLayers.Geometry.Point( 13.391260,52.552200 ).transform(epsg4326, projectTo),
-            {description:'This is the value of<br>the description attribute'} ,
-            {externalGraphic: '/img/marker.png', graphicHeight: 25, graphicWidth: 21, graphicXOffset:-12, graphicYOffset:-25  }
-        );    
-    vectorLayer.addFeatures(feature);
-   
-    var feature = new OpenLayers.Feature.Vector(
-            new OpenLayers.Geometry.Point( 13.510882, 52.535047  ).transform(epsg4326, projectTo),
-            {description:'Big Ben'} ,
-            {externalGraphic: '/img/marker.png', graphicHeight: 25, graphicWidth: 21, graphicXOffset:-12, graphicYOffset:-25  }
-        );    
-    vectorLayer.addFeatures(feature);
-
-    var feature = new OpenLayers.Feature.Vector(
-            new OpenLayers.Geometry.Point( -0.119623, 51.503308  ).transform(epsg4326, projectTo),
-            {description:'London Eye'} ,
-            {externalGraphic: '/img/marker.png', graphicHeight: 25, graphicWidth: 21, graphicXOffset:-12, graphicYOffset:-25  }
-        );    
-    vectorLayer.addFeatures(feature);
-
-   
-    map.addLayer(vectorLayer);
- 
-    
-    //Add a selector control to the vectorLayer with popup functions
-    var controls = {
-      selector: new OpenLayers.Control.SelectFeature(vectorLayer, { onSelect: createPopup, onUnselect: destroyPopup })
-    };
-
-    function createPopup(feature) {
-      feature.popup = new OpenLayers.Popup.FramedCloud("pop",
-          feature.geometry.getBounds().getCenterLonLat(),
-          null,
-          '<div class="markerContent">'+feature.attributes.description+'</div>',
-          null,
-          true,
-          function() { controls['selector'].unselectAll(); }
-      );
-      //feature.popup.closeOnMove = true;
-      map.addPopup(feature.popup);
-    }
-
-    function destroyPopup(feature) {
-      feature.popup.destroy();
-      feature.popup = null;
-    }
-    
-    map.addControl(controls['selector']);
-    controls['selector'].activate();
-
-    //Postionen bestimmen
-         navigator.geolocation.getCurrentPosition(function(position){ initialize_location(position.coords);        
-      }, function(){
-        document.getElementById('position').innerHTML = 'Deine Position konnte nicht ermittelt werden';
-      })  ;
-      
-  </script>
-
--->
-</div>
