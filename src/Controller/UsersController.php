@@ -51,7 +51,7 @@ class UsersController extends AppController
 
     public function beforeFilter(Event $event){
         parent::beforeFilter($event);
-        $this->Auth->allow(['logout', 'activate', 'sendActivationMailAgain', 'reset', 'resetPass']);
+        $this->Auth->allow(['logout', 'activate', 'sendActivationMailAgain', 'reset', 'resetPass', 'sendActivationMail']);
     }
 
     /**
@@ -281,7 +281,7 @@ class UsersController extends AppController
     public function sendActivationMail($id=null)
     {
         $user = $this->Users->get($id);
-        $link = 'http://ec2-52-28-79-204.eu-central-1.compute.amazonaws.com/users/activate/'.$id.'/'.$user->activation;
+        $link = 'http://ec2-52-28-103-178.eu-central-1.compute.amazonaws.com/users/activate/'.$id.'/'.$user->activation;
         $email = new Email('default');
         $email->from(['noreply@schuelerpaten.de' => 'Schülerpaten'])
             ->to($user->email)
@@ -372,7 +372,7 @@ class UsersController extends AppController
 	}
 	
 	public function sendReset($user = null){
-		$link = 'http://ec2-52-28-79-204.eu-central-1.compute.amazonaws.com/users/resetPass/'.$user->id.'/'.$user->reset;
+		$link = 'http://ec2-52-28-103-178.eu-central-1.compute.amazonaws.com/users/resetPass/'.$user->id.'/'.$user->reset;
 		$email = new Email('default');
 		$email->from(['noreply@schuelerpaten.de' => 'Schülerpaten'])
             ->to($user->email)

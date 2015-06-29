@@ -51558,3 +51558,404 @@ Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
 
 
 
+2015-06-29 17:39:58 Notice: Notice (8): Trying to get property of non-object in [/var/www/swp/src/Template/Partners/match.ctp, line 137]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+include - APP/Template/Partners/match.ctp, line 137
+Cake\View\View::_evaluate() - CORE/src/View/View.php, line 815
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::render() - CORE/src/View/View.php, line 463
+Cake\Controller\Controller::render() - CORE/src/Controller/Controller.php, line 581
+Cake\Routing\Dispatcher::_invoke() - CORE/src/Routing/Dispatcher.php, line 120
+Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
+[main] - ROOT/webroot/index.php, line 37
+
+
+
+2015-06-29 17:39:58 Notice: Notice (8): Trying to get property of non-object in [/var/www/swp/src/Template/Partners/match.ctp, line 137]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+include - APP/Template/Partners/match.ctp, line 137
+Cake\View\View::_evaluate() - CORE/src/View/View.php, line 815
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::render() - CORE/src/View/View.php, line 463
+Cake\Controller\Controller::render() - CORE/src/Controller/Controller.php, line 581
+Cake\Routing\Dispatcher::_invoke() - CORE/src/Routing/Dispatcher.php, line 120
+Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
+[main] - ROOT/webroot/index.php, line 37
+
+
+
+2015-06-29 17:52:24 Notice: Notice (8): Trying to get property of non-object in [/var/www/swp/src/Template/Students/view.ctp, line 39]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+include - APP/Template/Students/view.ctp, line 39
+Cake\View\View::_evaluate() - CORE/src/View/View.php, line 815
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::render() - CORE/src/View/View.php, line 463
+Cake\Controller\Controller::render() - CORE/src/Controller/Controller.php, line 581
+Cake\Routing\Dispatcher::_invoke() - CORE/src/Routing/Dispatcher.php, line 120
+Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
+[main] - ROOT/webroot/index.php, line 37
+
+
+
+2015-06-29 18:05:34 Notice: Notice (8): Trying to get property of non-object in [/var/www/swp/src/Template/Partners/view.ctp, line 269]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+include - APP/Template/Partners/view.ctp, line 269
+Cake\View\View::_evaluate() - CORE/src/View/View.php, line 815
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::render() - CORE/src/View/View.php, line 463
+Cake\Controller\Controller::render() - CORE/src/Controller/Controller.php, line 581
+Cake\Routing\Dispatcher::_invoke() - CORE/src/Routing/Dispatcher.php, line 120
+Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
+[main] - ROOT/webroot/index.php, line 37
+
+
+
+2015-06-29 18:05:34 Notice: Notice (8): Trying to get property of non-object in [/var/www/swp/src/Template/Partners/view.ctp, line 269]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+include - APP/Template/Partners/view.ctp, line 269
+Cake\View\View::_evaluate() - CORE/src/View/View.php, line 815
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::render() - CORE/src/View/View.php, line 463
+Cake\Controller\Controller::render() - CORE/src/Controller/Controller.php, line 581
+Cake\Routing\Dispatcher::_invoke() - CORE/src/Routing/Dispatcher.php, line 120
+Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
+[main] - ROOT/webroot/index.php, line 37
+
+
+
+2015-06-29 18:05:34 Notice: Notice (8): Trying to get property of non-object in [/var/www/swp/src/Template/Partners/view.ctp, line 269]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+include - APP/Template/Partners/view.ctp, line 269
+Cake\View\View::_evaluate() - CORE/src/View/View.php, line 815
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::render() - CORE/src/View/View.php, line 463
+Cake\Controller\Controller::render() - CORE/src/Controller/Controller.php, line 581
+Cake\Routing\Dispatcher::_invoke() - CORE/src/Routing/Dispatcher.php, line 120
+Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
+[main] - ROOT/webroot/index.php, line 37
+
+
+
+2015-06-29 18:05:34 Notice: Notice (8): Trying to get property of non-object in [/var/www/swp/src/Template/Partners/view.ctp, line 269]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+include - APP/Template/Partners/view.ctp, line 269
+Cake\View\View::_evaluate() - CORE/src/View/View.php, line 815
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::render() - CORE/src/View/View.php, line 463
+Cake\Controller\Controller::render() - CORE/src/Controller/Controller.php, line 581
+Cake\Routing\Dispatcher::_invoke() - CORE/src/Routing/Dispatcher.php, line 120
+Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
+[main] - ROOT/webroot/index.php, line 37
+
+
+
+2015-06-29 18:06:06 Notice: Notice (8): Trying to get property of non-object in [/var/www/swp/src/Template/Partners/view.ctp, line 269]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+include - APP/Template/Partners/view.ctp, line 269
+Cake\View\View::_evaluate() - CORE/src/View/View.php, line 815
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::render() - CORE/src/View/View.php, line 463
+Cake\Controller\Controller::render() - CORE/src/Controller/Controller.php, line 581
+Cake\Routing\Dispatcher::_invoke() - CORE/src/Routing/Dispatcher.php, line 120
+Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
+[main] - ROOT/webroot/index.php, line 37
+
+
+
+2015-06-29 18:06:06 Notice: Notice (8): Trying to get property of non-object in [/var/www/swp/src/Template/Partners/view.ctp, line 269]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+include - APP/Template/Partners/view.ctp, line 269
+Cake\View\View::_evaluate() - CORE/src/View/View.php, line 815
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::render() - CORE/src/View/View.php, line 463
+Cake\Controller\Controller::render() - CORE/src/Controller/Controller.php, line 581
+Cake\Routing\Dispatcher::_invoke() - CORE/src/Routing/Dispatcher.php, line 120
+Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
+[main] - ROOT/webroot/index.php, line 37
+
+
+
+2015-06-29 18:06:06 Notice: Notice (8): Trying to get property of non-object in [/var/www/swp/src/Template/Partners/view.ctp, line 269]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+include - APP/Template/Partners/view.ctp, line 269
+Cake\View\View::_evaluate() - CORE/src/View/View.php, line 815
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::render() - CORE/src/View/View.php, line 463
+Cake\Controller\Controller::render() - CORE/src/Controller/Controller.php, line 581
+Cake\Routing\Dispatcher::_invoke() - CORE/src/Routing/Dispatcher.php, line 120
+Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
+[main] - ROOT/webroot/index.php, line 37
+
+
+
+2015-06-29 18:06:06 Notice: Notice (8): Trying to get property of non-object in [/var/www/swp/src/Template/Partners/view.ctp, line 269]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+include - APP/Template/Partners/view.ctp, line 269
+Cake\View\View::_evaluate() - CORE/src/View/View.php, line 815
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::render() - CORE/src/View/View.php, line 463
+Cake\Controller\Controller::render() - CORE/src/Controller/Controller.php, line 581
+Cake\Routing\Dispatcher::_invoke() - CORE/src/Routing/Dispatcher.php, line 120
+Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
+[main] - ROOT/webroot/index.php, line 37
+
+
+
+2015-06-29 18:06:54 Notice: Notice (8): Trying to get property of non-object in [/var/www/swp/src/Template/Partners/view.ctp, line 269]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+include - APP/Template/Partners/view.ctp, line 269
+Cake\View\View::_evaluate() - CORE/src/View/View.php, line 815
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::render() - CORE/src/View/View.php, line 463
+Cake\Controller\Controller::render() - CORE/src/Controller/Controller.php, line 581
+Cake\Routing\Dispatcher::_invoke() - CORE/src/Routing/Dispatcher.php, line 120
+Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
+[main] - ROOT/webroot/index.php, line 37
+
+
+
+2015-06-29 18:06:54 Notice: Notice (8): Trying to get property of non-object in [/var/www/swp/src/Template/Partners/view.ctp, line 269]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+include - APP/Template/Partners/view.ctp, line 269
+Cake\View\View::_evaluate() - CORE/src/View/View.php, line 815
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::render() - CORE/src/View/View.php, line 463
+Cake\Controller\Controller::render() - CORE/src/Controller/Controller.php, line 581
+Cake\Routing\Dispatcher::_invoke() - CORE/src/Routing/Dispatcher.php, line 120
+Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
+[main] - ROOT/webroot/index.php, line 37
+
+
+
+2015-06-29 18:06:54 Notice: Notice (8): Trying to get property of non-object in [/var/www/swp/src/Template/Partners/view.ctp, line 269]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+include - APP/Template/Partners/view.ctp, line 269
+Cake\View\View::_evaluate() - CORE/src/View/View.php, line 815
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::render() - CORE/src/View/View.php, line 463
+Cake\Controller\Controller::render() - CORE/src/Controller/Controller.php, line 581
+Cake\Routing\Dispatcher::_invoke() - CORE/src/Routing/Dispatcher.php, line 120
+Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
+[main] - ROOT/webroot/index.php, line 37
+
+
+
+2015-06-29 18:06:54 Notice: Notice (8): Trying to get property of non-object in [/var/www/swp/src/Template/Partners/view.ctp, line 269]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+include - APP/Template/Partners/view.ctp, line 269
+Cake\View\View::_evaluate() - CORE/src/View/View.php, line 815
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::render() - CORE/src/View/View.php, line 463
+Cake\Controller\Controller::render() - CORE/src/Controller/Controller.php, line 581
+Cake\Routing\Dispatcher::_invoke() - CORE/src/Routing/Dispatcher.php, line 120
+Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
+[main] - ROOT/webroot/index.php, line 37
+
+
+
+2015-06-29 18:07:19 Notice: Notice (8): Trying to get property of non-object in [/var/www/swp/src/Template/Partners/view.ctp, line 269]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+include - APP/Template/Partners/view.ctp, line 269
+Cake\View\View::_evaluate() - CORE/src/View/View.php, line 815
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::render() - CORE/src/View/View.php, line 463
+Cake\Controller\Controller::render() - CORE/src/Controller/Controller.php, line 581
+Cake\Routing\Dispatcher::_invoke() - CORE/src/Routing/Dispatcher.php, line 120
+Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
+[main] - ROOT/webroot/index.php, line 37
+
+
+
+2015-06-29 18:07:19 Notice: Notice (8): Trying to get property of non-object in [/var/www/swp/src/Template/Partners/view.ctp, line 269]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+include - APP/Template/Partners/view.ctp, line 269
+Cake\View\View::_evaluate() - CORE/src/View/View.php, line 815
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::render() - CORE/src/View/View.php, line 463
+Cake\Controller\Controller::render() - CORE/src/Controller/Controller.php, line 581
+Cake\Routing\Dispatcher::_invoke() - CORE/src/Routing/Dispatcher.php, line 120
+Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
+[main] - ROOT/webroot/index.php, line 37
+
+
+
+2015-06-29 18:07:19 Notice: Notice (8): Trying to get property of non-object in [/var/www/swp/src/Template/Partners/view.ctp, line 269]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+include - APP/Template/Partners/view.ctp, line 269
+Cake\View\View::_evaluate() - CORE/src/View/View.php, line 815
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::render() - CORE/src/View/View.php, line 463
+Cake\Controller\Controller::render() - CORE/src/Controller/Controller.php, line 581
+Cake\Routing\Dispatcher::_invoke() - CORE/src/Routing/Dispatcher.php, line 120
+Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
+[main] - ROOT/webroot/index.php, line 37
+
+
+
+2015-06-29 18:07:19 Notice: Notice (8): Trying to get property of non-object in [/var/www/swp/src/Template/Partners/view.ctp, line 269]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+include - APP/Template/Partners/view.ctp, line 269
+Cake\View\View::_evaluate() - CORE/src/View/View.php, line 815
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::render() - CORE/src/View/View.php, line 463
+Cake\Controller\Controller::render() - CORE/src/Controller/Controller.php, line 581
+Cake\Routing\Dispatcher::_invoke() - CORE/src/Routing/Dispatcher.php, line 120
+Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
+[main] - ROOT/webroot/index.php, line 37
+
+
+
+2015-06-29 18:07:42 Notice: Notice (8): Trying to get property of non-object in [/var/www/swp/src/Template/Partners/view.ctp, line 269]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+include - APP/Template/Partners/view.ctp, line 269
+Cake\View\View::_evaluate() - CORE/src/View/View.php, line 815
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::render() - CORE/src/View/View.php, line 463
+Cake\Controller\Controller::render() - CORE/src/Controller/Controller.php, line 581
+Cake\Routing\Dispatcher::_invoke() - CORE/src/Routing/Dispatcher.php, line 120
+Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
+[main] - ROOT/webroot/index.php, line 37
+
+
+
+2015-06-29 18:07:42 Notice: Notice (8): Trying to get property of non-object in [/var/www/swp/src/Template/Partners/view.ctp, line 269]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+include - APP/Template/Partners/view.ctp, line 269
+Cake\View\View::_evaluate() - CORE/src/View/View.php, line 815
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::render() - CORE/src/View/View.php, line 463
+Cake\Controller\Controller::render() - CORE/src/Controller/Controller.php, line 581
+Cake\Routing\Dispatcher::_invoke() - CORE/src/Routing/Dispatcher.php, line 120
+Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
+[main] - ROOT/webroot/index.php, line 37
+
+
+
+2015-06-29 18:07:42 Notice: Notice (8): Trying to get property of non-object in [/var/www/swp/src/Template/Partners/view.ctp, line 269]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+include - APP/Template/Partners/view.ctp, line 269
+Cake\View\View::_evaluate() - CORE/src/View/View.php, line 815
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::render() - CORE/src/View/View.php, line 463
+Cake\Controller\Controller::render() - CORE/src/Controller/Controller.php, line 581
+Cake\Routing\Dispatcher::_invoke() - CORE/src/Routing/Dispatcher.php, line 120
+Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
+[main] - ROOT/webroot/index.php, line 37
+
+
+
+2015-06-29 18:07:42 Notice: Notice (8): Trying to get property of non-object in [/var/www/swp/src/Template/Partners/view.ctp, line 269]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+include - APP/Template/Partners/view.ctp, line 269
+Cake\View\View::_evaluate() - CORE/src/View/View.php, line 815
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::render() - CORE/src/View/View.php, line 463
+Cake\Controller\Controller::render() - CORE/src/Controller/Controller.php, line 581
+Cake\Routing\Dispatcher::_invoke() - CORE/src/Routing/Dispatcher.php, line 120
+Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
+[main] - ROOT/webroot/index.php, line 37
+
+
+
+2015-06-29 19:09:25 Notice: Notice (8): Undefined variable: studentController in [/var/www/swp/src/Controller/TandemsController.php, line 141]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+App\Controller\TandemsController::deactivate() - APP/Controller/TandemsController.php, line 141
+App\Controller\PartnersController::deactivate() - APP/Controller/PartnersController.php, line 354
+Cake\Controller\Controller::invokeAction() - CORE/src/Controller/Controller.php, line 410
+Cake\Routing\Dispatcher::_invoke() - CORE/src/Routing/Dispatcher.php, line 114
+Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
+[main] - ROOT/webroot/index.php, line 37
+
+
+
+2015-06-29 19:22:53 Notice: Notice (8): Trying to get property of non-object in [/var/www/swp/src/Template/Partners/view.ctp, line 269]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+include - APP/Template/Partners/view.ctp, line 269
+Cake\View\View::_evaluate() - CORE/src/View/View.php, line 815
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::render() - CORE/src/View/View.php, line 463
+Cake\Controller\Controller::render() - CORE/src/Controller/Controller.php, line 581
+Cake\Routing\Dispatcher::_invoke() - CORE/src/Routing/Dispatcher.php, line 120
+Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
+[main] - ROOT/webroot/index.php, line 37
+
+
+
+2015-06-29 19:22:53 Notice: Notice (8): Trying to get property of non-object in [/var/www/swp/src/Template/Partners/view.ctp, line 269]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+include - APP/Template/Partners/view.ctp, line 269
+Cake\View\View::_evaluate() - CORE/src/View/View.php, line 815
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::render() - CORE/src/View/View.php, line 463
+Cake\Controller\Controller::render() - CORE/src/Controller/Controller.php, line 581
+Cake\Routing\Dispatcher::_invoke() - CORE/src/Routing/Dispatcher.php, line 120
+Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
+[main] - ROOT/webroot/index.php, line 37
+
+
+
+2015-06-29 19:22:53 Notice: Notice (8): Trying to get property of non-object in [/var/www/swp/src/Template/Partners/view.ctp, line 269]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+include - APP/Template/Partners/view.ctp, line 269
+Cake\View\View::_evaluate() - CORE/src/View/View.php, line 815
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::render() - CORE/src/View/View.php, line 463
+Cake\Controller\Controller::render() - CORE/src/Controller/Controller.php, line 581
+Cake\Routing\Dispatcher::_invoke() - CORE/src/Routing/Dispatcher.php, line 120
+Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
+[main] - ROOT/webroot/index.php, line 37
+
+
+
+2015-06-29 19:22:53 Notice: Notice (8): Trying to get property of non-object in [/var/www/swp/src/Template/Partners/view.ctp, line 269]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+include - APP/Template/Partners/view.ctp, line 269
+Cake\View\View::_evaluate() - CORE/src/View/View.php, line 815
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::render() - CORE/src/View/View.php, line 463
+Cake\Controller\Controller::render() - CORE/src/Controller/Controller.php, line 581
+Cake\Routing\Dispatcher::_invoke() - CORE/src/Routing/Dispatcher.php, line 120
+Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
+[main] - ROOT/webroot/index.php, line 37
+
+
+
+2015-06-29 19:32:25 Notice: Notice (8): Undefined variable: authUser in [/var/www/swp/src/Controller/PartnersController.php, line 139]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+App\Controller\PartnersController::index() - APP/Controller/PartnersController.php, line 139
+Cake\Controller\Controller::invokeAction() - CORE/src/Controller/Controller.php, line 410
+Cake\Routing\Dispatcher::_invoke() - CORE/src/Routing/Dispatcher.php, line 114
+Cake\Routing\Dispatcher::dispatch() - CORE/src/Routing/Dispatcher.php, line 87
+[main] - ROOT/webroot/index.php, line 37
+
+
+

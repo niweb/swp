@@ -81,9 +81,9 @@ legend {
   text-overflow: clip;
 }
 
-table td {
+table td, th {
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: clip;
 }
 
 td.matchbool {
@@ -109,19 +109,19 @@ td.matchbool {
 
 td.matchbool:hover{
   background:#e2e236;
-  //width:400px;
+  width:400px;
 }
 
 td.matchbool span{
   display: none;
 }
 
-td.matchbool:hover span {
+td.matchbool:hover span{
   position: absolute;
   z-index: 9999;
   width: 300px;
   border-left: 5px solid #e2e236; //#15848F
-  display: inline;
+  display: inline-block;
   padding: 1px;
 }
 

@@ -314,6 +314,9 @@ msgstr "Status hinzufügen"
 msgid "View Status"
 msgstr "Diesen Status anzeigen"
 
+msgid "Change Status"
+msgstr "Status ändern"
+
 #, StatusText
 msgid "List Status Texts"
 msgstr "Alle Status-Nachrichten anzeigen"
@@ -402,7 +405,19 @@ msgstr "Kontaktdetails"
 msgid "first_name"
 msgstr "Vorname"
 
+msgid "first name"
+msgstr "Vorname"
+
+msgid "First Name"
+msgstr "Vorname"
+
 msgid "last_name"
+msgstr "Nachname"
+
+msgid "last name"
+msgstr "Nachname"
+
+msgid "Last Name"
 msgstr "Nachname"
 
 msgid "age"

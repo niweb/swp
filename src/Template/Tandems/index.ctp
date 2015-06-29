@@ -50,7 +50,6 @@
         <tr>
             <th><?= $this->Paginator->sort('partner_id') ?></th>
             <th><?= $this->Paginator->sort('student_id') ?></th>
-            <th><?= $this->Paginator->sort('status_id') ?></th>
             <th><?= $this->Paginator->sort('activated') ?></th>
             <th><?= $this->Paginator->sort('deactivated') ?></th>
             <th class="actions"><?= __('Actions') ?></th>
@@ -66,10 +65,6 @@
                 <td>
                         <?= $tandem->has('student') ? $this->Html->link(h($tandem->student->first_name.' '.$tandem->student->last_name), ['controller' => 'Students', 'action' => 'view', $tandem->student->id]) : '' ?>
                 </td>
-                <td>
-                        <?= $tandem->has('partner') ? $this->Html->link($tandem->partner->status_id, ['controller' => 'Partners', 'action' => 'view', $tandem->partner->id]) : '' ?>
-                </td>
-               
                 <td><?= h($tandem->activated) ?></td>
                 <td><?= h($tandem->deactivated) ?></td>
                 <td class="actions">

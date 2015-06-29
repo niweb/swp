@@ -132,58 +132,69 @@ class TandemsController extends AppController
 	}
 	
 	public function deactivate($id = null){
-		
-		$this->loadModel('Students');
-		$tandem = $this->Tandems->get($id);
-		$studentID = $tandem->student_id;
-		$studentsCount = $this->Tandems->find()->where(['student_id' => $studentID, 'deactivated IS NULL'])->count();
-		if($studentsCount == 1){
-	        $student = $this->Students->get($studentID);
-	        $student->student_status_id = '3'; 
-	        $this->Students->save($student);
-		}
-		$this->loadModel('Partners');
-		$partnerID = $tandem->partner_id;
-		//$deactivated = $tandem->deactivated;
-		$partnersCount = $this->Tandems->find()->where(['partner_id' => $partnerID, 'deactivated IS NULL'])->count();
-		if($partnersCount == 1){
-			$partner = $this->Partners->get($partnerID);
-			$partner->status_id = '7'; 
-			$this->Partners->save($partner);
-		}
-		
-		$time = time();
-		$tandem->deactivated = $time;
-		if($this->Tandems->save($tandem)){
-			$this->Flash->success('Tandem deaktiviert!');
-		} else {
-			$this->Flash->error('Tandem konnte nicht deaktiviert werden');
-		}
-		return $this->redirect(['action' => 'index']);
+            $tandem = $this->Tandems->get($id);
+            
+            //schüler der mit tandem assoziiert ist...
+            $studentID = $tandem->student_id;
+            
+            //... wird auf weitere tandems überprüft
+            $studentsTandems = $this->Tandems->find('list')->where(['student_id =' => $studentID, 'deactivated =' => NULL]);
+            $studentsCount = count($studentsTandems->toArray());
+            if($studentsCount == 1){
+                //wenn das das einzige ist, setze schüler wieder auf wartend
+                $this->loadModel('Students');
+                $student = $this->Students->get($studentID);
+                $student->student_status_id = '1'; //wartend
+                $this->Students->save($student);
+            }
+            
+            //genauso der Pate...
+            $partnerID = $tandem->partner_id;
+           
+            $partnersTandems = $this->Tandems->find('list')->where(['partner_id' => $partnerID, 'deactivated' => NULL]);
+            $partnersCount = count($partnersTandems);
+            if($partnersCount == 1){
+                $this->loadModel('Partners');
+                $partner = $this->Partners->get($partnerID);
+                $partner->status_id = '5'; //wartend
+                $this->Partners->save($partner);
+            }
+
+            $time = time();
+            $tandem->deactivated = $time;
+            
+            if($this->Tandems->save($tandem)){
+                    $this->Flash->success('Tandem deaktiviert!');
+            } else {
+                    $this->Flash->error('Tandem konnte nicht deaktiviert werden');
+            }
+            
+            return $this->redirect($this->request->referer());
 	}
 	
         
     public function reactivate($id = null){
-		$tandem = $this->Tandems->get($id);
-		$time = time();
-		$tandem->deactivated = null;
-		$this->loadModel('Students');
-		$student_id=$tandem->student_id;
-		$student = $this->Students->get($student_id);
-        $student->student_status_id='2'; 
-        $this->Students->save($student);
+        $tandem = $this->Tandems->get($id);
+        $tandem->deactivated = null;
+        
+        $this->loadModel('Students');
+        $student_id=$tandem->student_id;
+        $student = $this->Students->get($student_id);
+        $student->student_status_id='2'; //(wieder) auf vermittlet setzen
+        $studentSaved = $this->Students->save($student);
+        
         $this->loadModel('Partners');
-        $partner_id=$tandem->partner_id;
-		$partner = $this->Partners->get($partner_id);
-        $partner->status_id='6'; 
-	    $this->Partners->save($partner);
-		
-		if($this->Tandems->save($tandem)){
-			$this->Flash->success('Tandem wieder aktiviert!');
-		} else {
-			$this->Flash->error('Tandem konnte nicht wieder aktiviert werden');
-		}
-		return $this->redirect(['action' => 'index']);
-	}
+        $partner_id = $tandem->partner_id;
+        $partner = $this->Partners->get($partner_id);
+        $partner->status_id='6'; //(wieder) auf vermittlet setzen
+        $partnerSaved = $this->Partners->save($partner);
+
+        if($studentSaved and $partnerSaved and $this->Tandems->save($tandem)){
+            $this->Flash->success('Tandem wieder aktiviert!');
+        } else {
+            $this->Flash->error('Tandem konnte nicht wieder aktiviert werden');
+        }
+        return $this->redirect($this->request->referer());
+    }
         
 }

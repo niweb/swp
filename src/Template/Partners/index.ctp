@@ -34,12 +34,26 @@
                 <td><?= (($partner->sex)=='m') ? __('male') : __('female')?></td>
                 <td><?= h($partner->status->name) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('Match'), ['action' => 'match', $partner->id]) ?>
+                    <?php if($partner->status_id < 7) : ?>
+                            <?= $this->Html->link(__('Match'), ['action' => 'match', $partner->id]) ?>
+                    <?php endif; ?>
                     <?= $this->Html->link(__('View'), ['action' => 'view', $partner->id]) ?>
                     <?php if(!isset($matchmaker)) : ?>
-                        <?= $this->Html->link(__('Status'), ['action' => 'status', $partner->id]) ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit', $partner->id]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $partner->id], ['confirm' => __('Are you sure you want to delete {0}?', h($partner->user->first_name.' '.$partner->user->last_name))]) ?>
+                        
+                        <?php if(($partner->status_id > 1) and ($partner->status_id < 6)) : ?>
+                            <?= $this->Html->link(__('Change Status'), ['action' => 'status', $partner->id]) ?>
+                        <?php endif; ?>
+                        
+                        <?php if($partner->status_id < 7) : ?>
+                            <?= $this->Form->postLink(__('Deactivate'), ['action' => 'deactivate', $partner->id], ['confirm' => __('Are you sure you want to deactivate # {0}?', $partner->id)]) ?>
+                        <?php else: ?>
+                            <?php if(isset($locationAdmin) or isset($admin)) : ?>
+                                <?= $this->Form->postLink(__('Reactivate'), ['action' => 'reactivate', $partner->id], ['confirm' => __('Are you sure you want to reactivate # {0}?', $partner->id)]) ?>
+                                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $partner->id], ['confirm' => __('Are you sure you want to delete # {0}?', $partner->id)]) ?>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    
                     <?php endif; ?>
 
                 </td>
@@ -56,6 +70,6 @@
             </ul>
             <p><?= $this->Paginator->counter() ?></p>
         </div>
-    <?php else: echo __('no {0} to display', __('students'));
+    <?php else: echo '<br>'.__('no {0} to display', __('Partners'));
     endif; ?>
 </div>

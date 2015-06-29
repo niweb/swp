@@ -60,12 +60,12 @@
         ?>
         <div class="partners index large-7 medium-9 columns">
             <h3><?= __($range[0]) ?></h3>
-            <h6><?= '(>= '.$range[2].')' ?></h6>
             <table cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
                     <th><?= $this->Paginator->sort('first_name') ?></th>
                     <th><?= $this->Paginator->sort('last_name') ?></th>
+                    <th><?= $this->Paginator->sort('student_status_id', __('Status')) ?></th>
                     <th><?= __('gender') ?></th>
                     <th><?= __('Class') ?></th>
                     <th><?= __('Schooltype') ?></th>
@@ -77,11 +77,12 @@
             <?php
             foreach ($students as $student): 
                 $perc = $match_results[$student['id']]['percentage'];
-                  if ($perc >= $range[2]):
+                  if (($perc >= $range[2]) and ($perc < $range[1])):
                 ?>
                 <tr>
                         <td><?= h($student->first_name) ?></td>
                         <td><?= h($student->last_name) ?></td>
+                        <td><?= h($student->student_status->name) ?></td>
                         <td class='matchbool <?= $match_results[$student['id']]['gender'] ? 'true' : 'false' ?>'>
                             <span>
                                 <table>
@@ -109,8 +110,8 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <?php foreach($partner->preferred_classranges as $range){
-                                                echo $range->classrange->name.'<br>';
+                                            <?php foreach($partner->preferred_classranges as $clrange){
+                                                echo $clrange->classrange->name.'<br>';
                                             }?>
                                         </td>
                                         <td>
