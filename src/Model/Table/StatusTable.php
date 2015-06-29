@@ -44,9 +44,6 @@ class StatusTable extends Table
         $validator
             ->requirePresence('name', 'create')
             ->notEmpty('name');
-			
-		$validator
-			->allowEmpty('text');
 
         return $validator;
     }

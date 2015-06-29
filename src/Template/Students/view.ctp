@@ -1,10 +1,15 @@
 <div class="actions columns large-2 medium-3">
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
-        <?php if(isset($vermittler) or isset($locationAdmin) or isset($admin)) : ?>
+        <li class="back-button"><?= $this->Html->link(__('back'), $this->request->referer()) ?></li>
+        <?php if(isset($matchmaker)): ?>
+            <li><?= $this->Html->link(__('List Students'), ['action' => 'index', 'waiting']) ?> </li>
+        <?php elseif(isset($vermittler) or isset($locationAdmin) or isset($admin)) : ?>
             <li><?= $this->Html->link(__('Edit Student'), ['action' => 'edit', $student->id]) ?> </li>
             <li><?= $this->Form->postLink(__('Delete Student'), ['action' => 'delete', $student->id], ['confirm' => __('Are you sure you want to delete # {0}?', $student->id)]) ?> </li>
-            <li><?= $this->Html->link(__('List Students'), ['action' => 'index']) ?> </li>
+            <li><?= $this->Html->link(__('List waiting Students'), ['controller' => 'Students', 'action' => 'index', 'waiting']) ?></li>
+            <li><?= $this->Html->link(__('List active Students'), ['controller' => 'Students', 'action' => 'index', 'active']) ?></li>
+            <li><?= $this->Html->link(__('List inactive Students'), ['controller' => 'Students', 'action' => 'index', 'inactive']) ?></li>
         <?php endif; ?>
     </ul>
 </div>
@@ -30,6 +35,8 @@
             <p><?= h($student->telephone) ?></p>
             <h6 class="subheader"><?= __('mobile') ?></h6>
             <p><?= h($student->mobile) ?></p>
+			<h6 class="subheader"><?= __('Schooltype') ?></h6>
+            <p><?= h($student->schooltype->name) ?></p>
 			<h6 class="subheader"><?= __('Classrange') ?></h6>
             <p><?= h($classrange->classrange->name) ?></p>
 			<h6 class="subheader"><?= __('Subjects') ?></h6>

@@ -7,7 +7,7 @@ a:hover {
 }
 
 a {
-  color: #e2e236; //#1798A5;
+  color: #747474; //#e2e236; //#1798A5;
 }
 
 a.button[float='right']{
@@ -16,13 +16,21 @@ a.button[float='right']{
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.26);
   margin-left: 5px;
 }
-
 .side-nav li a:not(.button) {
   color: #000000; //#15848F
 }
 
 .side-nav li a:not(.button):hover {
   color: #000000; //#15848F
+}
+
+.side-nav li:first-child {
+  margin-left: -20px;
+  padding-left: 20px;
+  background-color: #e2e236;
+  color: #000000;
+  text-transform: lowercase;
+  font-weight: bold;
 }
 
 header {
@@ -43,15 +51,16 @@ header .header-title {
 
 
 legend {
-  color:#e2e236; //#15848F
+  color:#747474; //#e2e236; //#15848F
 }
 
 .row {
-  max-width: 80rem;
+  max-width: 80 rem;
 }
 
 .actions.columns {
-  margin-top:1rem;
+  margin-top:2rem;
+  margin-bottom: 100%;
   border-left: 5px solid #e2e236; //#15848F
   padding-left: 15px;
   padding: 32px 20px;
@@ -68,6 +77,52 @@ legend {
 
 .index table thead {
   height: 3.5rem;
+  overflow: hidden;
+  text-overflow: clip;
+}
+
+table td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+td.matchbool {
+  text-align: center;
+  box-shadow: inset 0px 0px 0px 10px #fff;
+}
+
+.true {
+  background-color: #DCE47E;
+}
+
+.true::before{
+  content: '✓';
+}
+
+.false {
+  background-color: #C3232D;
+}
+
+.false::before{
+  content: '✘';
+}
+
+td.matchbool:hover{
+  background:#e2e236;
+  //width:400px;
+}
+
+td.matchbool span{
+  display: none;
+}
+
+td.matchbool:hover span {
+  position: absolute;
+  z-index: 9999;
+  width: 300px;
+  border-left: 5px solid #e2e236; //#15848F
+  display: inline;
+  padding: 1px;
 }
 
 .header-help {
@@ -200,20 +255,23 @@ input[type=radio] {
 
 .error label,
 .error label.error {
-  color: #C3232D;
+  display: block;
+  font-weight: normal;
+  position: relative;
+  padding: 0.875rem //1 #C3232D;
+}
+
+div.related {
 }
 
 div.message {
   border-style: solid;
-  border-width: 1px;
-  display: block;
-  font-weight: normal;
-  position: relative;
-  padding: 0.875rem 1.5rem 0.875rem 20%;
+  border-width: 1px; //.5rem 0.875rem 20%;
   transition: opacity 300ms ease-out 0s;
   background-color: #DCE47E;
   border-color: #DCE47E;
   color: #626262;
+  padding:  12px 14px 12px 20%;
 }
 
 div.message.error {
@@ -277,6 +335,20 @@ div.warning:before {
   padding: 11px 16px 14px 7px;
   color: #C3232D;
   content: "!";
+}
+
+.search {
+  margin-top: 2rem;
+  margin-bottom: -2rem;
+  overflow: hidden;
+  text-align: right;
+  vertical-align: middle;
+  color: #626262;
+  padding: 12px;
+}
+
+.search button {
+  vertical-align: middle;
 }
 
 .view h2 {

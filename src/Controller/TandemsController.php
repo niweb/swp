@@ -13,10 +13,16 @@ class TandemsController extends AppController
 {
 
 	public function isAuthorized($user){
+	
+		$type = $user['type_id'];
 		if(in_array($this->request->action, ['index', 'view', 'add', 'edit', 'delete', 'deactivate'])){
-			$this->loadModel('UserHasTypes');
-			$type = $this->UserHasTypes->findByUserId($user['id'])->first()['type_id'];
 			if($type > '1'){
+				return true;
+			}
+		}
+		
+		if(in_array($this->request->action, ['reactivate'])){
+			if($type > '3'){
 				return true;
 			}
 		}
@@ -126,7 +132,26 @@ class TandemsController extends AppController
 	}
 	
 	public function deactivate($id = null){
+		
+		$this->loadModel('Students');
 		$tandem = $this->Tandems->get($id);
+		$studentID = $tandem->student_id;
+		$studentsCount = $this->Tandems->find()->where(['student_id' => $studentID, 'deactivated IS NULL'])->count();
+		if($studentsCount == 1){
+	        $student = $this->Students->get($studentID);
+	        $student->student_status_id = '3'; 
+	        $this->Students->save($student);
+		}
+		$this->loadModel('Partners');
+		$partnerID = $tandem->partner_id;
+		//$deactivated = $tandem->deactivated;
+		$partnersCount = $this->Tandems->find()->where(['partner_id' => $partnerID, 'deactivated IS NULL'])->count();
+		if($partnersCount == 1){
+			$partner = $this->Partners->get($partnerID);
+			$partner->status_id = '7'; 
+			$this->Partners->save($partner);
+		}
+		
 		$time = time();
 		$tandem->deactivated = $time;
 		if($this->Tandems->save($tandem)){
@@ -136,11 +161,23 @@ class TandemsController extends AppController
 		}
 		return $this->redirect(['action' => 'index']);
 	}
+	
         
-        public function reactivate($id = null){
+    public function reactivate($id = null){
 		$tandem = $this->Tandems->get($id);
 		$time = time();
 		$tandem->deactivated = null;
+		$this->loadModel('Students');
+		$student_id=$tandem->student_id;
+		$student = $this->Students->get($student_id);
+        $student->student_status_id='2'; 
+        $this->Students->save($student);
+        $this->loadModel('Partners');
+        $partner_id=$tandem->partner_id;
+		$partner = $this->Partners->get($partner_id);
+        $partner->status_id='6'; 
+	    $this->Partners->save($partner);
+		
 		if($this->Tandems->save($tandem)){
 			$this->Flash->success('Tandem wieder aktiviert!');
 		} else {

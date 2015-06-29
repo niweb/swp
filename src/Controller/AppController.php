@@ -125,13 +125,12 @@ class AppController extends Controller
 	}
 	
 	public function isAuthorized($user){
-		$this->loadModel('UserHasTypes');
-		$type = $this->UserHasTypes->findByUserId($user['id'])->order(['type_id' => 'DESC'])->first()['type_id'];
-		if($type == '5' || $type == '4') {
+		$type = $user['type_id'];
+		if($type == '5') {
 			return true;
 		}
 		
-		//$this->Flash->error('Permission denied');
+		$this->Flash->error('Permission denied');
 		return false;
 	}
 }

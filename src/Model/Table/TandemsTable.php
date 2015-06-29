@@ -44,10 +44,6 @@ class TandemsTable extends Table
 		->add('id', 'valid', ['rule' => 'numeric'])
 		->allowEmpty('id', 'create');
 
-		$validator
-		->add('active', 'valid', ['rule' => 'boolean'])
-		->allowEmpty('active');
-
 		return $validator;
 	}
 

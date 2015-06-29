@@ -16,10 +16,6 @@
             <h6 class="subheader"><?= __('Name') ?></h6>
             <p><?= h($type->name) ?></p>
         </div>
-        <div class="large-2 columns numbers end">
-            <h6 class="subheader"><?= __('Id') ?></h6>
-            <p><?= $this->Number->format($type->id) ?></p>
-        </div>
     </div>
 </div>
 <div class="related row">

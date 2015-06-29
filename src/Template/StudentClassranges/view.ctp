@@ -20,9 +20,5 @@
             <h6 class="subheader"><?= __('Classrange') ?></h6>
             <p><?= $studentClassrange->has('classrange') ? $this->Html->link($studentClassrange->classrange->name, ['controller' => 'Classranges', 'action' => 'view', $studentClassrange->classrange->id]) : '' ?></p>
         </div>
-        <div class="large-2 columns numbers end">
-            <h6 class="subheader"><?= __('Id') ?></h6>
-            <p><?= $this->Number->format($studentClassrange->id) ?></p>
-        </div>
     </div>
 </div>

@@ -1,6 +1,7 @@
 <div class="actions columns large-2 medium-3">
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
+        <li class="back-button"><?= $this->Html->link(__('back'), $this->request->referer()) ?></li>
         <li><?= $this->Html->link(__('New Location'), ['action' => 'add']) ?></li>
     </ul>
 </div>
@@ -8,7 +9,6 @@
     <table cellpadding="0" cellspacing="0">
     <thead>
         <tr>
-            <th><?= $this->Paginator->sort('id') ?></th>
             <th><?= $this->Paginator->sort('name') ?></th>
             <th class="actions"><?= __('Actions') ?></th>
         </tr>
@@ -16,7 +16,6 @@
     <tbody>
     <?php foreach ($locations as $location): ?>
         <tr>
-            <td><?= $this->Number->format($location->id) ?></td>
             <td><?= h($location->name) ?></td>
             <td class="actions">
                 <?= $this->Html->link(__('View'), ['action' => 'view', $location->id]) ?>

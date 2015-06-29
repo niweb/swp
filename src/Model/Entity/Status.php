@@ -16,6 +16,5 @@ class Status extends Entity
      */
     protected $_accessible = [
         'name' => true,
-        'text' => true,
     ];
 }

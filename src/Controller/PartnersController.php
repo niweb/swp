@@ -20,6 +20,8 @@ class PartnersController extends AppController
 	}
 
 	public function isAuthorized($user) {
+	
+			$type = $user['type_id'];
             if(in_array($this->request->action, ['view', 'edit'])){
                 $partnerID = (int)$this->request->params['pass'][0];
                 if($this->Partners->isTheSame($partnerID, $user['id'])){
@@ -27,15 +29,11 @@ class PartnersController extends AppController
                 }
             }
             if(in_array($this->request->action, ['index'])){
-                $this->loadModel('UserHasTypes');
-                $type = $this->UserHasTypes->findByUserId($user['id'])->first()['type_id'];
                 if($type > '1') {
                     return true;
 		}
             }
-            if(in_array($this->request->action, ['view', 'match'])){
-                $this->loadModel('UserHasTypes');
-                $type = $this->UserHasTypes->findByUserId($user['id'])->first()['type_id'];
+            if(in_array($this->request->action, ['view'])){
                 if($type > '1'){
 					$location = $this->Auth->user('location_id');
 					$partnerID = (int)$this->request->params['pass'][0];
@@ -45,9 +43,17 @@ class PartnersController extends AppController
 					}
                 }
             }
-			if(in_array($this->request->action, ['edit', 'delete', 'status'])){
-                $this->loadModel('UserHasTypes');
-                $type = $this->UserHasTypes->findByUserId($user['id'])->first()['type_id'];
+			if(in_array($this->request->action, ['match'])){
+                if($type > '1'){
+					$location = $this->Auth->user('location_id');
+					$partnerID = (int)$this->request->params['pass'][0];
+					$partner = $this->Partners->get($partnerID);
+					if($location == $partner->location_id && $partner->status_id < 7){
+						return true;
+					}
+                }
+            }
+			if(in_array($this->request->action, ['edit', 'deactivate'])){
                 if($type > '2'){
 					$location = $this->Auth->user('location_id');
 					$partnerID = (int)$this->request->params['pass'][0];
@@ -57,11 +63,29 @@ class PartnersController extends AppController
 					}
                 }
             }
+			if(in_array($this->request->action, ['status'])){
+                if($type > '2'){
+					$location = $this->Auth->user('location_id');
+					$partnerID = (int)$this->request->params['pass'][0];
+					$partner = $this->Partners->get($partnerID);
+					if($location == $partner->location_id && $partner->status_id < 8){
+						return true;
+					}
+                }
+            }
 			if(in_array($this->request->action, ['add'])){
-                $this->loadModel('UserHasTypes');
-                $type = $this->UserHasTypes->findByUserId($user['id'])->first()['type_id'];
                 if($type > '2'){
 					return true;
+                }
+            }
+			if(in_array($this->request->action, ['reactivate'])){
+                if($type > '3'){
+					$location = $this->Auth->user('location_id');
+					$partnerID = (int)$this->request->params['pass'][0];
+					$partnerLocation = $this->Partners->get($partnerID)->location_id;
+					if($location == $partnerLocation){
+						return true;
+					}
                 }
             }
 			
@@ -118,7 +142,7 @@ class PartnersController extends AppController
 
             if($userType > '1' && $userType < '5') {
                 $condition['Users.location_id ='] = $user['location_id'];
-                $this->paginate = ['contain' => ['Locations', 'Users', 'Status']];
+                $this->paginate = ['contain' => ['Locations', 'Users', 'Status'], 'order' => ['status_id' => 'asc']];
                 $partners = $this->Partners->find('all', ['limit' => 500, 'conditions' => $condition])->contain(['Users', 'Status']);
                 $this->set('partners', $this->paginate($partners));
                 $this->set('_serialize', ['partners']);
@@ -143,8 +167,12 @@ class PartnersController extends AppController
             $partner = $this->Partners->get($id, [
                 'contain' => ['PreferredClassranges.Classranges', 'PreferredSchooltypes.Schooltypes', 'PreferredSubjects.Subjects', 'Tandems.Students', 'Status', 'Users']
             ]);
-            $this->set('partner', $partner);
-            $this->set('_serialize', ['partner']);
+			
+			$this->loadModel('StatusTexts');
+			$statusText = $this->StatusTexts->findByStatusId($partner->status_id)->first();
+			
+            $this->set(compact('partner', 'statusText'));
+            $this->set('_serialize', ['partner', 'statusText']);
 
             /*$this->loadModel('Users');
             $user = $this->Users->get($partner->user_id);
@@ -187,29 +215,94 @@ class PartnersController extends AppController
 	 */
 	public function edit($id = null)
 	{
-            $partner = $this->Partners->get($id, [
-                'contain' => []
-            ]);
-            $this->loadModel('Users');
-            if ($this->request->is(['patch', 'post', 'put'])) {
-                $partner = $this->Partners->patchEntity($partner, $this->request->data);
-                $user = $this->Users->get($partner->user_id);
-                $user->first_name = $this->request->data('user.first_name');
-                $user->last_name = $this->request->data('user.last_name');
-                if ($this->Partners->save($partner) && $this->Users->save($user)) {
-                    $this->Flash->success('The partner has been saved.');
-                    return $this->redirect(['action' => 'view', $partner->id]);
-                } else {
-                    $this->Flash->error('The partner could not be saved. Please, try again.');
-                }
-            }
-            $this->loadModel('UserHasTypes');
-            $type = $this->UserHasTypes->findByUserId($this->Auth->user('id'))->first()['type_id'];
-            $user = $this->Users->get($partner->user_id);
-            $locations = $this->Partners->Locations->find('list', ['limit' => 200]);
-            $status = $this->Partners->Status->find('list', ['limit' => 200]);
-            $this->set(compact('partner', 'locations', 'user', 'status', 'type'));
-            $this->set('_serialize', ['partner', 'user']);
+		$partner = $this->Partners->get($id, [
+			'contain' => ['Users', 'PreferredClassranges', 'PreferredSchooltypes', 'PreferredSubjects']
+		]);
+		$this->loadModel('Users');
+		if ($this->request->is(['patch', 'post', 'put'])) {
+			$partner = $this->Partners->patchEntity($partner, $this->request->data);
+			$user = $this->Users->get($partner->user_id);
+			$user->first_name = $this->request->data('user.first_name');
+			$user->last_name = $this->request->data('user.last_name');
+			if ($this->Partners->save($partner) && $this->Users->save($user)) {
+			
+				$this->loadModel('PreferredClassranges');				
+				foreach(($this->request->data('preferredClassranges')) as $classrangeId => $checked) {
+					$pClassrange = $this->PreferredClassranges->find()->where(['classrange_id' => $classrangeId, 'partner_id' => $partner->id])->first();
+					if($checked == '1') {
+						if($pClassrange == null){
+							$pClassrange = $this->PreferredClassranges->newEntity();
+							$pClassrange->partner_id = $partner->id;
+							$pClassrange->classrange_id = $classrangeId;
+							$this->PreferredClassranges->save($pClassrange);
+						}
+					} else if($pClassrange != null){
+						$this->PreferredClassranges->delete($pClassrange);
+					}
+				}
+				
+				$this->loadModel('PreferredSchooltypes');
+				foreach(($this->request->data('preferredSchooltypes')) as $schooltypeId => $checked){
+					$pSchooltype = $this->PreferredSchooltypes->find()->where(['schooltype_id' => $schooltypeId, 'partner_id' => $partner->id])->first();
+					if($checked == '1'){
+						if($pSchooltype == null) {
+							$pSchooltype = $this->PreferredSchooltypes->newEntity();
+							$pSchooltype->partner_id = $partner->id;
+							$pSchooltype->schooltype_id = $schooltypeId;
+							$this->PreferredSchooltypes->save($pSchooltype);
+						}
+					} else if($pSchooltype != null){
+						$this->PreferredSchooltypes->delete($pSchooltype);
+					}
+				}
+				
+				$this->loadModel('PreferredSubjects');
+				foreach(($this->request->data('preferredSubjects')) as $subjectId => $gradeLimit){
+					debug($gradeLimit);
+					$pSubject = $this->PreferredSubjects->find()->where(['subject_id' => $subjectId, 'partner_id' => $partner->id])->first();
+					if(($gradeLimit != 0) AND ($gradeLimit != null)){
+						if($pSubject == null) {
+							$pSubject = $this->PreferredSubjects->newEntity();
+							$pSubject->partner_id = $partner->id;
+							$pSubject->subject_id = $subjectId;
+							$pSubject->maximum_class = $gradeLimit;
+							$this->PreferredSubjects->save($pSubject);
+						} else {
+							$pSubject->maximum_class = $gradeLimit;
+							$this->PreferredSubjects->save($pSubject);
+						}
+					} else{
+						if($pSubject != null){
+							$this->PreferredSubjects->delete($pSubject);
+						}
+					}
+				}
+				
+				$this->Flash->success('The partner has been saved.');
+				return $this->redirect(['action' => 'view', $partner->id]);
+			} else {
+				$this->Flash->error('The partner could not be saved. Please, try again.');
+			}
+		}
+			
+		$this->loadModel('Classranges');
+        $classranges = $this->Classranges->find('all');
+        
+        $this->loadModel('Schooltypes');
+        $schooltypes = $this->Schooltypes->find('all')
+                ->where(['location_id =' => $this->Auth->user('location_id')]);
+        
+        $this->loadModel('Subjects');
+        $subjects = $this->Subjects->find('all')
+                ->where(['location_id =' => $this->Auth->user('location_id')]);
+			
+		$type = $this->Auth->user('type_id');
+		$user = $this->Users->get($partner->user_id);
+		$status = $this->Partners->Status->find('list', ['limit' => 200]);
+		$checked = false;
+		$tmpsubject = '';
+		$this->set(compact('partner', 'user', 'status', 'type', 'classranges', 'schooltypes', 'subjects', 'checked', 'tmpsubject'));
+		$this->set('_serialize', ['partner', 'user']);
 	}
 
 	/*public function deactivate($id = null){
@@ -241,7 +334,29 @@ class PartnersController extends AppController
 		} else {
 			$this->Flash->error('Pate konnte nicht gelöscht werden');
 		}
-		return $this->redirect(['action' => 'index']);
+		return $this->redirect($this->referer(['action' => 'index']));
+	}
+	
+	public function deactivate($id = null){
+		$partner = $this->Partners->get($id);
+		$partner->status_id = 8;
+		if($this->Partners->save($partner)){
+			$this->Flash->success('Pate wurde erfolgreich deaktiviert.');
+		} else {
+			$this->Flash->error('Pate konnte nicht deaktiviert werden.');
+		}
+		return $this->redirect($this->referer(['action' => 'index']));
+	}
+	
+	public function reactivate($id = null){
+		$partner = $this->Partners->get($id);
+		$partner->status_id = 2;
+		if($this->Partners->save($partner)){
+			$this->Flash->success('Pate wurde erfolgreich reaktiviert.');
+		} else {
+			$this->Flash->error('Pate konnte nicht reaktiviert werden.');
+		}
+		return $this->redirect($this->referer(['action' => 'index']));
 	}
 
 public function register($loc = null) /* location-id */
@@ -278,7 +393,7 @@ public function register($loc = null) /* location-id */
                 $userType->type_id = 1;
                 $userTypeSaved = $userTypeTable->save($userType);
 
-                if($partnerSaved AND $userSaved){
+                if($partnerSaved){
                     //preferredclassranges-eintrag
                     $pClassrangesTable = TableRegistry::get('PreferredClassranges');
                     $allPClassrangesSaved = true;
@@ -326,6 +441,10 @@ public function register($loc = null) /* location-id */
                         //everything saved? then send activationMail
                         $userController = new UsersController;
                         $userController->sendActivationMail($user->id);
+                        if(isset($authUser) and $authUser['type_id'] > 1){
+                            $this->Flash->success('Der Pate wurde registriert und erhält nun eine Aktivierungsmail.');
+                            return $this->redirect(['controller'=>'Partners','action' => 'index', 'active']);
+                        }
                         $this->Flash->success('Deine Informationen wurden gespeichert. Danke!');
                         return $this->redirect(['controller'=>'Users','action' => 'login']);
                     } else {
@@ -333,7 +452,7 @@ public function register($loc = null) /* location-id */
                         $this->loadModel('PreferredClassranges');
                         $this->loadModel('PreferredSchooltypes');
                         $this->loadModel('PreferredSubjects');
-						$this->Partners->delete($partner);
+                        $this->Partners->delete($partner);
                         $this->PreferredClassranges->deleteAll(['partner_id' => $partner['id']]);
                         $this->PreferredSchooltypes->deleteAll(['partner_id' => $partner['id']]);
                         $this->PreferredSubjects->deleteAll(['partner_id' => $partner['id']]);
@@ -346,10 +465,10 @@ public function register($loc = null) /* location-id */
                     $this->Partners->delete($partner);
                     $userTypeTable->delete($userType);
 
-                    $this->Flash->error('Es ist leider etwas schief gelaufen. Bitte versuche es gleich noch einmal. (User konnte nicht gespeichert werden)');
+                    $this->Flash->error('Es ist leider etwas schief gelaufen. Bitte versuche es gleich noch einmal. Wenn das Problem weiterhin besteht kontaktiere uns bitte!');
                 }
             }else {
-                $this->Flash->error('Es ist leider etwas schief gelaufen. Bitte versuche es gleich noch einmal. (User konnte nicht gespeichert werden)');
+                $this->Flash->error('Es ist leider etwas schief gelaufen. Bitte versuche es gleich noch einmal. Vermutlich bist du bereits unter dieser Email-Adresse bei uns registriert. Wenn dem nicht so ist und das Problem dennoch weiterhin besteht kontaktiere uns bitte!');
             }
         } 
 
@@ -381,18 +500,122 @@ public function register($loc = null) /* location-id */
             $this->redirect(['action' => 'index']);
         }
         else if($studentId == null){
-            //wenn partnerId != null, aber studentid == 0, so wurde schon ein pate
+            //wenn partnerId != null, aber studentid == null, so wurde schon ein pate
             //ausgewählt, aber noch kein passender schüler dazu
             //nur hier werden Daten im view gebraucht, die werden hier gesetzt
             
             $partner = $this->Partners->get($partnerId, [
-                'contain' => ['Users']
+                'contain' => ['Users', 'PreferredClassranges.Classranges', 'PreferredSchooltypes.Schooltypes', 'PreferredSubjects.Subjects', 'Status']
                 ]);
             $this->loadModel('Students');
-            $students = $this->Students->find('all')
-                    ->where(['location_id =' => $partner->location_id]);
-
-            $this->set(compact('partner', 'students',$this->paginate($students)));
+            $students = $this->Students
+                    ->find('all', [
+                        'contain' => ['StudentSubjects.Subjects', 'StudentClassranges.Classranges', 'Schooltypes', 'StudentStatus']
+                    ])
+                    ->where(['Students.location_id =' => $partner['location_id']]);
+            
+            //matchingkriterien des partners auslesen
+            $preferredGender = $partner->preferred_gender;
+            
+            $prefClassranges = $partner->preferred_classranges;
+            foreach($prefClassranges as $range){
+                $preferredClassranges[] = $range['classrange_id'];
+            }
+            
+            $prefSchooltypes = $partner->preferred_schooltypes;
+            foreach($prefSchooltypes as $type){
+                $preferredSchooltypes[] = $type['schooltype_id'];
+            }
+            
+            $prefSubjects = $partner->preferred_subjects;
+            foreach($prefSubjects as $subj){
+                $preferredSubjects[] = $subj['subject_id'];
+            }
+            //matching für jeden schüler einzeln
+            foreach($students as $student){
+                //für jeden schüler eine matchpoint-zahl ausrechnen, die angibt,
+                //wie gut ein schüler zum paten passt
+                $match = [
+                    'points' => 0,
+                    'maxpoints' => 0,
+                    'percentage' => 0.0,
+                    'gender' => false,
+                    'classrange' => false,
+                    'schooltype' => false,
+                    'subjects' => false,
+                    ];
+                
+                //gender == preferredgender?
+                $studentGender = $student->sex;
+                if($preferredGender == '' OR $preferredGender == $studentGender) {
+                    $match['points']++;
+                    $match['gender'] = true;
+                }
+                
+                $match['maxpoints']++;
+                
+                //classrange is in preferred_classranges?
+                $studentClassrange = $student->student_classrange->classrange['id'];
+                if (in_array($studentClassrange,$preferredClassranges)){
+                    $match['points']++;
+                    $match['classrange'] = true;
+                }
+                
+                $match['maxpoints']++;
+                
+                //schooltype is in preferred_schooltypes?
+                $studentSchooltype = $student['schooltype_id'];
+                if (in_array($studentSchooltype,$preferredSchooltypes)){
+                    $match['points']++;
+                    $match['schooltype'] = true;
+                }
+                
+                $match['maxpoints']++;
+                
+                $studentSubjects = [$student->student_subject->subject1, $student->student_subject->subject2, $student->student_subject->subject3];
+                $checkedSubjects = [];
+                foreach($studentSubjects as $subj){
+                    //alle 3 Fächer nacheinander abgleichen
+                    if(!in_array($subj,$checkedSubjects)){
+                        //checkedSubjects enthält alle bereits enthaltenen Fächer
+                        //kann raus, wenn in Student subject1/2/3 nicht gleich aber null sein darf
+                        //verhindert zuviele matchpoints
+                        if(in_array($subj,$preferredSubjects)){
+                            $match['points']++;
+                            $match['subjects'] = true;
+                            $checkedSubjects[] = $subj;
+                        }
+                    }
+                    
+                $match['maxpoints']++;
+                $match['percentage'] = $match['points']/$match['maxpoints'];
+                
+                }
+                
+                
+                //$studentStatus = $student->student_status->name;
+                $match_results[$student['id']] = $match;
+		$this->set(compact('student'));
+		$this->set('_serialize', ['student']);
+                
+            }
+            
+            /* subjects - da ein student keine richigen subject verweise hat,
+             * werden hier alle möglichen subjects in ein array gepackt,
+             * damit diese schön in der view ausgegeben werden können
+             * [ID => NAME]
+             */
+            $this->loadModel('Subjects');
+            $subjects = $this->Subjects->find('all')
+                    ->where(['location_id =' => $partner['location_id']]);
+            $subject_list = [];
+            foreach($subjects as $subj){
+                $subject_list[$subj['id']] = $subj['name'];
+            }
+            
+            
+            $ranges = [['perfect match', 1.1, 0.9], ['great match', 0.9, 0.6], ['average match', 0.6, 0.3], ['bad match',0.3,0.0]];
+            $this->set(compact('partner', 'match_results', 'ranges', 'subject_list', 'students', $this->paginate($students)));
             $this->set('_serialize', ['partner'], ['students']);
             
             
@@ -404,10 +627,17 @@ public function register($loc = null) /* location-id */
             ]);
             $partnerName = h($partner->user->first_name . ' ' . $partner->user->last_name);
             
+            $partner->status_id=6;
+            $this->Partners->save($partner);
+            
             $this->loadModel('Students');
+            $studentTable = TableRegistry::get('Students');
             $student = $this->Students->get($studentId);
             $studentName = h($student->first_name . ' ' . $student->last_name);
             
+            $student->status_id=2;
+            $studentTable->save($student);
+
             $tandemTable = TableRegistry::get('Tandems');
             $tandem = $tandemTable->newEntity();
             $tandem->partner_id = $partnerId;
@@ -415,19 +645,26 @@ public function register($loc = null) /* location-id */
             $tandemTable->save($tandem);
             
             $this->Flash->success(h($partnerName . ' und ' . $studentName . ' sind nun ein Tandem!'));
+            
             $this->redirect(['controller' => 'Tandems', 'action' => 'index', ['sort' => 'activated', 'direction' => 'desc']]);
         }
     }
 	
 	public function status($id = null) {
 		$partner = $this->Partners->get($id, ['contain' => ['Users']]);
+		$this->loadModel('Tandems');
 		if($this->request->is(['patch', 'post', 'put'])){
-			$partner = $this->Partners->patchEntity($partner, $this->request->data);
-			if($this->Partners->save($partner)){
-				$this->Flash->success('Status aktualisiert');
-				$this->redirect(['action' => 'index']);
+			$tandems_count = $this->Tandems->find()->where(['partner_id' => $partner->id, 'deactivated IS NULL'])->count();
+			if($this->request->data('status_id') == 6 && $tandems_count == 0) {
+				$this->Flash->error('Ungültige Operation');
 			} else {
-				$this->Flash->error('Fehler beim speichern des Paten.');
+				$partner = $this->Partners->patchEntity($partner, $this->request->data);
+				if($this->Partners->save($partner)){
+					$this->Flash->success('Status aktualisiert');
+					$this->redirect(['action' => 'index', 'active']);
+				} else {
+					$this->Flash->error('Fehler beim Speichern des Paten.');
+				}
 			}
 		}
 		$status = $this->Partners->Status->find('list', ['limit' => 200]);

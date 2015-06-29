@@ -21,8 +21,6 @@
             <p><?= $preferredSubject->has('partner') ? $this->Html->link($preferredSubject->partner->name, ['controller' => 'Partners', 'action' => 'view', $preferredSubject->partner->id]) : '' ?></p>
         </div>
         <div class="large-2 columns numbers end">
-            <h6 class="subheader"><?= __('Id') ?></h6>
-            <p><?= $this->Number->format($preferredSubject->id) ?></p>
             <h6 class="subheader"><?= __('Maximum Class') ?></h6>
             <p><?= $this->Number->format($preferredSubject->maximum_class) ?></p>
         </div>

@@ -20,9 +20,5 @@
             <h6 class="subheader"><?= __('Schooltype') ?></h6>
             <p><?= $preferredSchooltype->has('schooltype') ? $this->Html->link($preferredSchooltype->schooltype->name, ['controller' => 'Schooltypes', 'action' => 'view', $preferredSchooltype->schooltype->id]) : '' ?></p>
         </div>
-        <div class="large-2 columns numbers end">
-            <h6 class="subheader"><?= __('Id') ?></h6>
-            <p><?= $this->Number->format($preferredSchooltype->id) ?></p>
-        </div>
     </div>
 </div>

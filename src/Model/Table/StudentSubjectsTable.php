@@ -30,7 +30,7 @@ class StudentSubjectsTable extends Table
         $this->belongsTo('Subjects', [
             'foreignKey' => 'subject1'
         ]);
-		$this->belongsTo('Subjects', [
+	$this->belongsTo('Subjects', [
             'foreignKey' => 'subject2'
         ]);
 		$this->belongsTo('Subjects', [

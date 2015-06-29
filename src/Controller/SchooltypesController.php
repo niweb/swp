@@ -10,7 +10,29 @@ use App\Controller\AppController;
  */
 class SchooltypesController extends AppController
 {
-
+	
+	public function isAuthorized($user) {
+	
+		$type = $user['type_id'];
+		if(in_array($this->request->action, ['index', 'add'])){
+			if($type > '3') {
+				return true;
+			}
+		}
+		
+		if(in_array($this->request->action, ['view', 'edit', 'delete'])){
+			if($type > '3'){
+				$schooltypeID = (int)$this->request->params['pass'][0];
+				$schooltype = $this->Schooltypes->get($schooltypeID);
+				if($schooltype['location_id'] == $user['location_id']){
+					return true;
+				}
+			}
+		}
+		
+		return parent::isAuthorized($user);
+	}
+	
 	/**
 	 * Index method
 	 *
@@ -21,7 +43,8 @@ class SchooltypesController extends AppController
 		$this->paginate = [
             'contain' => ['Locations']
 		];
-		$this->set('schooltypes', $this->paginate($this->Schooltypes));
+		$schooltypes = $this->Schooltypes->find('all', ['conditions' => ['location_id' => $this->Auth->user('location_id')]]);
+		$this->set('schooltypes', $this->paginate($schooltypes));
 		$this->set('_serialize', ['schooltypes']);
 	}
 
@@ -51,6 +74,7 @@ class SchooltypesController extends AppController
 		$schooltype = $this->Schooltypes->newEntity();
 		if ($this->request->is('post')) {
 			$schooltype = $this->Schooltypes->patchEntity($schooltype, $this->request->data);
+			$schooltype->location_id = $this->Auth->user('location_id');
 			if ($this->Schooltypes->save($schooltype)) {
 				$this->Flash->success('The schooltype has been saved.');
 				return $this->redirect(['action' => 'index']);

@@ -44,14 +44,20 @@ msgstr "Klassenstufen"
 msgid "Classrange"
 msgstr "Klassenstufe"
 
+msgid "Class"
+msgstr "Klasse"
+
 msgid "Schooltypes"
 msgstr "Schularten"
 
 msgid "Subjects"
-msgstr "Schulfächer"
+msgstr "Fächer"
 
 msgid "Status"
 msgstr "Status"
+
+msgid "StatusTexts"
+msgstr "Status-Nachrichten"
 
 msgid "Tutorship"
 msgstr "Patenschaft"
@@ -64,6 +70,21 @@ msgstr "vorherige"
 
 msgid "next"
 msgstr "nächste"
+
+msgid "of"
+msgstr "von"
+
+msgid "back"
+msgstr "zurück"
+
+msgid "no preference"
+msgstr "Keine Präferenz"
+
+msgid "no information"
+msgstr "Keine Angaben"
+
+msgid "no {0} to display"
+msgstr "Keine {0} anzuzeigen"
 
 
 #, Allgemeine Aktionen
@@ -79,8 +100,14 @@ msgstr "Willst du wirklich #{0} löschen?"
 msgid "Are you sure you want to deactivate # {0}?"
 msgstr "Willst du wirklich #{0} deaktivieren?"
 
+msgid "Are you sure you want to reactivate # {0}?"
+msgstr "Willst du wirklich #{0} reaktivieren?"
+
 msgid "dont_delete_{0}"
 msgstr "Achtung! Wird ein {0} gelöscht, kann es zu schweren Fehlern im System kommen! Bitte nicht leichtsinnig verwenden!"
+
+msgid "dont_delete_fem_{0}"
+msgstr "Achtung! Wird eine {0} gelöscht, kann es zu schweren Fehlern im System kommen! Bitte nicht leichtsinnig verwenden!"
 
 msgid "Cancel"
 msgstr "Abbrechen"
@@ -117,6 +144,9 @@ msgstr "Alle ehemaligen Paten anzeigen"
 msgid "Edit Partner"
 msgstr "Paten bearbeiten"
 
+msgid "Edit Profile"
+msgstr "Profil bearbeiten"
+
 msgid "Delete Partner"
 msgstr "Paten löschen"
 
@@ -126,9 +156,21 @@ msgstr "Neuen Paten anlegen"
 msgid "View Partner"
 msgstr "Diesen Paten anzeigen"
 
+msgid "Change Status of Partner"
+msgstr "Status des Paten ändern"
+
 #, Schüler
 msgid "List Students"
 msgstr "Alle Schüler anzeigen"
+
+msgid "List waiting Students"
+msgstr "Alle wartenden Schüler anzeigen"
+
+msgid "List active Students"
+msgstr "Alle aktiven Schüler anzeigen"
+
+msgid "List inactive Students"
+msgstr "Alle inaktiven Schüler anzeigen"
 
 msgid "New Student"
 msgstr "Neuen Schüler anlegen"
@@ -163,6 +205,12 @@ msgstr "Benutzer löschen"
 
 msgid "View User"
 msgstr "Diesen Benutzer anzeigen"
+
+msgid "New {0} created"
+msgstr "Ein Neuer {0} wurde erstellt"
+
+msgid "The user has been deleted."
+msgstr "Der Benutzer wurde gelöscht."
 
 #, Locations
 msgid "List Locations"
@@ -222,6 +270,13 @@ msgid "View Classrange"
 msgstr "Diese Klassenstufe anzeigen"
 
 #, Schooltype
+
+msgid "Schooltype"
+msgstr "Schulart"
+
+msgid "Schooltypes"
+msgstr "Schularten"
+
 msgid "List Schooltypes"
 msgstr "Alle Schularten anzeigen"
 
@@ -258,6 +313,25 @@ msgstr "Status hinzufügen"
 
 msgid "View Status"
 msgstr "Diesen Status anzeigen"
+
+#, StatusText
+msgid "List Status Texts"
+msgstr "Alle Status-Nachrichten anzeigen"
+
+msgid "Edit Status Text"
+msgstr "Status-Nachricht bearbeiten"
+
+msgid "Delete Status"
+msgstr "Status-Nachricht löschen"
+
+msgid "New Status Text"
+msgstr "Neue Status-Nachricht anlegen"
+
+msgid "Add Status Text"
+msgstr "Status-Nachricht hinzufügen"
+
+msgid "View Status Text"
+msgstr "Diese Status-Nachricht anzeigen"
 
 #, Subject
 msgid "List Subjects"
@@ -410,6 +484,9 @@ msgstr "Bitte nenne uns auch die höchste Klassenstufe, die du in dem jeweiligen
 msgid "subject"
 msgstr "Schulfach"
 
+msgid "Schooltype"
+msgstr "Schulart"
+
 msgid "max_grade"
 msgstr "Höchste Klassenstufe"
 
@@ -447,6 +524,42 @@ msgid "reason_for_schuelerpaten"
 msgstr "Wie bist du auf uns gekommen?"
 
 #, Matching
+
+msgid "perfect match"
+msgstr "Perfekte Übereinstimmung"
+
+msgid "great match"
+msgstr "Gute Übereinstimmung"
+
+msgid "average match"
+msgstr "Mittelmäßige Übereinstimmung"
+
+msgid "bad match"
+msgstr "Schlechte Übereinstimmung"
+
+msgid "preferred_gender_of_partner"
+msgstr "Bevorzugtes Geschlecht des Paten"
+
+msgid "gender_of_student"
+msgstr "Geschlecht des Schülers"
+
+msgid "preferred_classranges_of_partner"
+msgstr "Bevorzugte Klassenstufen des Paten"
+
+msgid "class_of_student"
+msgstr "Klasse des Schülers"
+
+msgid "preferred_schooltypes_of_partner"
+msgstr "Bevorzugte Schularten des Paten"
+
+msgid "schooltype_of_student"
+msgstr "Schulart des Schülers"
+
+msgid "preferred_subjects_of_partner"
+msgstr "Bevorzugte Schulfächer des Paten"
+
+msgid "subjects_of_student"
+msgstr "Schulfächer des Schülers"
 
 msgid "Are you sure you want to match {0} with {1}?"
 msgstr "Möchtest du {0} und {1} wirklich matchen?"

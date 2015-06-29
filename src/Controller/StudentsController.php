@@ -13,22 +13,36 @@ class StudentsController extends AppController
 
 	public function isAuthorized($user){
 		if(in_array($this->request->action, ['index', 'add'])){
-			$this->loadModel('UserHasTypes');
-			$type = $this->UserHasTypes->findByUserId($user['id'])->first()['type_id'];
-			if($type > '1' && $type < '4'){
-					return true;
-			}
+                    $type = $user['type_id'];
+                    if($type > '1'){
+                        return true;
+                    }
 		}
-		if(in_array($this->request->action, ['edit', 'view', 'delete'])){
-			$this->loadModel('UserHasTypes');
-			$type = $this->UserHasTypes->findByUserId($user['id'])->first()['type_id'];
-			if($type > '1' && $type < '4'){
-				$studentID = (int)$this->request->params['pass'][0];
-				$studentLocation = $this->Students->get($studentID)->location_id;
-				if($user['location_id'] == $studentLocation){
-					return true;
-				}
-			}
+		if(in_array($this->request->action, ['edit', 'view'])){
+                    $type = $user['type_id'];
+                    if ($type == '5'){
+                        return true;
+                    }
+                    elseif($type > '1'){
+                        $studentID = (int)$this->request->params['pass'][0];
+                        $studentLocation = $this->Students->get($studentID)->location_id;
+                        if($user['location_id'] == $studentLocation){
+                            return true;
+                        }
+                    }
+		}
+                if(in_array($this->request->action, ['delete', 'deactivate', 'reactivate', 'status'])){
+                    $type = $user['type_id'];
+                    if ($type == '5'){
+                        return true;
+                    }
+                    if($type > '2'){
+                        $studentID = (int)$this->request->params['pass'][0];
+                        $studentLocation = $this->Students->get($studentID)->location_id;
+                        if($user['location_id'] == $studentLocation){
+                            return true;
+                        }
+                    }
 		}
 		
 		return parent::isAuthorized($user);
@@ -39,26 +53,83 @@ class StudentsController extends AppController
 	 *
 	 * @return void
 	 */
-	public function index()
+	public function index($view = null)
 	{
-		$this->loadModel('UserHasTypes');
         $user = $this->Auth->user();
-        $type = $this->UserHasTypes->findByUserId($user['id'])->first()['type_id'];
+        $type = $user['type_id'];
+		
+		switch($view){
+                    case 'all':
+                        $condition = [];
+                        break;
+                    case 'waiting': 
+                        $condition = ['student_status_id =' => 1];
+                        break;
+                    case 'active': 
+                        $condition = ['student_status_id <' => 3];
+                        break;
+                    case 'deactive':
+                        $condition = ['student_status_id =' => 3];
+                        break;
+                    default:
+                        if($type < 3):  $condition = ['student_status_id =' => 1];
+                        else:           $condition = ['student_status_id <' => 3];
+                        endif; break;
+		}
+		
+		if ($this->request->is('post')) {
+			$search = $this->request->data('search');
+			$field = $this->request->data('field');
+
+			switch($field){
+				case 0: 
+					$column = 'first_name';
+					break;
+				case 1:
+					$column = 'last_name';
+					break;
+				case 2:
+					$column = 'sex';
+					if($search == 'männlich' || $search == 'mann'){ $search = 'm'; }
+					if($search == 'weiblich' || $search == 'w' || $search == 'frau'){ $search = 'f'; }
+					break;
+				case 3:
+					$column = 'street';
+					break;
+				case 4:
+					$column = 'postcode';
+					break;
+				case 5:
+					$column = 'city';
+					break;
+				case 6:
+					$column = 'student_status_id';
+					if($search == 'wartend'){ $search = '1'; }
+					if($search == 'vermittelt'){ $search = '2'; }
+					if($search == 'aufgehört'){ $search = '3'; }
+					break;
+			}
+			
+			if($search != ''){
+				$condition[$column] = $search;
+			}
+        }
 	
 		if($type < '5'){
-			$this->paginate = [
-            'contain' => ['Locations', 'StudentStatus']
-			];
-			$students = $this->Students->findByLocationId($user['location_id']);
-			$this->set('students', $this->paginate($students));
-			$this->set('_serialize', ['students']);
+				$this->paginate = [
+					'contain' => ['Locations', 'StudentStatus']
+				];
+				$condition['location_id'] = $user['location_id'];
+				$students = $this->Students->find('all', ['conditions' => $condition, 'contain' => ['Locations', 'StudentStatus']]);
+				$this->set('students', $this->paginate($students));
+				$this->set('_serialize', ['students']);
 		} else {
-			$this->paginate = [
-				'contain' => ['Locations']
-			];
-			$this->set('students', $this->paginate($this->Students));
-			$this->set('_serialize', ['students']);
-		}
+				$this->paginate = [
+						'contain' => ['Locations']
+				];
+				$this->set('students', $this->paginate($this->Students));
+				$this->set('_serialize', ['students']);
+		}   
 	}
 
 	/**
@@ -71,7 +142,7 @@ class StudentsController extends AppController
 	public function view($id = null)
 	{
 		$student = $this->Students->get($id, [
-            'contain' => ['Tandems.Partners.Users', 'StudentStatus']
+                    'contain' => ['Tandems.Partners.Users', 'StudentStatus', 'Schooltypes']
 		]);
 		$this->loadModel('StudentSubjects');
 		$this->loadModel('StudentClassranges');
@@ -99,6 +170,7 @@ class StudentsController extends AppController
 		$this->loadModel('StudentClassranges');
 		if ($this->request->is('post')) {
 			$student = $this->Students->patchEntity($student, $this->request->data);
+			$student->student_status_id = 1;
 			$student->location_id = $user['location_id'];
 			if ($this->Students->save($student)) {
 				$subject1 = $this->request->data('subject1');
@@ -124,7 +196,7 @@ class StudentsController extends AppController
 				
 				if($this->StudentClassranges->save($classrange) && $this->StudentSubjects->save($subject)){
 					$this->Flash->success('The student has been saved.');
-					return $this->redirect(['action' => 'index']);
+					return $this->redirect(['action' => 'index', 'active']);
 				} else {
 					$this->Student->delete($student);
 					$this->Flash->error('The student could not be saved. Please, try again.');
@@ -135,11 +207,12 @@ class StudentsController extends AppController
 		}
 		$this->loadModel('Subjects');
 		$this->loadModel('Classranges');
+		$schooltypes = $this->Students->Schooltypes->find('list');
 		$subjects = $this->Subjects->find('list');
 		$classranges = $this->Classranges->find('list');
-		$this->set(compact('student', 'subjects', 'classranges'));
+		$this->set(compact('student', 'subjects', 'classranges', 'schooltypes'));
 		//$this->set('student', $student);
-		$this->set('_serialize', ['student', 'subjects', 'classranges']);
+		$this->set('_serialize', ['student', 'subjects', 'classranges', 'schooltypes']);
 	}
 
 	/**
@@ -152,13 +225,13 @@ class StudentsController extends AppController
 	public function edit($id = null)
 	{
 		$student = $this->Students->get($id, [
-            'contain' => []
+                    'contain' => []
 		]);
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$student = $this->Students->patchEntity($student, $this->request->data);
 			if ($this->Students->save($student)) {
 				$this->Flash->success('The student has been saved.');
-				return $this->redirect(['action' => 'index']);
+				return $this->redirect(['action' => 'index', 'active']);
 			} else {
 				$this->Flash->error('The student could not be saved. Please, try again.');
 			}
@@ -166,11 +239,16 @@ class StudentsController extends AppController
 		$this->loadModel('StudentStatus');
 		$this->loadModel('Subjects');
 		$this->loadModel('Classranges');
+		$schooltypes = $this->Students->Schooltypes->find('list');
 		$status = $this->StudentStatus->find('list');
 		$subjects = $this->Subjects->find('list');
 		$classranges = $this->Classranges->find('list');
-		$this->set(compact('student', 'status', 'subjects', 'classranges'));
-		$this->set('_serialize', ['student', 'status', 'subjects', 'classranges']);
+                $default_subject[1] = $this->Subjects->find('list', ['conditions' => ['id = ' => $student->subject1]])->first();
+                $default_subject[2] = $this->Subjects->find('list', ['conditions' => ['id = ' => $student->subject2]])->first();
+                $default_subject[3] = $this->Subjects->find('list', ['conditions' => ['id = ' => $student->subject3]])->first();
+                
+		$this->set(compact('student', 'status', 'subjects', 'classranges', 'schooltypes', 'default_subject'));
+		$this->set('_serialize', ['student', 'status', 'subjects', 'classranges', 'schooltypes']);
 	}
 
 	/**
@@ -197,6 +275,45 @@ class StudentsController extends AppController
 		} else {
 			$this->Flash->error('The student could not be deleted. Please, try again.');
 		}
-		return $this->redirect(['action' => 'index']);
+		return $this->redirect($this->referer(['action' => 'index']));
+	}
+	
+	public function deactivate($id = null) {
+		$student = $this->Students->get($id);
+		$student->student_status_id = 3;
+		if($this->Students->save($student)){
+			$this->Flash->success('Der Schüler wurde deaktiviert.');
+		} else {
+			$this->Flash->error('Konnte Schüler nicht deaktivieren.');
+		}
+		return $this->redirect(['action' => 'index', 'active']);
+	}
+	
+	public function reactivate($id = null) {
+		$student = $this->Students->get($id);
+		$student->student_status_id = 1;
+		if($this->Students->save($student)){
+			$this->Flash->success('Der Schüler wurde reaktiviert.');
+		} else {
+			$this->Flash->error('Konnte Schüler nicht reaktivieren.');
+		}
+		return $this->redirect(['action' => 'index', 'deactive']);
+	}
+	
+	public function status($id = null) {
+		$student = $this->Students->get($id);
+		if($this->request->is(['patch', 'post', 'put'])) {
+			$student = $this->Students->patchEntity($student, $this->request->data);
+			if($this->Students->save($student)) {
+				$this->Flash->success('Status wurde aktualisiert');
+				$this->redirect(['action' => 'index', 'active']);
+			} else {
+				$this->Flash->error('Konnte Status nicht aktualisieren');
+			}
+		}
+		
+		$status = $this->Students->StudentStatus->find('list', ['limit' => 200]);
+		$this->set(compact('student', 'status'));
+		$this->set('_serialize', ['student', 'status']);
 	}
 }

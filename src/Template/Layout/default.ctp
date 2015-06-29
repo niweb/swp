@@ -60,13 +60,14 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                                                         <span><?php echo $this->Html->link(__('Tandems'), ['controller' => 'Tandems', 'action' => 'index']); ?></span>
 							<span><?php echo $this->Html->link(__('Schooltypes'), ['controller' => 'Schooltypes', 'action' => 'index']); ?></span>
 							<span><?php echo $this->Html->link(__('Subjects'), ['controller' => 'Subjects', 'action' => 'index']); ?></span>
+							<span><?php echo $this->Html->link(__('StatusTexts'), ['controller' => 'StatusTexts', 'action' => 'index']); ?></span>
                         </div>
 						<div class="header-help">
 							<span><?php echo $this->Html->link(h($authUser['first_name'].' '.$authUser['last_name']), ['controller' => 'Users', 'action' => 'view', $authUser['id']]); ?></span>
                     <?php elseif(isset($matchmaker)): ?>
                         <div class="header-menu">
 							<span><?php echo $this->Html->link(__('Partners'), ['controller' => 'Partners', 'action' => 'index', 'waiting']); ?></span>
-							<span><?php echo $this->Html->link(__('Students'), ['controller' => 'Students', 'action' => 'index']); ?></span>
+							<span><?php echo $this->Html->link(__('Students'), ['controller' => 'Students', 'action' => 'index', 'waiting']); ?></span>
                                                         <span><?php echo $this->Html->link(__('Tandems'), ['controller' => 'Tandems', 'action' => 'index']); ?></span>
 						</div>
 						<div class="header-help">

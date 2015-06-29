@@ -26,8 +26,9 @@ class Student extends Entity
         'telephone' => true,
         'mobile' => true,
         'location_id' => true,
-		'status_id' => true,
+		'student_status_id' => true,
         'location' => true,
         'tandems' => true,
+		'schooltype_id' => true,
 	];
 }

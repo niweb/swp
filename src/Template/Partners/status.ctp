@@ -1,7 +1,8 @@
 <div class="actions columns large-2 medium-3">
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
-		<li><?= $this->Html->link(__('List Partners'), ['controller' => 'Partners', 'action' => 'index']) ?></li>
+        <li class="back-button"><?= $this->Html->link(__('back'), $this->request->referer()) ?></li>
+        <li><?= $this->Html->link(__('List Partners'), ['controller' => 'Partners', 'action' => 'index', 'active']) ?></li>
     </ul>
 </div> 
 <div class="partners form large-10 medium-9 columns">

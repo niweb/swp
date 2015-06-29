@@ -1,6 +1,7 @@
 <div class="actions columns large-2 medium-3">
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
+        <li class="back-button"><?= $this->Html->link(__('back'), $this->request->referer()) ?></li>
         <li><?= $this->Html->link(__('Edit Location'), ['action' => 'edit', $location->id]) ?> </li>
         <li><?= $this->Form->postLink(__('Delete Location'), ['action' => 'delete', $location->id], ['confirm' => __('Are you sure you want to delete # {0}?', $location->id)]) ?> </li>
         <li><?= $this->Html->link(__('List Locations'), ['action' => 'index']) ?> </li>
@@ -128,7 +129,6 @@
 
             </td>
         </tr>
-
         <?php endforeach; ?>
     </table>
     <?php endif; ?>

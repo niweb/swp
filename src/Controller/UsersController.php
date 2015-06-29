@@ -37,6 +37,15 @@ class UsersController extends AppController
                 }
             }
         }
+		
+        if(in_array($this->request->action, ['delete'])){
+                $actionId = (int)$this->request->params['pass'][0];
+                $actionUser = $this->Users->get($actionId);
+                if($actionUser['type_id'] < $user['type_id']){
+                        return true;
+                }
+        }
+		
         return parent::isAuthorized($user);
     }
 
@@ -103,12 +112,16 @@ class UsersController extends AppController
             if ($this->request->is('post')) {
                     $user = $this->Users->patchEntity($user, $this->request->data);
                     $user->activation = NULL;
-					$user->location_id = $this->Auth->user('location_id');
+                    if(!isset($admin)){
+                        $user->location_id = $this->Auth->user('location_id');
+                    }
                     if ($this->Users->save($user)) {
                             $userType->user_id = $user->id;
                             $userType->type_id = $this->request->data['type_id'];
                             if($this->UserHasTypes->save($userType)) {
-                                $this->Flash->success('New Matchmaker created.');
+                                $this->loadModel('Types');
+                                $type_name = $this->Types->get($user->type_id)->name;
+                                $this->Flash->success(__('New {0} created', $type_name));
                                 return $this->redirect(['controller' => 'Users', 'action' => 'index']);
                             } else {
                                 $this->Users->delete($user);
@@ -208,7 +221,7 @@ class UsersController extends AppController
             
             if ($this->Users->delete($user)) {
                 
-                    $this->Flash->success('The user has been deleted.');
+                    $this->Flash->success(__('The user has been deleted.'));
             } else {
                     $this->Flash->error('The user could not be deleted. Please, try again.');
             }
@@ -268,7 +281,7 @@ class UsersController extends AppController
     public function sendActivationMail($id=null)
     {
         $user = $this->Users->get($id);
-        $link = 'http://52.28.79.204/users/activate/'.$id.'/'.$user->activation;
+        $link = 'http://ec2-52-28-79-204.eu-central-1.compute.amazonaws.com/users/activate/'.$id.'/'.$user->activation;
         $email = new Email('default');
         $email->from(['noreply@schuelerpaten.de' => 'Schülerpaten'])
             ->to($user->email)
@@ -359,7 +372,7 @@ class UsersController extends AppController
 	}
 	
 	public function sendReset($user = null){
-		$link = 'http://52.28.79.204/users/resetPass/'.$user->id.'/'.$user->reset;
+		$link = 'http://ec2-52-28-79-204.eu-central-1.compute.amazonaws.com/users/resetPass/'.$user->id.'/'.$user->reset;
 		$email = new Email('default');
 		$email->from(['noreply@schuelerpaten.de' => 'Schülerpaten'])
             ->to($user->email)

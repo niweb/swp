@@ -17,7 +17,8 @@ class Tandem extends Entity
 	protected $_accessible = [
         'partner_id' => true,
         'student_id' => true,
-        'active' => true,
+        'activated' => true,
+		'deactivated' => true,
         'partner' => true,
         'student' => true,
 	];

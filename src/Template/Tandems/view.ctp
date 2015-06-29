@@ -1,6 +1,7 @@
 <div class="actions columns large-2 medium-3">
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
+        <li class="back-button"><?= $this->Html->link(__('back'), $this->request->referer()) ?></li>
         <?php if(isset($tandem->deactivated)) : ?>
             <li><?= $this->Form->postLink(__('Reactivate Tandem'), ['action' => 'reactivate', $tandem->id], ['confirm' => __('Are you sure you want to reactivate # {0}?', $tandem->id)]) ?> </li>
         <?php else: ?>
@@ -14,9 +15,9 @@
     <div class="row">
         <div class="large-5 columns strings">
             <h6 class="subheader"><?= __('Partner') ?></h6>
-            <p><?= $tandem->has('partner') ? $this->Html->link($tandem->partner->user->first_name, ['controller' => 'Partners', 'action' => 'view', $tandem->partner->id]) : '' ?></p>
+            <p><?= $tandem->has('partner') ? $this->Html->link(h($tandem->partner->user->first_name.' '.$tandem->partner->user->last_name), ['controller' => 'Partners', 'action' => 'view', $tandem->partner->id]) : '' ?></p>
             <h6 class="subheader"><?= __('Student') ?></h6>
-            <p><?= $tandem->has('student') ? $this->Html->link($tandem->student->first_name, ['controller' => 'Students', 'action' => 'view', $tandem->student->id]) : '' ?></p>
+            <p><?= $tandem->has('student') ? $this->Html->link(h($tandem->student->first_name.' '.$tandem->student->last_name), ['controller' => 'Students', 'action' => 'view', $tandem->student->id]) : '' ?></p>
 			<h6 class="subheader"><?= __('Activated') ?></h6>
 			<p><?= h($tandem->activated) ?></p>
 			<?php if($tandem->deactivated) : ?>

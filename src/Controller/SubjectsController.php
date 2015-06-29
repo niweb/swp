@@ -11,6 +11,27 @@ use App\Controller\AppController;
 class SubjectsController extends AppController
 {
 
+	public function isAuthorized($user){
+		$type = $user['type_id'];
+		if(in_array($this->request->action, ['index', 'add'])){
+			if($type > '3') {
+				return true;
+			}
+		}
+		
+		if(in_array($this->request->action, ['view', 'edit', 'delete'])) {
+			if($type > '3'){
+				$subjectID = (int)$this->request->params['pass'][0];
+				$subject = $this->Subjects->get($subjectID);
+				if($subject['location_id'] == $user['location_id']){
+					return true;
+				}
+			}
+		}
+		
+		return parent::isAuthorized($user);
+	}
+
 	/**
 	 * Index method
 	 *
@@ -51,6 +72,7 @@ class SubjectsController extends AppController
 		$subject = $this->Subjects->newEntity();
 		if ($this->request->is('post')) {
 			$subject = $this->Subjects->patchEntity($subject, $this->request->data);
+			$subject->location_id = $this->Auth->user('location_id');
 			if ($this->Subjects->save($subject)) {
 				$this->Flash->success('The subject has been saved.');
 				return $this->redirect(['action' => 'index']);
@@ -58,8 +80,7 @@ class SubjectsController extends AppController
 				$this->Flash->error('The subject could not be saved. Please, try again.');
 			}
 		}
-		$locations = $this->Subjects->Locations->find('list', ['limit' => 200]);
-		$this->set(compact('subject', 'locations'));
+		$this->set(compact('subject'));
 		$this->set('_serialize', ['subject']);
 	}
 
@@ -84,8 +105,7 @@ class SubjectsController extends AppController
 				$this->Flash->error('The subject could not be saved. Please, try again.');
 			}
 		}
-		$locations = $this->Subjects->Locations->find('list', ['limit' => 200]);
-		$this->set(compact('subject', 'locations'));
+		$this->set(compact('subject'));
 		$this->set('_serialize', ['subject']);
 	}
 

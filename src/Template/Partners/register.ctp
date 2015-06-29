@@ -1,3 +1,11 @@
+<?php if(isset($authUser)): ?>
+<div class="actions columns large-2 medium-3">
+    <h3><?= __('Actions') ?></h3>
+    <ul class="side-nav">
+        <li class="back-button"><?= $this->Html->link(__('back'), $this->request->referer()) ?></li>
+    </ul>
+</div>
+<?php endif; ?>
 <div class="partners form large-10 medium-9 columns">
     <?php if($location_name == null): ?>
     <fieldset>

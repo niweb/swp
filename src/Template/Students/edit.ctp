@@ -1,6 +1,7 @@
 <div class="actions columns large-2 medium-3">
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
+        <li class="back-button"><?= $this->Html->link(__('back'), $this->request->referer()) ?></li>
         <?php if(isset($vermittler) or isset($locationAdmin) or isset($admin) ) : ?>
             <li><?= $this->Form->postLink(
                             __('Delete'),
@@ -9,7 +10,9 @@
                     )
             ?></li>
             <li><?= $this->Html->link(__('View Student'), ['controller' => 'Students', 'action' => 'view', $student->id]) ?></li>
-            <li><?= $this->Html->link(__('List Students'), ['controller' => 'Students', 'action' => 'index']) ?></li>
+            <li><?= $this->Html->link(__('List waiting Students'), ['controller' => 'Students', 'action' => 'index', 'waiting']) ?></li>
+            <li><?= $this->Html->link(__('List active Students'), ['controller' => 'Students', 'action' => 'index', 'active']) ?></li>
+            <li><?= $this->Html->link(__('List inactive Students'), ['controller' => 'Students', 'action' => 'index', 'inactive']) ?></li>
         <?php endif; ?>
     </ul>
 </div>
@@ -29,11 +32,11 @@
 			echo $this->Form->input('city', ['label' => __('city'), 'onchange'=>'save_city(this.value)']);
             echo $this->Form->input('telephone', ['label' => __('telephone')]);
             echo $this->Form->input('mobile', ['label' => __('mobile')]);
-			echo $this->Form->input('status_id', ['label' => __('status_id'), 'options' => $status]);
+			echo $this->Form->input('schooltype_id', ['label' => __('schooltype'), 'options' => $schooltypes]);
 			echo $this->Form->input('classranges', ['label' => __('classranges'), 'options' => $classranges]);
-			echo $this->Form->input('subject1', ['label' => __('subject1'), 'options' => $subjects]);
-			echo $this->Form->input('subject2', ['label' => __('subject2'), 'options' => $subjects]);
-			echo $this->Form->input('subject3', ['label' => __('subject3'), 'options' => $subjects]);
+			echo $this->Form->input('subject1', ['label' => __('subject1'), 'options' => $subjects, 'default' => $default_subject[1]]);
+			echo $this->Form->input('subject2', ['label' => __('subject2'), 'options' => $subjects, 'default' => $default_subject[2]]);
+			echo $this->Form->input('subject3', ['label' => __('subject3'), 'options' => $subjects, 'default' => $default_subject[3]]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

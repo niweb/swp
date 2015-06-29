@@ -21,18 +21,28 @@ class StudentsTable extends Table
 	 */
 	public function initialize(array $config)
 	{
-		$this->table('students');
-		$this->displayField('first_name');
-		$this->primaryKey('id');
-		$this->belongsTo('Locations', [
-            'foreignKey' => 'location_id'
+            $this->table('students');
+            $this->displayField('first_name');
+            $this->primaryKey('id');
+            $this->belongsTo('Locations', [
+                'foreignKey' => 'location_id'
             ]);
-		$this->hasMany('Tandems', [
-			'foreignKey' => 'student_id'
-			]);
-		$this->belongsTo('StudentStatus', [
-            'foreignKey' => 'status_id'
+            $this->hasMany('Tandems', [
+                'foreignKey' => 'student_id'
             ]);
+            $this->belongsTo('StudentStatus', [
+                'foreignKey' => 'student_status_id'
+            ]);
+            $this->hasOne('StudentSubjects', [
+                'foreignKey' => 'student_id'
+            ]);
+            $this->hasOne('StudentClassranges', [
+                'foreignKey' => 'student_id'
+            ]);
+			$this->belongsTo('Schooltypes', [
+                'foreignKey' => 'schooltype_id'
+            ]);
+            
 	}
 
 	/**
@@ -98,6 +108,7 @@ class StudentsTable extends Table
 	public function buildRules(RulesChecker $rules)
 	{
 		$rules->add($rules->existsIn(['location_id'], 'Locations'));
+		$rules->add($rules->existsIn(['schooltype_id'], 'Schooltypes'));
 		return $rules;
 	}
 }

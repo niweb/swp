@@ -79,10 +79,12 @@ class PartnersTable extends Table
 		->allowEmpty('job');
 
 		$validator
+		->add('street', 'string',['rule' => 'alphaNumeric'])
 		->requirePresence('street', 'create')
 		->notEmpty('street');
 
 		$validator
+		->add('house_number', 'valid', ['rule' => 'numeric', 'message' => 'Hausnummer muss eine Zahl sein'])
 		->requirePresence('house_number', 'create')
 		->notEmpty('house_number');
 
@@ -90,14 +92,18 @@ class PartnersTable extends Table
 		->allowEmpty('house_number_addition');
 
 		$validator
+		->add('postcode', 'valid', ['rule' => 'numeric', 'message' => 'Postleitzahl muss eine Zahl sein'])
+		->add('postcode', 'postLength', ['rule' => ['lengthBetween', 5, 5], 'message' => 'Postleitzahl muss 5-stellig sein'])
 		->requirePresence('postcode', 'create')
 		->notEmpty('postcode');
 
 		$validator
+		->add('city', 'string', ['rule' => 'alphaNumeric', 'message' => 'Bitte einen gültigen Stadtnamen eingeben'])
 		->requirePresence('city', 'create')
 		->notEmpty('city');
 
 		$validator
+		->add('mobile', 'valid', ['rule' => 'numeric', 'message' => 'Die Nummer muss eine Zahl sein'])
 		->requirePresence('mobile', 'create')
 		->notEmpty('mobile');
 
@@ -105,7 +111,7 @@ class PartnersTable extends Table
 		->allowEmpty('telephone');
 
 		$validator
-                ->add('teach_time', 'valid', ['rule' => 'numeric'])
+		->add('teach_time', 'valid', ['rule' => 'numeric'])
 		->add('teach_time', 'validValue', [
                     'rule' => ['range',90,10080],
                     'message' => 'Du musst mindestens 90 Minuten Zeit in der Woche haben.',
@@ -115,14 +121,18 @@ class PartnersTable extends Table
 
 		$validator
 		->add('extra_time', 'valid', ['rule' => 'numeric'])
+		->add('extra_time', 'range', ['rule' => ['range', 0, 10080], 'message' => 'Ungültiger Wert'])
 		->requirePresence('extra_time', 'create')
 		->notEmpty('extra_time');
 
 		$validator
+		->add('spend_time', 'valid', ['rule' => 'numeric', 'message' => 'Muss eine Zahl sein'])
+		->add('spend_time', 'range', ['rule' => ['range', 0, 10080], 'message' => 'Ungültiger Wert'])
 		->requirePresence('spend_time', 'create')
 		->notEmpty('spend_time');
 
 		$validator
+		->add('experience', 'string', ['rule' => 'alphaNumeric', 'message' => 'Ungültiger Wert'])
 		->requirePresence('experience', 'create')
 		->notEmpty('experience');
 
@@ -133,6 +143,7 @@ class PartnersTable extends Table
 		->allowEmpty('support_wish');
 
 		$validator
+		->add('reason_for_decision', 'string', ['rule' => 'alphaNumeric', 'message' => 'Ungültiger Wert'])
 		->requirePresence('reason_for_decision', 'create')
 		->notEmpty('reason_for_decision');
 

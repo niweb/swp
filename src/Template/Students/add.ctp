@@ -1,8 +1,13 @@
 <div class="actions columns large-2 medium-3">
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
+        <li class="back-button"><?= $this->Html->link(__('back'), $this->request->referer()) ?></li>
         <?php if(isset($matchmaker)) : ?>
-            <li><?= $this->Html->link(__('List Students'), ['controller' => 'Students', 'action' => 'index']) ?></li>
+            <li><?= $this->Html->link(__('List Students'), ['controller' => 'Students', 'action' => 'index', 'waiting']) ?></li>
+        <?php elseif(isset($vermittler) or isset($locationAdmin) or isset($admin)) : ?>
+            <li><?= $this->Html->link(__('List waiting Students'), ['controller' => 'Students', 'action' => 'index', 'waiting']) ?></li>
+            <li><?= $this->Html->link(__('List active Students'), ['controller' => 'Students', 'action' => 'index', 'active']) ?></li>
+            <li><?= $this->Html->link(__('List inactive Students'), ['controller' => 'Students', 'action' => 'index', 'inactive']) ?></li>
         <?php endif; ?>
     </ul>
 </div>
@@ -22,6 +27,7 @@
 			echo $this->Form->input('city', ['label' => __('city'), 'onchange'=>'save_city(this.value)']);
             echo $this->Form->input('telephone', ['label' => __('telephone')]);
             echo $this->Form->input('mobile', ['label' => __('mobile'), 'id'=>'mobile']);
+			echo $this->Form->input('schooltype_id', ['label' => __('schooltype'), 'options' => $schooltypes]);
 			echo $this->Form->input('classranges', ['label' => __('classranges'), 'options' => $classranges]);
 			echo $this->Form->input('subject1', ['label' => __('subject1'), 'options' => $subjects]);
 			echo $this->Form->input('subject2', ['label' => __('subject2'), 'options' => $subjects]);
