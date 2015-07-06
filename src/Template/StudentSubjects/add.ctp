@@ -17,6 +17,7 @@
             echo $this->Form->input('subject_id', ['options' => $subjects, 'empty' => true]);
         ?>
     </fieldset>
+    <?= $this->Form->button(__('Cancel'), ['type' => 'cancel', 'onclick' => 'window.history.go(-1)']) ?>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
 </div>

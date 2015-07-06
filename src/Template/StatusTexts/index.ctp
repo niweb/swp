@@ -2,7 +2,7 @@
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
         <li class="back-button"><?= $this->Html->link(__('back'), $this->request->referer()) ?></li>
-        <li><?= $this->Html->link(__('New Status Text'), ['action' => 'add']) ?></li>
+        <li><?= __('No Actions') ?></li>
     </ul>
 </div>
 <div class="statusTexts index large-10 medium-9 columns">
@@ -22,7 +22,6 @@
             <td class="actions">
                 <?= $this->Html->link(__('View'), ['action' => 'view', $statusText->id]) ?>
                 <?= $this->Html->link(__('Edit'), ['action' => 'edit', $statusText->id]) ?>
-                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $statusText->id], ['confirm' => __('Are you sure you want to delete # {0}?', $statusText->id)]) ?>
             </td>
         </tr>
 

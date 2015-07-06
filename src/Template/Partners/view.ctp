@@ -1,32 +1,50 @@
 <div class="actions columns large-2 medium-3">
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
+        <!-- alle dürfen zurück --->
         <li class="back-button"><?= $this->Html->link(__('back'), $this->request->referer()) ?></li>
+        
+        <!-- alle außer pate dürfen vermittlen --->    
+        <?php if (!(isset($authPartner)) AND ($partner->status_id == 5)): ?>
+            <li><?= $this->Html->link(__('Match Partner'), ['action' => 'match', $partner->id]) ?> </li>    
+        <?php endif; ?>
+        
         <?php if(isset($vermittler) or isset($locationAdmin) or isset($admin)) : ?>
+        <!--- matchmaker darf nicht bearbeiten -->
             <li><?= $this->Html->link(__('Edit Partner'), ['action' => 'edit', $partner->id]) ?> </li>    
             <?php if($partner->status_id < 7) : ?>
-				<li><?= $this->Form->postLink(__('Deactivate'), ['action' => 'deactivate', $partner->id], ['confirm' => __('Are you sure you want to deactivate {0}?', h($partner->user->first_name.' '.$partner->user->last_name))]) ?></li>
-			<?php else : ?>
-				<li><?= $this->Form->postLink(__('Reactivate'), ['action' => 'reactivate', $partner->id], ['confirm' => __('Are you sure you want to reactivate {0}?', h($partner->user->first_name.' '.$partner->user->last_name))]) ?></li>
-				<?php if(isset($locationAdmin)) : ?>
-					<li><?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $partner->id], ['confirm' => __('Are you sure you want to delete {0}?', h($partner->user->first_name.' '.$partner->user->last_name))]) ?></li>
-				<?php endif; ?>
-			<?php endif; ?>
-            <li><?= $this->Html->link(__('Change Status of Partner'), ['action' => 'status', $partner->id]) ?> </li>
+            <!-- falls aufgehört oder abgelehnt reaktivieren, sonst deaktivieren --->
+                <li><?= $this->Form->postLink(__('Deactivate'), ['action' => 'deactivate', $partner->id], ['confirm' => __('Are you sure you want to deactivate {0}?', h($partner->user->first_name.' '.$partner->user->last_name))]) ?></li>
+            <?php else : ?>
+                <?php if(isset($locationAdmin) or isset($admin)) : ?>
+                    <!--nur standort admin und global admin dürfen reaktivieren und löschen-->
+                <li><?= $this->Form->postLink(__('Reactivate'), ['action' => 'reactivate', $partner->id], ['confirm' => __('Are you sure you want to reactivate {0}?', h($partner->user->first_name.' '.$partner->user->last_name))]) ?></li>
+                    <li><?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $partner->id], ['confirm' => __('Are you sure you want to delete {0}?', h($partner->user->first_name.' '.$partner->user->last_name))]) ?></li>
+                <?php endif; ?>
+            <?php endif; ?>
         <?php endif; ?>
+                    
         <?php if(isset($matchmaker)): ?>
-            <li><?= $this->Html->link(__('Change Status of Partner'), ['action' => 'status', $partner->id]) ?> </li>
-            <li><?= $this->Html->link(__('List Partners'), ['controller' => 'Partners', 'action' => 'index']) ?></li>
+            <!--- matchmaker hat nur eine paten-liste --->
+            <li><?= $this->Html->link(__('List Partners'), ['controller' => 'Partners', 'action' => 'index']) ?> </li>
+            
         <?php elseif(isset($vermittler) or isset($locationAdmin) OR isset($admin)): ?>
+            <!-- vermittler, standortadmin und globaler admin dürfen status des paten änders --->
+            <?php if($partner->status_id != 1 and $partner->status_id < 6) : ?>
+                <li><?= $this->Html->link(__('Change Status of Partner'), ['action' => 'status', $partner->id]) ?> </li>
+            <?php endif; ?>
+            <!-- ... und haben unterteile paten-ansicht --->
             <li><?= $this->Html->link(__('List verified Partners'), ['controller' => 'Partners', 'action' => 'index', 'verified']) ?></li>
             <li><?= $this->Html->link(__('List waiting and matched Partners'), ['controller' => 'Partners', 'action' => 'index', 'active']) ?></li>
             <li><?= $this->Html->link(__('List quit and denied Partners'), ['controller' => 'Partners', 'action' => 'index', 'inactive']) ?></li>
         <?php endif; ?>
         <?php if(isset($authPartner)) : ?>
+            
                 <li><?= $this->Html->link(__('Edit Profile'), ['action' => 'edit', $partner->id]) ?> </li>    
         <?php endif; ?>
     </ul>
 </div>
+
 <div class="partners view large-10 medium-9 columns">
     <h2><?= h($partner->user->first_name) ?>
         <?= h($partner->user->last_name) ?></h2>
@@ -46,9 +64,9 @@
 			<?php elseif($partner->status->id == '6') : ?>
 				<p>Angemeldet <br/> Verifiziert <br/> Führungszeugnis <br/> Getroffen <br/> Wartend <br/> <b>Vermittelt</b></p>
 			<?php elseif($partner->status->id == '7') : ?>
-				<p><b><font color="red">Aufgehört</font></b></p>
+				<p><b><font color="#dd2d38">Aufgehört</font></b></p>
 			<?php else : ?>
-				<p><b><font color="red">Abgelehnt</font></b></p>
+				<p><b><font color="#dd2d38">Abgelehnt</font></b></p>
 			<?php endif; ?>
             <h6 class="subheader"><?= __('E-Mail') ?></h6>
             <p><?= h($partner->user->email) ?></p>
@@ -98,58 +116,102 @@
             <p><?= h($partner->reason_for_schuelerpaten) ?></p>
 			<?php if (!empty($partner->preferred_classranges)): ?>
 				<h6 class="subheader"><?= __('Related PreferredClassranges') ?></h6>
-				<p>
-					<table cellpadding="0" cellspacing="0">
-						<tr>
-							<th><?= __('Classranges') ?></th>
-						</tr>
-						<?php foreach ($partner->preferred_classranges as $preferredClassranges): ?>
-						<tr>
-							<td><?= h($preferredClassranges->classrange->name) ?></td>
-						</tr>
-						<?php endforeach; ?>
-					</table>
-				</p>
+                                    <table cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                    <th><?= __('Classranges') ?></th>
+                                            </tr>
+                                            <?php foreach ($partner->preferred_classranges as $preferredClassranges): ?>
+                                            <tr>
+                                                    <td><?= h($preferredClassranges->classrange->name) ?></td>
+                                            </tr>
+                                            <?php endforeach; ?>
+                                    </table>
+                                <hr>
 			<?php endif; ?>
 			
 			<?php if (!empty($partner->preferred_schooltypes)): ?>
 				<h6 class="subheader"><?= __('Related PreferredSchooltypes') ?></h6>
-				<p>
-					<table cellpadding="0" cellspacing="0">
-						<tr>
-							<th><?= __('Schooltype') ?></th>
-						</tr>
-						<?php foreach ($partner->preferred_schooltypes as $preferredSchooltypes): ?>
-						<tr>
-							<td><?= h($preferredSchooltypes->schooltype->name) ?></td>
-						</tr>
-						<?php endforeach; ?>
-					</table>
-				</p>
+                                    <table cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                    <th><?= __('Schooltype') ?></th>
+                                            </tr>
+                                            <?php foreach ($partner->preferred_schooltypes as $preferredSchooltypes): ?>
+                                            <tr>
+                                                    <td><?= h($preferredSchooltypes->schooltype->name) ?></td>
+                                            </tr>
+                                            <?php endforeach; ?>
+                                    </table>
+				<hr>
 			<?php endif; ?>
 			
 			<?php if (!empty($partner->preferred_subjects)): ?>
 				<h6 class="subheader"><?= __('Related PreferredSubjects') ?></h6>
-				<p>
-					<table cellpadding="0" cellspacing="0">
-						<tr>
-							<th><?= __('Subject') ?></th>
-							<th><?= __('Maximum Class') ?></th>
-						</tr>
-						<?php foreach ($partner->preferred_subjects as $preferredSubjects): ?>
-						<tr>
-							<td><?= h($preferredSubjects->subject->name) ?></td>
-							<td><?= h($preferredSubjects->maximum_class) ?></td>
-						</tr>
-						<?php endforeach; ?>
-					</table>
-				</p>
+                                    <table cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                    <th><?= __('Subject') ?></th>
+                                                    <th><?= __('max_grade') ?></th>
+                                            </tr>
+                                            <?php foreach ($partner->preferred_subjects as $preferredSubjects): ?>
+                                            <tr>
+                                                    <td><?= h($preferredSubjects->subject->name) ?></td>
+                                                    <td><?= h($preferredSubjects->maximum_class) ?></td>
+                                            </tr>
+                                            <?php endforeach; ?>
+                                    </table>
 			<?php endif; ?>
         </div>
+		<?php if($partner->contact != NULL or $partner->contact != '') : ?>
+			<div class="large-5 columns strings end">
+				<h6 class="subheader"><?= __('Contact Person') ?></h6>
+				<p>
+					<?= nl2br(h($partner->contact)) ?>
+				</p>
+			</div>
+		<?php endif; ?>
+		
 		<div class="large-5 columns numbers end">
-            <h6 class="subheader"><?= __('Information') ?></h6>
-            <p><?= h($statusText->text) ?></p>
+			<h6 class="subheader"><?= __('Information for Partner') ?></h6>
+			<p>
+				<?= h($statusText->text) ?>
+			</p>
+			<?php if($partner->status_text != NULL or $partner->status_text != '') : ?>
+				<br/>
+				<p>
+					<?= h($partner->status_text) ?>
+				</p>
+			<?php endif; ?>
+		</div>
+        <?php if (!isset($authPartner)) : ?>
+        <div class="large-5 columns dates end">
+            <h6 class="subheader"><?= __('Status History') ?></h6>
+        <table>
+            <tr><th>Status</th><th>Erreicht am</th><th>Notiz</th></tr>
+            <?php foreach($statHis as $stat) : ?>
+            <tr><td>
+                <?= h($stat->status->name) ?>
+                </td><td>
+                <?= h($stat->timestamp) ?>
+                </td><td>
+                    <?php
+                    if(isset($matchmaker)) :
+                        echo h($stat->text);
+                    else :
+                        if(($stat->text) == ''):
+                            $linkText = h(__('Add Status Note'));
+                        else:
+                            $linkText = h($stat->text);
+                        endif;
+                        echo $this->Html->link(
+                            $linkText,
+                            ['controller' => 'StatusHistorys', 'action' => 'setNote', $stat->id]
+                        );
+                    endif; ?>
+                </td></tr>
+            <?php endforeach; ?>
+        </table>
         </div>
+        <?php endif; ?>
+        
     </div>
 </div>
 
@@ -276,7 +338,6 @@
 						<?php if(!isset($authPartner)) : ?>
 							<td class="actions">
 								<?= $this->Html->link(__('View'), ['controller' => 'Tandems', 'action' => 'view', $tandems->id]) ?>
-								<?= $this->Html->link(__('Edit'), ['controller' => 'Tandems', 'action' => 'edit', $tandems->id]) ?>
 								<?php if($tandems->deactivated == NULL) : ?>
 									<?= $this->Form->postLink(__('Deactivate'), ['controller' => 'Tandems', 'action' => 'deactivate', $tandems->id], ['confirm' => __('Are you sure you want to deactivate # {0}?', $tandems->id)]) ?>
 								<?php else : ?>

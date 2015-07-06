@@ -39,6 +39,7 @@ class ClassrangesTable extends Table
 		->allowEmpty('id', 'create');
 
 		$validator
+		->add('name', 'valid', ['rule' => 'numeric'])
 		->requirePresence('name', 'create')
 		->notEmpty('name');
 

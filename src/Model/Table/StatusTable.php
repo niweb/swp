@@ -27,6 +27,9 @@ class StatusTable extends Table
         $this->hasMany('Partners', [
             'foreignKey' => 'status_id'
         ]);
+        $this->hasMany('StatusHistory', [
+        'foreignKey' => 'status_id'
+        ]);
     }
 
     /**

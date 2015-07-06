@@ -62,6 +62,56 @@ msgstr "Status-Nachrichten"
 msgid "Tutorship"
 msgstr "Patenschaft"
 
+msgid "Age"
+msgstr "Alter"
+
+msgid "Degree Course"
+msgstr "Studiengang"
+
+msgid "Street"
+msgstr "Straȥ"
+
+msgid "House Number"
+msgstr "Hausnummer"
+
+msgid "House Number Addition"
+msgstr "Hausnummernzusatz"
+
+msgid "Postcode"
+msgstr "Postleitzahl"
+
+msgid "City"
+msgstr "Stadt"
+
+msgid "Telephone"
+msgstr "Telefon"
+
+msgid "Mobile"
+msgstr "Handy"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "yes"
+msgstr "Ja"
+
+msgid "No"
+msgstr "Nein"
+
+msgid "no"
+msgstr "Nein"
+
+
+#, Buttons und Überschriften
+msgid "Inactive Tandems"
+msgstr "Inaktive Patenschaften"
+
+msgid "Active Tandems"
+msgstr "Aktive Patenschaften"
+
+msgid "search"
+msgstr "Suche"
+
 msgid "created"
 msgstr "erstellt"
 
@@ -86,10 +136,60 @@ msgstr "Keine Angaben"
 msgid "no {0} to display"
 msgstr "Keine {0} anzuzeigen"
 
+msgid "submit"
+msgid "bestätigen"
+
+msgid "Submit"
+msgid "Bestätigen"
+
+msgid "cancel"
+msgid "abbrechen"
+
+msgid "Cancel"
+msgid "Abbrechen"
+
+msgid "Search"
+msgstr "Suche"
+
+msgid "search"
+msgstr "Suche"
 
 #, Allgemeine Aktionen
+msgid "The user has been saved."
+msgstr "Der Benutzer wurde gespeichert."
+
+msgid "The schooltype has been saved."
+msgstr "Die Schulart wurde gespeichert."
+
+msgid "The subject has been saved"
+msgstr "Das Fach wurde gespeichert."
+
+msgid "The student has been deleted."
+msgstr "Der Schüer wurde gelöscht."
+
+msgid "The tandem has been deleted."
+msgstr "Die Patenschaft wurde entfernt."
+
+msgid "The user has been deleted."
+msgstr "Der Benutzer wurde gelöscht."
+
+msgid "The schooltype has been deleted."
+msgstr "Die Schulart wurde gelöscht."
+
+msgid "The subject has been deleted"
+msgstr "Das Fach wurde gelöscht."
+
+msgid "The user could not be saved. Please, try again"
+msgstr "Der Benutzer konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
+
 msgid "Delete"
 msgstr "Löschen"
+
+msgdid "deleted {0}"
+msgstr "Gelöschter {0}"
+
+msgdid "Deleted {0}"
+msgstr "Gelöschter {0}"
 
 msgid "Are you sure you want to delete {0}?"
 msgstr "Willst du wirklich {0} löschen?"
@@ -104,10 +204,10 @@ msgid "Are you sure you want to reactivate # {0}?"
 msgstr "Willst du wirklich #{0} reaktivieren?"
 
 msgid "dont_delete_{0}"
-msgstr "Achtung! Wird ein {0} gelöscht, kann es zu schweren Fehlern im System kommen! Bitte nicht leichtsinnig verwenden!"
+msgstr "Achtung! Wird ein {0} gelöscht kommt es zu Datenverlusten. Bitte führen sie diese Funktion nur aus wenn sie sich ganz sicher sind."
 
 msgid "dont_delete_fem_{0}"
-msgstr "Achtung! Wird eine {0} gelöscht, kann es zu schweren Fehlern im System kommen! Bitte nicht leichtsinnig verwenden!"
+msgstr "Achtung! Wird eine {0} gelöscht kommt es zu Datenverlusten. Bitte führen sie diese Funktion nur aus wenn sie sich ganz sicher sind."
 
 msgid "Cancel"
 msgstr "Abbrechen"
@@ -120,6 +220,9 @@ msgstr "Ansehen"
 
 msgid "Edit"
 msgstr "Bearbeiten"
+
+msgid "Contact"
+msgstr "Ansprechpartner"
 
 #, Action-Column
 msgid "Actions"
@@ -147,6 +250,12 @@ msgstr "Paten bearbeiten"
 msgid "Edit Profile"
 msgstr "Profil bearbeiten"
 
+msgid "Edit Contact"
+msgstr "Kontaktperson bearbeiten"
+
+msgid "Edit Status"
+msgstr "Status ändern"
+
 msgid "Delete Partner"
 msgstr "Paten löschen"
 
@@ -158,6 +267,12 @@ msgstr "Diesen Paten anzeigen"
 
 msgid "Change Status of Partner"
 msgstr "Status des Paten ändern"
+
+msgid "The partner has been saved."
+msgstr "Der Pate wurde gespeichert."
+
+msgid "The partner has been deleted."
+msgstr "Der Pate wurde gelöscht."
 
 #, Schüler
 msgid "List Students"
@@ -187,6 +302,12 @@ msgstr "Schüler löschen"
 msgid "View Student"
 msgstr "Diesen Schüler anzeigen"
 
+msgid "The student has been saved."
+msgstr "Der Schüler wurde gespeichert."
+
+msgid "The student has been deleted."
+msgstr "Der Schüler wurde gelöscht."
+
 #, User
 msgid "List Users"
 msgstr "Alle Benutzer anzeigen"
@@ -208,6 +329,9 @@ msgstr "Diesen Benutzer anzeigen"
 
 msgid "New {0} created"
 msgstr "Ein Neuer {0} wurde erstellt"
+
+msgid "The user has been saved."
+msgstr "Der Benutzer wurde gespeichert."
 
 msgid "The user has been deleted."
 msgstr "Der Benutzer wurde gelöscht."
@@ -231,6 +355,12 @@ msgstr "Standort hinzufügen"
 msgid "View Location"
 msgstr "Diesen Standort anzeigen"
 
+msgid "The location has been saved."
+msgstr "Der Standort wurde gespeichert."
+
+msgid "The location has been deleted."
+msgstr "Der Standort wurde gelöscht."
+
 #, Types
 msgid "List Types"
 msgstr "Alle Benutzertypen anzeigen"
@@ -250,7 +380,25 @@ msgstr "Benutzertyp hinzufügen"
 msgid "View Type"
 msgstr "Diesen Benutzertypen anzeigen"
 
+msgid "The type has been saved."
+msgstr "Der Benutzertyp wurde gespeichert."
+
+msgid "The type has been deleted."
+msgstr "Der Benutzertyp wurde gelöscht."
+
 #, Classrange
+msgid "Classrange"
+msgstr "Klassenstufe"
+
+msgid "classrange"
+msgstr "Klassenstufe"
+
+msgid "Classranges"
+msgstr "Klassenstufen"
+
+msgid "classranges"
+msgstr "Klassenstufen"
+
 msgid "List Classranges"
 msgstr "Alle Klassenstufen anzeigen"
 
@@ -269,12 +417,24 @@ msgstr "Klassenstufe hinzufügen"
 msgid "View Classrange"
 msgstr "Diese Klassenstufe anzeigen"
 
+msgid "The classrange has been saved."
+msgstr "Die Klassenstufe wurde gespeichert."
+
+msgid "The classrange has been deleted."
+msgstr "Die Klassenstufe wurde gelöscht."
+
 #, Schooltype
 
 msgid "Schooltype"
 msgstr "Schulart"
 
+msgid "schooltype"
+msgstr "Schulart"
+
 msgid "Schooltypes"
+msgstr "Schularten"
+
+msgid "schooltypes"
 msgstr "Schularten"
 
 msgid "List Schooltypes"
@@ -294,6 +454,12 @@ msgstr "Schulart hinzufügen"
 
 msgid "View Schooltype"
 msgstr "Diese Schulart anzeigen"
+
+msgid "The schooltype has been saved."
+msgstr "Die Schulart wurde gespeichert."
+
+msgid "The schooltype has been deleted."
+msgstr "Die Schulart wurde gelöscht."
 
 #, Status
 msgid "List Status"
@@ -317,6 +483,12 @@ msgstr "Diesen Status anzeigen"
 msgid "Change Status"
 msgstr "Status ändern"
 
+msgid "The status has been saved."
+msgstr "Der Status wurde gespeichert."
+
+msgid "The status has been deleted."
+msgstr "Der Status wurde gelöscht."
+
 #, StatusText
 msgid "List Status Texts"
 msgstr "Alle Status-Nachrichten anzeigen"
@@ -336,7 +508,44 @@ msgstr "Status-Nachricht hinzufügen"
 msgid "View Status Text"
 msgstr "Diese Status-Nachricht anzeigen"
 
+msgid "The status text has been saved."
+msgstr "Die Status-Nachricht wurde gespeichert."
+
+msgid "The status text has been deleted."
+msgstr "Die Status-Nachricht wurde gelöscht."
+
+msgid "Information for Partner"
+msgstr "Information für den Paten"
+
+msgid "Contact Person"
+msgstr "Ansprechpartner"
+
+msgid "Edit Contact Person"
+msgstr "Ansprechpartner bearbeiten"
+
+#, Status Notiz
+msgid "Status Note"
+msgstr "Status-Notiz"
+
+msgid "Add Status Note"
+msgstr "Status-Notiz hinzufügen"
+
 #, Subject
+msgid "Subject"
+msgstr "Schulfach"
+
+msgid "subject"
+msgstr "Schulfach"
+
+msgid "subject1"
+msgstr "Schulfach 1"
+
+msgid "subject2"
+msgstr "Schulfach 2"
+
+msgid "subject3"
+msgstr "Schulfach 3"
+
 msgid "List Subjects"
 msgstr "Alle Schulfächer anzeigen"
 
@@ -355,12 +564,24 @@ msgstr "Schulfach hinzufügen"
 msgid "View Subject"
 msgstr "Dieses Schulfach anzeigen"
 
+msgid "The subject has been saved."
+msgstr "Das Schulfach wurde gespeichert."
+
+msgid "The subject has been deleted."
+msgstr "Das Schulfach wurde gelöscht."
+
 #, Tandems
 msgid "Tandem"
 msgstr "Patenschaft"
 
 msgid "List Tandems"
 msgstr "Alle Patenschaften anzeigen"
+
+msgid "List active Tandems"
+msgstr "Alle aktiven Patenschaften anzeigen"
+
+msgid "List inactive Tandems"
+msgstr "Alle inaktiven Patenschaften anzeigen"
 
 msgid "Deactivate Tandem"
 msgstr "Patenschaft deaktivieren"
@@ -370,6 +591,12 @@ msgstr "Patenschaft wieder aktivieren"
 
 msgid "View Tandem"
 msgstr "Diese Patenschaft anzeigen"
+
+msgid "The tandem has been saved."
+msgstr "Die Patenschaft wurde gespeichert."
+
+msgid "The tandem has been deleted."
+msgstr "Die Patenschaft wurde gelöscht."
 
 msgid "Activated"
 msgstr "Aktiviert"
@@ -382,6 +609,9 @@ msgstr "Deaktivieren"
 
 msgid "Reactivate"
 msgstr "Wieder aktivieren"
+
+msgid "Active"
+msgstr "Aktiv"
 
 
 #, Tabellenüberschriften
@@ -423,13 +653,25 @@ msgstr "Nachname"
 msgid "age"
 msgstr "Alter"
 
+msgid "Age"
+msgstr "Alter"
+
 msgid "email"
+msgstr "E-Mail"
+
+msgid "Email"
 msgstr "E-Mail"
 
 msgid "e-mail"
 msgstr "E-Mail"
 
+msgid "E-mail"
+msgstr "E-Mail"
+
 msgid "password"
+msgstr "Passwort"
+
+msgid "Password"
 msgstr "Passwort"
 
 #, Geschlechtsoptionen
@@ -458,28 +700,55 @@ msgstr "egal"
 msgid "degree_course"
 msgstr "Studiengang"
 
+msgid "Degree Course"
+msgstr "Studiengang"
+
 msgid "job"
+msgstr "Beruf"
+
+msgid "Job"
 msgstr "Beruf"
 
 msgid "street"
 msgstr "Straße"
 
+msgid "Street"
+msgstr "Straße"
+
 msgid "house_number"
+msgstr "Hausnummer"
+
+msgid "House Number"
 msgstr "Hausnummer"
 
 msgid "house_number_addition"
 msgstr "Hausnummernzusatz"
 
+msgid "House Number Addition"
+msgstr "Hausnummernzusatz"
+
 msgid "postcode"
+msgstr "Postleitzahl"
+
+msgid "Postcode"
 msgstr "Postleitzahl"
 
 msgid "city"
 msgstr "Ort"
 
+msgid "City"
+msgstr "Ort"
+
 msgid "telephone"
 msgstr "Telefon"
 
+msgid "Telephone"
+msgstr "Telefon"
+
 msgid "mobile"
+msgstr "Mobil"
+
+msgid "Mobile"
 msgstr "Mobil"
 
 #, Patendetails über Patenschaft
@@ -539,6 +808,14 @@ msgid "reason_for_schuelerpaten"
 msgstr "Wie bist du auf uns gekommen?"
 
 #, Matching
+msgid "match"
+msgstr "Vermitteln"
+
+msgid "Match"
+msgstr "Vermitteln"
+
+msgid "Match Partner"
+msgstr "Paten vermitteln"
 
 msgid "perfect match"
 msgstr "Perfekte Übereinstimmung"

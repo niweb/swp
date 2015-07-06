@@ -42,7 +42,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             <?php if(!isset($authUser)) : ?>
                 <div class="header-help">
                     <span><a target="_parent" href="/users/login">Login</a></span>
-                    <span><a target="_parent" href="/partners/register">Registrieren</a></span>
+                    <span><a target="_parent" href="/partners/register/1">Registrieren</a></span>
                 </div>
 				<?php else :
                     if(isset($admin)): ?>
@@ -57,7 +57,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 							<span><?php echo $this->Html->link(__('Users'), ['controller' => 'Users', 'action' => 'index']); ?></span>
 							<span><?php echo $this->Html->link(__('Partners'), ['controller' => 'Partners', 'action' => 'index']); ?></span>
 							<span><?php echo $this->Html->link(__('Students'), ['controller' => 'Students', 'action' => 'index']); ?></span>
-                                                        <span><?php echo $this->Html->link(__('Tandems'), ['controller' => 'Tandems', 'action' => 'index']); ?></span>
+                            <span><?php echo $this->Html->link(__('Tandems'), ['controller' => 'Tandems', 'action' => 'index', 'active']); ?></span>
 							<span><?php echo $this->Html->link(__('Schooltypes'), ['controller' => 'Schooltypes', 'action' => 'index']); ?></span>
 							<span><?php echo $this->Html->link(__('Subjects'), ['controller' => 'Subjects', 'action' => 'index']); ?></span>
 							<span><?php echo $this->Html->link(__('StatusTexts'), ['controller' => 'StatusTexts', 'action' => 'index']); ?></span>

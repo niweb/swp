@@ -15,20 +15,21 @@ class Student extends Entity
 	 * @var array
 	 */
 	protected $_accessible = [
-        'first_name' => true,
-        'last_name' => true,
-		'sex' => true,
-		'street' => true,
-        'house_number' => true,
-        'house_number_addition' => true,
-        'postcode' => true,
-        'city' => true,
-        'telephone' => true,
-        'mobile' => true,
-        'location_id' => true,
-		'student_status_id' => true,
-        'location' => true,
-        'tandems' => true,
-		'schooltype_id' => true,
+            'first_name' => true,
+            'last_name' => true,
+            'sex' => true,
+            'street' => true,
+            'house_number' => true,
+            'house_number_addition' => true,
+            'postcode' => true,
+            'city' => true,
+            'telephone' => true,
+            'mobile' => true,
+            'location_id' => true,
+            'student_status_id' => true,
+            'location' => true,
+            'tandems' => true,
+            'schooltype_id' => true,
+            'waiting' => true
 	];
 }

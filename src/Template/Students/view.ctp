@@ -6,7 +6,15 @@
             <li><?= $this->Html->link(__('List Students'), ['action' => 'index', 'waiting']) ?> </li>
         <?php elseif(isset($vermittler) or isset($locationAdmin) or isset($admin)) : ?>
             <li><?= $this->Html->link(__('Edit Student'), ['action' => 'edit', $student->id]) ?> </li>
-            <li><?= $this->Form->postLink(__('Delete Student'), ['action' => 'delete', $student->id], ['confirm' => __('Are you sure you want to delete # {0}?', $student->id)]) ?> </li>
+			<?php if($student->student_status_id != 3) : ?>
+				<li><?= $this->Html->link(__('Deactivate'), ['action' => 'deactivate', $student->id], ['confirm' => __('Are you sure you want to deactivate {0}?', h($student->first_name.' '.$student->last_name))]) ?></li>
+			<?php else: ?>
+				<li><?= $this->Html->link(__('Reactivate'), ['action' => 'reactivate', $student->id], ['confirm' => __('Are you sure you want to reactivate {0}?', h($student->first_name.' '.$student->last_name))]) ?></li>
+				<?php if(isset($locationAdmin) or isset($admin)) : ?>
+					<li><?= $this->Html->link(__('Delete'), ['action' => 'delete', $student->id], ['confirm' => __('Are you sure you want to delete {0}?', h($student->first_name.' '.$student->last_name))]) ?></li>
+				<?php endif; ?>
+			<?php endif; ?>
+            <li><?= $this->Html->link(__('Delete Student'), ['action' => 'delete', $student->id], ['confirm' => __('Are you sure you want to delete {0}?', h($student->first_name.' '.$student->last_name))]) ?> </li>
             <li><?= $this->Html->link(__('List waiting Students'), ['controller' => 'Students', 'action' => 'index', 'waiting']) ?></li>
             <li><?= $this->Html->link(__('List active Students'), ['controller' => 'Students', 'action' => 'index', 'active']) ?></li>
             <li><?= $this->Html->link(__('List inactive Students'), ['controller' => 'Students', 'action' => 'index', 'inactive']) ?></li>
@@ -43,10 +51,6 @@
             <p><?= (isset($subject1)) ? h($subject1->name) : '' ?></p>
             <p><?= (isset($subject2)) ? h($subject2->name) : '' ?></p>
             <p><?= (isset($subject3)) ? h($subject3->name) : '' ?></p>
-        </div>
-        <div class="large-2 columns numbers end">
-            <h6 class="subheader"><?= __('Id') ?></h6>
-            <p><?= $this->Number->format($student->id) ?></p>
         </div>
     </div>
 </div>

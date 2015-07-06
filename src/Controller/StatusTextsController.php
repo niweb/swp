@@ -13,13 +13,13 @@ class StatusTextsController extends AppController
 
 	public function isAuthorized($user) {
 		$type = $user['type_id'];
-		if(in_array($this->request->action, ['index', 'add'])){
+		if(in_array($this->request->action, ['index'])){
 			if($type > '3') {
 				return true;
 			}
 		}
 		
-		if(in_array($this->request->action, ['view', 'edit', 'delete'])){
+		if(in_array($this->request->action, ['view', 'edit'])){
 			if($type > '3'){
 				$statusTextID = (int)$this->request->params['pass'][0];
 				$statusText = $this->StatusTexts->get($statusTextID);

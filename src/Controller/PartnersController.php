@@ -5,6 +5,7 @@ use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
 use Cake\Network\Email\Email;
 use Cake\Event\Event;
+use Cake\I18n\Time;
 
 /**
  * Partners Controller
@@ -57,7 +58,7 @@ class PartnersController extends AppController
                 }
             }
         }
-        if(in_array($this->request->action, ['edit', 'deactivate'])){
+        if(in_array($this->request->action, ['edit', 'deactivate', 'contact'])){
             if($type > '2'){
                 $location = $this->Auth->user('location_id');
                 $partnerID = (int)$this->request->params['pass'][0];
@@ -90,6 +91,11 @@ class PartnersController extends AppController
                 if($location == $partnerLocation){
                         return true;
                 }
+            }
+        }
+        if(in_array($this->request->action, ['delete'])){
+            if($type > '3'){
+                return true;
             }
         }
 
@@ -145,18 +151,18 @@ class PartnersController extends AppController
 
         $this->loadModel('UserHasTypes');
         $user = $this->Auth->user();
-        $userType = $this->UserHasTypes->findByUserId($user['id'])->first()['type_id'];
+        $userType = $user['type_id'];
 
-        if($userType > '1' && $userType < '5') {
+        if($userType > '1' && $userType < '5') { //matchmaker, vermittler & standortadmin
             $condition['Users.location_id ='] = $user['location_id'];
-            $this->paginate = ['contain' => ['Locations', 'Users', 'Status'], 'order' => ['status_id' => 'asc']];
+            $this->paginate = ['contain' => ['Locations', 'Users', 'Status'], 'order' => ['status_id' => 'asc'], 'sortWhitelist' => ['status_id', 'Users.first_name', 'Users.last_name', 'age', 'sex']];
             $partners = $this->Partners->find('all', ['limit' => 500, 'conditions' => $condition])->contain(['Users', 'Status']);
             $this->set('partners', $this->paginate($partners));
             $this->set('_serialize', ['partners']);
         } else {
             //unwichtig weil globadmin eigentlich nie paten sieht
             $this->paginate = ['contain' => ['Locations', 'Users', 'Status']];
-            $partners = $this->Partners->find('all')->contain(['Users']);
+            $partners = $this->Partners->find('all')->contain(['Users', 'Status']);
             $this->set('partners', $this->paginate($partners));
             $this->set('_serialize', ['partners']);
         }
@@ -175,11 +181,19 @@ class PartnersController extends AppController
             'contain' => ['PreferredClassranges.Classranges', 'PreferredSchooltypes.Schooltypes', 'PreferredSubjects.Subjects', 'Tandems.Students', 'Status', 'Users']
         ]);
 
-                    $this->loadModel('StatusTexts');
-                    $statusText = $this->StatusTexts->findByStatusId($partner->status_id)->first();
+        $this->loadModel('StatusTexts');
+        $statusText = $this->StatusTexts->findByStatusId($partner->status_id)->first();
 
-        $this->set(compact('partner', 'statusText'));
-        $this->set('_serialize', ['partner', 'statusText']);
+        $this->loadModel('StatusHistorys');
+        $statusHistory = $this->StatusHistorys->find('all',[
+                    'order' => ['timestamp' => 'DESC'],
+                    'contain' => ['Status']
+            ])
+                ->where(['partner_id' => $partner->id]);
+        $statHis = $statusHistory->toArray();
+
+        $this->set(compact('partner', 'statusText', 'statHis'));
+        $this->set('_serialize', ['partner', 'statusText', 'statHis']);
 
         /*$this->loadModel('Users');
         $user = $this->Users->get($partner->user_id);
@@ -292,7 +306,7 @@ class PartnersController extends AppController
                     }
             }
 
-            $this->loadModel('Classranges');
+    $this->loadModel('Classranges');
     $classranges = $this->Classranges->find('all');
 
     $this->loadModel('Schooltypes');
@@ -303,13 +317,13 @@ class PartnersController extends AppController
     $subjects = $this->Subjects->find('all')
             ->where(['location_id =' => $this->Auth->user('location_id')]);
 
-            $type = $this->Auth->user('type_id');
-            $user = $this->Users->get($partner->user_id);
-            $status = $this->Partners->Status->find('list', ['limit' => 200]);
-            $checked = false;
-            $tmpsubject = '';
-            $this->set(compact('partner', 'user', 'status', 'type', 'classranges', 'schooltypes', 'subjects', 'checked', 'tmpsubject'));
-            $this->set('_serialize', ['partner', 'user']);
+    $type = $this->Auth->user('type_id');
+    $user = $this->Users->get($partner->user_id);
+    $status = $this->Partners->Status->find('list', ['limit' => 200]);
+    $checked = false;
+    $tmpsubject = '';
+    $this->set(compact('partner', 'user', 'status', 'type', 'classranges', 'schooltypes', 'subjects', 'checked', 'tmpsubject'));
+    $this->set('_serialize', ['partner', 'user']);
     }
 
     /*public function deactivate($id = null){
@@ -329,27 +343,43 @@ class PartnersController extends AppController
     {	
             $this->request->allowMethod(['post', 'delete']);
             $partner = $this->Partners->get($id);
+            $userID = $partner->user_id;
+            
+            if(($partner->status_id > 1) AND ($partner->status_id < 7)){
+                $this->Flash->error('Der Pate muss vor der Löschung erst deaktiviert werden.');
+                $this->redirect($this->referer(['action' => 'index']));
+            }
+            
             if ($this->Partners->delete($partner)) {
                 $this->loadModel('PreferredClassranges');
                 $this->loadModel('PreferredSchooltypes');
                 $this->loadModel('PreferredSubjects');
+                $this->loadModel('StatusHistory');
+                $this->loadModel('Users');
                 $this->loadModel('Tandems');
                 $this->PreferredClassranges->deleteAll(['partner_id' => $id]);
                 $this->PreferredSchooltypes->deleteAll(['partner_id' => $id]);
                 $this->PreferredSubjects->deleteAll(['partner_id' => $id]);
+                $this->StatusHistorys->deleteAll(['partner_id' => $id]);
+                $this->Users->deleteAll(['id' => $userID]);
                 $this->Tandems->deleteAll(['partner_id' => $id]);
 
                 $this->Flash->success('Pate wurde gelöscht');
             } else {
                 $this->Flash->error('Pate konnte nicht gelöscht werden');
             }
-            return $this->redirect($this->referer(['action' => 'index']));
+            return $this->redirect(['action' => 'index', 'inactive']);
     }
 
     public function deactivate($id = null){
         $partner = $this->Partners->get($id,[
                 'contain' => ['Tandems']
             ]);
+        
+        if($partner->status_id == 1){
+            $this->Flash->error('Nicht verifizierte Paten können nicht deaktiviert werden.');
+            return $this->redirect($this->referer(['action' => 'index']));
+        }
         
         //alle tandems in denen der pate steckt werden ebenfalls deaktiviert
         $tandemsController = new TandemsController;
@@ -358,7 +388,7 @@ class PartnersController extends AppController
         }
         
         //setze status_id auf 'aufgehört'
-        $partner->status_id = 7;
+        $this->setStatus($id,7);
         
         if($this->Partners->save($partner)){
             $this->Flash->success('Pate wurde erfolgreich deaktiviert.');
@@ -370,7 +400,8 @@ class PartnersController extends AppController
 
     public function reactivate($id = null){
         $partner = $this->Partners->get($id);
-        $partner->status_id = 2;
+        $this->setStatus($id,2);
+        //$partner->status_id = 2;
         if($this->Partners->save($partner)){
             $this->Flash->success('Pate wurde erfolgreich reaktiviert.');
         } else {
@@ -403,9 +434,8 @@ class PartnersController extends AppController
                     $partner = $this->Partners->patchEntity($partner, $this->request->data()/*, ['associated'=>'Users']*/);
                     $partner->user_id = $user->id;
                     $partner->location_id = $loc;
-                    $partner->status_id = 1;            //initialized status_id -> achtung bei db-änderungen
+                    $partner->status_id = 1;        //initialized status_id -> achtung bei db-änderungen
                     $partnerSaved = $this->Partners->save($partner);
-
                     //userhastypes-eintrag
                     $userTypeTable = TableRegistry::get('UserHasTypes');
                     $userType = $userTypeTable->newEntity();
@@ -423,7 +453,7 @@ class PartnersController extends AppController
                                 $pClassrange->partner_id = $partner->id;
                                 $pClassrange->classrange_id = $classrangeId;
                                 $pClassrangeSaved = $pClassrangesTable->save($pClassrange);
-                                $allPClassrangesSaved = $pClassrangeSaved ? true : false;
+                                if ($allPClassrangesSaved) { $allPClassrangesSaved = $pClassrangeSaved ? true : false; }
                             }
                         }
 
@@ -436,7 +466,7 @@ class PartnersController extends AppController
                                 $pSchooltype->partner_id = $partner->id;
                                 $pSchooltype->schooltype_id = $schooltypeId;
                                 $pSchooltypeSaved = $pSchooltypesTable->save($pSchooltype);
-                                $allPSchooltypesSaved = $pSchooltypeSaved ? true : false;
+                                if ($allPSchooltypesSaved) { $allPSchooltypesSaved = $pSchooltypeSaved ? true : false; }
                             }
                         }
 
@@ -450,7 +480,7 @@ class PartnersController extends AppController
                                 $pSubject->subject_id = $subjectId;
                                 $pSubject->maximum_class = $gradeLimit;
                                 $pSubjectSaved = $pSubjectsTable->save($pSubject);
-                                $allPSubjectsSaved = $pSubjectSaved ? true : false;
+                                if($allPSubjectsSaved) { $allPSubjectsSaved = $pSubjectSaved ? true : false; }
                             }
                         }
 
@@ -495,6 +525,7 @@ class PartnersController extends AppController
         //set variables for view
         
         $this->loadModel('Locations');
+        $all_locations = $this->Locations->find('all')->toArray();
         $location_name = $this->Locations->findById($loc)->first()['name'];
         
         $this->loadModel('Classranges');
@@ -508,7 +539,7 @@ class PartnersController extends AppController
         $subjects = $this->Subjects->find('all')
                 ->where(['location_id =' => $loc]);
         
-        $this->set(compact('partner', 'location_name', 'classranges', 'schooltypes', 'subjects'));
+        $this->set(compact('partner', 'all_locations', 'location_name', 'classranges', 'schooltypes', 'subjects'));
         $this->set('_serialize', ['partner']);
     }
 
@@ -531,7 +562,7 @@ class PartnersController extends AppController
             $students = $this->Students
                     ->find('all', [
                         'contain' => ['StudentSubjects.Subjects', 'StudentClassranges.Classranges', 'Schooltypes', 'StudentStatus'],
-                        'conditions' => ['student_status_id <' => 3]
+                        'conditions' => ['student_status_id =' => 1]
                         ])
                     ->where(['Students.location_id =' => $partner['location_id']]);
             
@@ -550,7 +581,7 @@ class PartnersController extends AppController
             
             $prefSubjects = $partner->preferred_subjects;
             foreach($prefSubjects as $subj){
-                $preferredSubjects[] = $subj['subject_id'];
+                $preferredSubjects[] = ['id' => $subj['subject_id'], 'max_grade' => $subj['maximum_class']];
             }
             //matching für jeden schüler einzeln
             foreach($students as $student){
@@ -576,8 +607,8 @@ class PartnersController extends AppController
                 $match['maxpoints']++;
                 
                 //classrange is in preferred_classranges?
-                $studentClassrange = $student->student_classrange->classrange['id'];
-                if (in_array($studentClassrange,$preferredClassranges)){
+                $studentClassrange = $student->student_classrange->classrange;
+                if (in_array($studentClassrange['id'],$preferredClassranges)){
                     $match['points']++;
                     $match['classrange'] = true;
                 }
@@ -601,20 +632,26 @@ class PartnersController extends AppController
                         //checkedSubjects enthält alle bereits enthaltenen Fächer
                         //kann raus, wenn in Student subject1/2/3 nicht gleich aber null sein darf
                         //verhindert zuviele matchpoints
-                        if(in_array($subj,$preferredSubjects)){
-                            $match['points']++;
-                            $match['subjects'] = true;
-                            $checkedSubjects[] = $subj;
+                        
+                        //für jedes student_subject  wird jetzt überprüft ob
+                        //es ein passendes preferred_subject des paten gibt,
+                        //das der pate auch in der klassenstufe des schülers
+                        //unterrichten könnte (max_grade)
+                        foreach($preferredSubjects as $prefSubj){
+                            if(($subj == $prefSubj['id']) AND ($studentClassrange['name'] <= $prefSubj['max_grade'])){
+                                $match['points']++;
+                                $match['subjects'] = true;
+                            }
                         }
                         $match['maxpoints']++;
                     }
                 
+                /* es werden eh nur wartende schüler angezeigt
                 if($student->student_status_id == 1){
                     $match['points']++;
                 }
-                $match['maxpoints']++;
+                $match['maxpoints']++;*/
                     
-                $match['maxpoints']++;
                 $match['percentage'] = $match['points']/$match['maxpoints'];
                 
                 }
@@ -654,15 +691,17 @@ class PartnersController extends AppController
             ]);
             $partnerName = h($partner->user->first_name . ' ' . $partner->user->last_name);
             
-            $partner->status_id=6;
-            $this->Partners->save($partner);
+            //$partner->status_id=6;
+            $this->setStatus($partnerId,6);
+			$partner->status_text = null;
+			$this->Partners->save($partner);
             
             $this->loadModel('Students');
             $studentTable = TableRegistry::get('Students');
             $student = $this->Students->get($studentId);
             $studentName = h($student->first_name . ' ' . $student->last_name);
             
-            $student->status_id=2;
+            $student->student_status_id=2;
             $studentTable->save($student);
 
             $tandemTable = TableRegistry::get('Tandems');
@@ -672,47 +711,109 @@ class PartnersController extends AppController
             $tandemTable->save($tandem);
             
             $this->Flash->success(h($partnerName . ' und ' . $studentName . ' sind nun ein Tandem!'));
-            
             $this->redirect(['controller' => 'Tandems', 'action' => 'index', ['sort' => 'activated', 'direction' => 'desc']]);
         }
     }
 	
+    //status-änderungsfunktion für den user mit user interface ->
+    //nicht zu verwechseln mit setStatus, die nur für interne änderungen
+    //gebraucht wird (wie auch hier)
     public function status($id = null) {
-            $partner = $this->Partners->get($id, ['contain' => ['Users']]);
-            $this->loadModel('Tandems');
-            if($this->request->is(['patch', 'post', 'put'])){
-                    $tandems_count = $this->Tandems->find()->where(['partner_id' => $partner->id, 'deactivated IS NULL'])->count();
-                    if($this->request->data('status_id') == 6 && $tandems_count == 0) {
-                            $this->Flash->error('Ungültige Operation');
-                    } else {
-                            $partner = $this->Partners->patchEntity($partner, $this->request->data);
-                            if($this->Partners->save($partner)){
-                                    $this->Flash->success('Status aktualisiert');
-                                    $this->redirect(['action' => 'index', 'active']);
-                            } else {
-                                    $this->Flash->error('Fehler beim Speichern des Paten.');
-                            }
-                    }
-            }
-            if($partner['type_id'] == 1){ //noch nicht verifiziert
-                $message = 'Der Pate muss erst seine Email-Adresse bestätigen bevor sein Status verändert werden kann!';
-                $this->Flash->error($message);
-                return $this->redirect($this->request->referer());
-            } elseif($partner['type_id'] == 6){
-                $message = 'Der Pate ist inaktiv. Ein Admin muss ihn erst wieder aktivieren, bevor sein Status wieder verändert werden kann.';
-            } elseif($partner['type_id'] > 6){ //aufgehört oder abgelehnt
-                $message = 'Der Pate ist bereits vermittelt. Der Status kann erst wieder verändert werden, wenn diese Patenschaft beendet ist.';
-            }
-            
-            if(isset($message)){
-                $this->Flash->error($message);
-                return $this->redirect($this->request->referer());
+        $partner = $this->Partners->get($id, ['contain' => ['Users']]);
+        $this->loadModel('Tandems');
+		
+        if($this->request->is(['patch', 'post', 'put'])){
+            $tandems_count = $this->Tandems->find()->where(['partner_id' => $partner->id, 'deactivated IS NULL'])->count();
+            if($this->request->data('status_id') == 6 && $tandems_count == 0) {
+                $this->Flash->error('Ungültige Operation');
             } else {
-                $status = $this->Partners->Status->find('list', ['limit' => 200, 'conditions' => ['id <' => 6, 'id >' => 1]]);
-                $this->set(compact('partner', 'status'));
-                $this->set('_serialize', ['partner', 'status']);
-            }
-    }
 
-  
+                if($this->setStatus($id, $this->request->data('status_id'))) {
+                        $this->Flash->success('Status aktualisiert');
+                        return $this->redirect(['action' => 'index']);
+                } else {
+                        $this->Flash->success('Fehler bei der Status Aktualisierung');
+                }
+            }
+        }
+		
+        //falls aus irgendwelchen gründen solche operationen passieren
+        //hier die rückfallbedingung
+        if($partner['status_id'] == 1){ //noch nicht verifiziert
+            $message = 'Der Pate muss erst seine Email-Adresse bestätigen bevor sein Status verändert werden kann!';
+            $this->Flash->error($message);
+            return $this->redirect($this->request->referer());
+        } elseif($partner['status_id'] == 6){
+            $message = 'Der Pate ist inaktiv. Ein Admin muss ihn erst wieder aktivieren, bevor sein Status wieder verändert werden kann.';
+        } elseif($partner['status_id'] > 6){ //aufgehört oder abgelehnt
+            $message = 'Der Pate ist bereits vermittelt. Der Status kann erst wieder verändert werden, wenn diese Patenschaft beendet ist.';
+        }
+
+        if(isset($message)){
+            $this->Flash->error($message);
+            return $this->redirect($this->request->referer());
+        } else {
+            //status darf nicht auf 'angemeldet' und 'aufgehört' geändert werden
+            //für aufgehört muss deaktiviert werden
+            $status = $this->Partners->Status->find('list', [
+                'limit' => 200,
+                'conditions' => [
+                    'OR' => [['id >' => 1, 'id <' => 6], ['id =' => 8]]
+                    ]
+                ]);
+            $this->set(compact('partner', 'status'));
+            $this->set('_serialize', ['partner', 'status']);
+        }
+    }
+    
+    //interne funktion um den status eines paten zu ändern
+    public function setStatus($partner_id = null, $status_id = null){
+        if($partner_id == NULL or $status_id == NULL){
+            $this->Flash->error('Ungültige Operation');
+            return $this->redirect($this->referer(['action' => 'index']));
+        }
+        //update statusHistory
+        $this->loadModel('StatusHistorys');
+        $newStatHist = $this->StatusHistorys->newEntity();//$statHistTable->newEntity();
+        $newStatHist->partner_id = $partner_id;
+        $newStatHist->status_id = $status_id;
+        $newStatHist->timestamp = Time::now();
+        //falls die anfrage übers formular (partners/status/$id) geht...
+        $newStatHist->text = $this->request->data('status_text');
+        
+        //update waiting data
+        $partner = $this->Partners->get($partner_id);
+        $partner->status_id = $status_id;
+        if($status_id == 5){
+            $partner->waiting = Time::now();
+        } else {
+            $partner->waiting = NULL;
+        }
+	
+        $this->Partners->patchEntity($partner, $this->request->data);
+        
+        if(($this->StatusHistorys->save($newStatHist)) and ($this->Partners->save($partner))){
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+        
+    }
+	
+	public function contact($id = null){
+		$partner = $this->Partners->get($id, ['contain' => 'Users']);
+		
+		if($this->request->is(['patch', 'post', 'put'])){
+			$partner = $this->Partners->patchEntity($partner, $this->request->data);
+			if($this->Partners->save($partner)){
+				$this->Flash->success('Kontaktperson wurde aktualisiert!');
+				return $this->redirect(['action' => 'index']);
+			} else {
+				$this->Flash->error('Fehler beim speichern der Kontaktperson.');
+			}
+		}
+		
+		$this->set(compact('partner'));
+		$this->set('_serialize', ['partner']);
+	}  
 }

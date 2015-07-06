@@ -34,23 +34,31 @@
                 <td><?= (($partner->sex)=='m') ? __('male') : __('female')?></td>
                 <td><?= h($partner->status->name) ?></td>
                 <td class="actions">
-                    <?php if($partner->status_id < 7) : ?>
-                            <?= $this->Html->link(__('Match'), ['action' => 'match', $partner->id]) ?>
-                    <?php endif; ?>
                     <?= $this->Html->link(__('View'), ['action' => 'view', $partner->id]) ?>
+                    <br>
+                    <?php if(($partner->status_id > 1) AND ($partner->status_id < 7)) : ?>
+                        <?= $this->Html->link(__('Match'), ['action' => 'match', $partner->id]) ?>
+                        <br>
+                    <?php endif; ?>
                     <?php if(!isset($matchmaker)) : ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit', $partner->id]) ?>
-                        
+                        <br>
+                        <?= $this->Html->link(__('Edit Contact Person'), ['action' => 'contact', $partner->id]) ?>
+                        <br>
                         <?php if(($partner->status_id > 1) and ($partner->status_id < 6)) : ?>
                             <?= $this->Html->link(__('Change Status'), ['action' => 'status', $partner->id]) ?>
+                            <br>
                         <?php endif; ?>
                         
-                        <?php if($partner->status_id < 7) : ?>
-                            <?= $this->Form->postLink(__('Deactivate'), ['action' => 'deactivate', $partner->id], ['confirm' => __('Are you sure you want to deactivate # {0}?', $partner->id)]) ?>
-                        <?php else: ?>
+                        <?php if(($partner->status_id > 1) AND ($partner->status_id < 7)) : ?>
+                            <?= $this->Form->postLink(__('Deactivate'), ['action' => 'deactivate', $partner->id], ['confirm' => __('Are you sure you want to deactivate {0}?', h($partner->user->first_name.' '.$partner->user->last_name))]) ?>
+                            <br>
+                        <?php elseif(!($partner->status_id = 1)): ?>
                             <?php if(isset($locationAdmin) or isset($admin)) : ?>
-                                <?= $this->Form->postLink(__('Reactivate'), ['action' => 'reactivate', $partner->id], ['confirm' => __('Are you sure you want to reactivate # {0}?', $partner->id)]) ?>
-                                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $partner->id], ['confirm' => __('Are you sure you want to delete # {0}?', $partner->id)]) ?>
+                                <?= $this->Form->postLink(__('Reactivate'), ['action' => 'reactivate', $partner->id], ['confirm' => __('Are you sure you want to reactivate {0}?', h($partner->user->first_name.' '.$partner->user->last_name))]) ?>
+                                <br>
+                                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $partner->id], ['confirm' => __('Are you sure you want to delete {0}?', h($partner->user->first_name.' '.$partner->user->last_name))]) ?>
+                                <br>
                             <?php endif; ?>
                         <?php endif; ?>
                     

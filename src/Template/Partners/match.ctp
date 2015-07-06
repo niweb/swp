@@ -1,4 +1,4 @@
-<div class="actions columns medium-5 side-nav">
+<div class="actions match-side columns medium-5 side-nav">
     <li class="back-button"><?= $this->Html->link(__('back'), $this->request->referer()) ?></li>
     <h3><?= h($partner->user->first_name.' '.$partner->user->last_name) ?></h3>
     <h6 class="subheader"><?= __('Status')?></h6>
@@ -58,14 +58,13 @@
     }
     if(!$noStudents):
         ?>
-        <div class="partners index large-7 medium-9 columns">
+        <div class="partners match index large-7 medium-9 columns">
             <h3><?= __($range[0]) ?></h3>
             <table cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
                     <th><?= $this->Paginator->sort('first_name') ?></th>
                     <th><?= $this->Paginator->sort('last_name') ?></th>
-                    <th><?= $this->Paginator->sort('student_status_id', __('Status')) ?></th>
                     <th><?= __('gender') ?></th>
                     <th><?= __('Class') ?></th>
                     <th><?= __('Schooltype') ?></th>
@@ -82,7 +81,6 @@
                 <tr>
                         <td><?= h($student->first_name) ?></td>
                         <td><?= h($student->last_name) ?></td>
-                        <td><?= h($student->student_status->name) ?></td>
                         <td class='matchbool <?= $match_results[$student['id']]['gender'] ? 'true' : 'false' ?>'>
                             <span>
                                 <table>
@@ -95,7 +93,7 @@
                                             <?= ($partner->preferred_gender == '') ? __('whatever') : (($partner->preferred_gender == 'm') ? __('male') : __('female')) ?>
                                         </td>
                                         <td>
-                                            <?= ($student->gender == 'm') ? __('male') : __('female') ?>
+                                            <?= ($student->sex == 'm') ? __('male') : __('female') ?>
                                         </td>
                                     <tr>
                                 </table>
@@ -151,7 +149,7 @@
                                     <tr>
                                         <td>
                                             <?php foreach($partner->preferred_subjects as $subj){
-                                                echo $subj->subject->name.'<br>';
+                                                echo $subj->subject->name.' ('.$subj->maximum_class.')<br>';
                                             }?>
                                         </td>
                                         <td>
@@ -164,7 +162,7 @@
                             </span>
                         </td>
                         <td class="actions">
-                            <?= $this->Html->link(__('Match'), ['action' => 'match', $partner->id, $student->id], ['confirm' => __('Are you sure you want to match {0} with {1}?', $student->first_name, $partner->user->first_name)])?>
+                            <?= $this->Html->link(__('Match'), ['action' => 'match', $partner->id, $student->id], ['confirm' => __('Are you sure you want to match {0} with {1}?', $student->first_name, $partner->user->first_name), 'Model.referer'])?>
                             <?= $this->Html->link(__('View'), ['controller' => 'Students', 'action' => 'view', $student->id]) ?>
                         </td>
                     </tr>
@@ -185,4 +183,5 @@
         </div>
         <?php
     endif;
-endforeach; ?>
+endforeach; 
+?>

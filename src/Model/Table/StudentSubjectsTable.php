@@ -30,7 +30,7 @@ class StudentSubjectsTable extends Table
         $this->belongsTo('Subjects', [
             'foreignKey' => 'subject1'
         ]);
-	$this->belongsTo('Subjects', [
+		$this->belongsTo('Subjects', [
             'foreignKey' => 'subject2'
         ]);
 		$this->belongsTo('Subjects', [
@@ -51,15 +51,16 @@ class StudentSubjectsTable extends Table
             ->allowEmpty('id', 'create');
 		
 		$validator	
-			->add('subject1', 'custom', ['rule' => ['notEqual', 'subject2']])
-			->allowEmpty('subject1');
+			->add('subject1', 'custom', ['rule' => ['!equalTo', 'subject2']])
+			->requirePresence('subject1', 'create')
+			->notEmpty('subject1');
 		
 		$validator	
-			->add('subject2', 'custom', ['rule' => ['notEqual', 'subject3']])
+			->add('subject2', 'custom', ['rule' => ['!equalTo', 'subject3']])
 			->allowEmpty('subject2');
 		
 		$validator	
-			->add('subject3', 'custom', ['rule' => ['notEqual', 'subject1']])
+			->add('subject3', 'custom', ['rule' => ['!equalTo', 'subject1']])
 			->allowEmpty('subject3');
 
         return $validator;

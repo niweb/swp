@@ -121,7 +121,12 @@ class SubjectsController extends AppController
 		$this->request->allowMethod(['post', 'delete']);
 		$subject = $this->Subjects->get($id);
 		if ($this->Subjects->delete($subject)) {
-			$this->Flash->success('The subject has been deleted.');
+                    $this->loadModel('PreferredSubjects');
+                    $this->loadModel('StudentSubjects');
+                    $this->PreferredSubjects->deleteAll(['subject_id' => $id]);
+                    $this->StudentSubjects->deleteAll(['subject_id' => $id]);
+                    
+                    $this->Flash->success('The subject has been deleted.');
 		} else {
 			$this->Flash->error('The subject could not be deleted. Please, try again.');
 		}

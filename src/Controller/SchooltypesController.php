@@ -125,6 +125,11 @@ class SchooltypesController extends AppController
 		$this->request->allowMethod(['post', 'delete']);
 		$schooltype = $this->Schooltypes->get($id);
 		if ($this->Schooltypes->delete($schooltype)) {
+                    $this->loadModel('PreferredSchooltypes');
+                    $this->loadModel('StudentSchooltypes');
+                    $this->PreferredSchooltypes->deleteAll(['schooltype_id' => $id]);
+                    $this->StudentSchooltypes->deleteAll(['schooltype_id' => $id]);
+                    
 			$this->Flash->success('The schooltype has been deleted.');
 		} else {
 			$this->Flash->error('The schooltype could not be deleted. Please, try again.');

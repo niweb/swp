@@ -54,11 +54,11 @@
                     <?php if(!isset($matchmaker)) : ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $student->id]) ?>
                         <?php if($student->student_status_id != 3) : ?>
-                            <?= $this->Form->postLink(__('Deactivate'), ['action' => 'deactivate', $student->id], ['confirm' => __('Are you sure you want to deactivate # {0}?', $student->id)]) ?>
+                            <?= $this->Form->postLink(__('Deactivate'), ['action' => 'deactivate', $student->id], ['confirm' => __('Are you sure you want to deactivate {0}?', h($student->first_name.' '.$student->last_name))]) ?>
                         <?php else: ?>
-                            <?= $this->Form->postLink(__('Reactivate'), ['action' => 'reactivate', $student->id], ['confirm' => __('Are you sure you want to reactivate # {0}?', $student->id)]) ?>
+                            <?= $this->Form->postLink(__('Reactivate'), ['action' => 'reactivate', $student->id], ['confirm' => __('Are you sure you want to reactivate {0}?', h($student->first_name.' '.$student->last_name))]) ?>
                             <?php if(isset($locationAdmin) or isset($admin)) : ?>
-                                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $student->id], ['confirm' => __('Are you sure you want to delete # {0}?', $student->id)]) ?>
+                                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $student->id], ['confirm' => __('Are you sure you want to delete {0}?', h($student->first_name.' '.$student->last_name))]) ?>
                             <?php endif; ?>
                         <?php endif; ?>
                     <?php endif; ?>

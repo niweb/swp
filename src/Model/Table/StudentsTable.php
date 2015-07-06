@@ -39,7 +39,7 @@ class StudentsTable extends Table
             $this->hasOne('StudentClassranges', [
                 'foreignKey' => 'student_id'
             ]);
-			$this->belongsTo('Schooltypes', [
+            $this->belongsTo('Schooltypes', [
                 'foreignKey' => 'schooltype_id'
             ]);
             
@@ -94,6 +94,9 @@ class StudentsTable extends Table
 
 		$validator
 		->allowEmpty('telephone');
+		
+		$validator
+		->allowEmpty('waiting');
 
 		return $validator;
 	}

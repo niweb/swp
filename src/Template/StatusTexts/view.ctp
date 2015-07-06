@@ -3,9 +3,7 @@
     <ul class="side-nav">
         <li class="back-button"><?= $this->Html->link(__('back'), $this->request->referer()) ?></li>
         <li><?= $this->Html->link(__('Edit Status Text'), ['action' => 'edit', $statusText->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Status Text'), ['action' => 'delete', $statusText->id], ['confirm' => __('Are you sure you want to delete # {0}?', $statusText->id)]) ?> </li>
         <li><?= $this->Html->link(__('List Status Texts'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Status Text'), ['action' => 'add']) ?> </li>
     </ul>
 </div>
 <div class="statusTexts view large-10 medium-9 columns">

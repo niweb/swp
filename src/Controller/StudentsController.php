@@ -150,8 +150,10 @@ class StudentsController extends AppController
 		$this->loadModel('Subjects');
 		$subject = $this->StudentSubjects->findByStudentId($id)->contain('Subjects')->first();
 		$subject1 = $this->Subjects->get($subject['subject1']);
-		$subject2 = $this->Subjects->get($subject['subject2']);
-		$subject3 = $this->Subjects->get($subject['subject3']);
+		if($subject['subject2'] != NULL)
+			$subject2 = $this->Subjects->get($subject['subject2']);
+		if($subject['subject3'] != NULL)
+			$subject3 = $this->Subjects->get($subject['subject3']);
 		$classrange = $this->StudentClassranges->findByStudentId($id)->contain('Classranges')->first();
 		$this->set(compact('student', 'subject1', 'subject2', 'subject3', 'classrange'));
 		$this->set('_serialize', ['student', 'subject1', 'subject2', 'subject3', 'classrange']);
@@ -171,6 +173,7 @@ class StudentsController extends AppController
 		if ($this->request->is('post')) {
 			$student = $this->Students->patchEntity($student, $this->request->data);
 			$student->student_status_id = 1;
+			$student->waiting = time();
 			$student->location_id = $user['location_id'];
 			if ($this->Students->save($student)) {
 				$subject1 = $this->request->data('subject1');
@@ -225,29 +228,61 @@ class StudentsController extends AppController
 	public function edit($id = null)
 	{
 		$student = $this->Students->get($id, [
-                    'contain' => []
+                    'contain' => ['StudentSubjects.Subjects', 'StudentClassranges.Classranges']
 		]);
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$student = $this->Students->patchEntity($student, $this->request->data);
-			if ($this->Students->save($student)) {
+                        
+                        //edit subjects in student_subjects table
+                        $this->loadModel('StudentSubjects');
+                        $student_subjects = $this->StudentSubjects
+                                ->find('all', [
+                                    'conditions' => ['student_id =' => $id]
+                                ])
+                                ->first();
+                        
+                        $student_subjects->subject1 = $this->request->data['subject1'];
+                        $student_subjects->subject2 = $this->request->data['subject2'];
+                        $student_subjects->subject3 = $this->request->data['subject3'];
+                        
+                        //edit classrange in StudentSubjects table
+                        $this->loadModel('StudentClassranges');
+                        $student_classrange = $this->StudentClassranges
+                                ->find('all', [
+                                    'conditions' => ['student_id =' => $student->id]
+                                ])
+                                ->first();
+                        $student_classrange->classrange_id = $this->request->data['classranges'];
+                        
+                        $student_saved = ($this->Students->save($student));
+                        $subjects_saved = ($this->StudentSubjects->save($student_subjects));
+                        $classrange_saved = ($this->StudentClassranges->save($student_classrange));
+                        
+                        //save everything
+			if ($student_saved and $subjects_saved and $classrange_saved) {
 				$this->Flash->success('The student has been saved.');
 				return $this->redirect(['action' => 'index', 'active']);
 			} else {
 				$this->Flash->error('The student could not be saved. Please, try again.');
 			}
 		}
+                
 		$this->loadModel('StudentStatus');
 		$this->loadModel('Subjects');
 		$this->loadModel('Classranges');
+                
 		$schooltypes = $this->Students->Schooltypes->find('list');
 		$status = $this->StudentStatus->find('list');
 		$subjects = $this->Subjects->find('list');
 		$classranges = $this->Classranges->find('list');
-                $default_subject[1] = $this->Subjects->find('list', ['conditions' => ['id = ' => $student->subject1]])->first();
-                $default_subject[2] = $this->Subjects->find('list', ['conditions' => ['id = ' => $student->subject2]])->first();
-                $default_subject[3] = $this->Subjects->find('list', ['conditions' => ['id = ' => $student->subject3]])->first();
                 
-		$this->set(compact('student', 'status', 'subjects', 'classranges', 'schooltypes', 'default_subject'));
+                $default_classrange = $this->Students->StudentClassranges->find('all', ['conditions' => ['student_id =' => $student->id]])->first();
+                $default_schooltype = $this->Students->Schooltypes->find('all', ['conditions' => ['id = ' => $student->schooltype_id]])->first();
+                $default_subject[1] = $this->Subjects->find('all', ['conditions' => ['id = ' => $student->student_subject->subject1]])->first();
+                $default_subject[2] = $this->Subjects->find('all', ['conditions' => ['id = ' => $student->student_subject->subject2]])->first();
+                $default_subject[3] = $this->Subjects->find('all', ['conditions' => ['id = ' => $student->student_subject->subject3]])->first();
+                
+		$this->set(compact('student', 'status', 'subjects', 'classranges', 'schooltypes', 'default_classrange', 'default_schooltype','default_subject'));
 		$this->set('_serialize', ['student', 'status', 'subjects', 'classranges', 'schooltypes']);
 	}
 
@@ -302,13 +337,28 @@ class StudentsController extends AppController
 	
 	public function status($id = null) {
 		$student = $this->Students->get($id);
+		$this->loadModel('Tandems');
 		if($this->request->is(['patch', 'post', 'put'])) {
-			$student = $this->Students->patchEntity($student, $this->request->data);
-			if($this->Students->save($student)) {
-				$this->Flash->success('Status wurde aktualisiert');
-				$this->redirect(['action' => 'index', 'active']);
+			$tandems_count = $this->Tandems->find()->where(['student_id' => $student->id, 'deactivated IS NULL'])->count();
+			$status = $this->request->data('student_status_id');
+			
+			if($tandems_count == 0 && $status == 2) {
+				$this->Flash->error('Schüler ist in keiner Patenschaft. Kann nicht auf vermittelt gestellt werden.');
+			} else if($tandems_count != 0 && $status != 2){
+				$this->Flash->error('Schüler ist zurzeit in einer Patenschaft. Deaktivieren sie diese vorher!');
 			} else {
-				$this->Flash->error('Konnte Status nicht aktualisieren');
+				if($status == 1) {
+					$student->waiting = time();
+				} else {
+					$student->waiting = null;
+				}
+				$student = $this->Students->patchEntity($student, $this->request->data);
+				if($this->Students->save($student)) {
+					$this->Flash->success('Status wurde aktualisiert');
+					$this->redirect(['action' => 'index', 'active']);
+				} else {
+					$this->Flash->error('Konnte Status nicht aktualisieren');
+				}
 			}
 		}
 		

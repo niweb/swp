@@ -45,6 +45,9 @@ class PartnersTable extends Table
             $this->hasMany('Tandems', [
             'foreignKey' => 'partner_id'
             ]);
+            $this->hasMany('StatusHistory', [
+            'foreignKey' => 'partner_id'
+            ]);
 	}
 
 	/**
@@ -98,7 +101,6 @@ class PartnersTable extends Table
 		->notEmpty('postcode');
 
 		$validator
-		->add('city', 'string', ['rule' => 'alphaNumeric', 'message' => 'Bitte einen gültigen Stadtnamen eingeben'])
 		->requirePresence('city', 'create')
 		->notEmpty('city');
 
@@ -120,19 +122,16 @@ class PartnersTable extends Table
 		->notEmpty('teach_time');
 
 		$validator
-		->add('extra_time', 'valid', ['rule' => 'numeric'])
 		->add('extra_time', 'range', ['rule' => ['range', 0, 10080], 'message' => 'Ungültiger Wert'])
 		->requirePresence('extra_time', 'create')
 		->notEmpty('extra_time');
 
 		$validator
-		->add('spend_time', 'valid', ['rule' => 'numeric', 'message' => 'Muss eine Zahl sein'])
 		->add('spend_time', 'range', ['rule' => ['range', 0, 10080], 'message' => 'Ungültiger Wert'])
 		->requirePresence('spend_time', 'create')
 		->notEmpty('spend_time');
 
 		$validator
-		->add('experience', 'string', ['rule' => 'alphaNumeric', 'message' => 'Ungültiger Wert'])
 		->requirePresence('experience', 'create')
 		->notEmpty('experience');
 
@@ -143,7 +142,6 @@ class PartnersTable extends Table
 		->allowEmpty('support_wish');
 
 		$validator
-		->add('reason_for_decision', 'string', ['rule' => 'alphaNumeric', 'message' => 'Ungültiger Wert'])
 		->requirePresence('reason_for_decision', 'create')
 		->notEmpty('reason_for_decision');
 
@@ -166,6 +164,12 @@ class PartnersTable extends Table
 		
 		$validator
 		->allowEmpty('status_text');
+		
+		$validator
+		->allowEmpty('waiting');
+		
+		$validator
+		->allowEmpty('contact');
 
 		return $validator;
 	}

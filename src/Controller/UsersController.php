@@ -40,7 +40,10 @@ class UsersController extends AppController
 		
         if(in_array($this->request->action, ['delete'])){
                 $actionId = (int)$this->request->params['pass'][0];
-                $actionUser = $this->Users->get($actionId);
+                $actionUser = $this->Users->get($actionId, ['contain' => 'Partners']);
+                if(isset($actionUser->partner)){
+                    return false;
+                }
                 if($actionUser['type_id'] < $user['type_id']){
                         return true;
                 }
@@ -68,13 +71,13 @@ class UsersController extends AppController
         //$userType = $this->UserHasTypes->findByUserId($user['id'])->order(['type_id' => 'DESC'])->first()['type_id'];
 
         if($user['type_id'] == '4'){
-            $conditions = ['type_id <' => 4, 'location_id =' => $user['location_id']];
+            $conditions = ['type_id <' => 4, 'Users.location_id =' => $user['location_id']];
         } else {
             $conditions = ['type_id >' => 3];
         }
         
         $this->paginate = ['contain' => ['Locations', 'Types']];
-        $users = $this->Users->find('all', ['limit' => 200, 'empty' => false, 'conditions' => $conditions]);
+        $users = $this->Users->find('all', ['limit' => 200, 'empty' => false, 'conditions' => $conditions, 'contain' => 'Partners']);
         $this->set('users', $this->paginate($users));
         $this->set('_serialize', ['users']);
     }
@@ -131,8 +134,7 @@ class UsersController extends AppController
                             $this->Flash->error('The user could not be saved. Please, try again.');
                     }
             }
-            $this->loadModel('UserHasTypes');
-            $type = $this->UserHasTypes->findByUserId($this->Auth->user('id'))->order(['type_id' => 'DESC'])->first()['type_id'];
+            $type = $this->Auth->user['type_id'];
             switch($type){
                 case(4):
                     $typeConditions = ['id <' => '4', 'id !=' => '1']; //standortadmin darf keine standort admins oder global admins erstellen
@@ -145,8 +147,10 @@ class UsersController extends AppController
                     break;
             }
             $this->loadModel('Types');
+			$this->loadModel('Locations');
             $types = $this->Types->find('list', ['limit' => 200, 'empty' => false, 'conditions' => $typeConditions]);
-            $this->set(compact('user', 'types'));
+			$locations = $this->Locations->find('list');
+            $this->set(compact('user', 'types', 'locations'));
             $this->set('_serialize', ['user']);
     }
 
@@ -208,8 +212,7 @@ class UsersController extends AppController
             $user = $this->Users->get($id);
             
             //check if user is partner
-            $this->loadModel('UserHasTypes');
-            $type = $this->UserHasTypes->findByUserId($this->Auth->user('id'))->order(['type_id' => 'ASC'])->first()['type_id'];
+            $type = $user['type_id'];
             if($type == 1){
                 $this->loadModel('Partners');
                 $partnerId = $this->Partners->findByUserId($id)->first()['id'];
@@ -237,7 +240,7 @@ class UsersController extends AppController
                     $user = $this->Auth->identify();
                     if ($user) {
                             $this->Auth->setUser($user);
-                            $type = $this->UserHasTypes->findByUserId($user['id'])->first()['type_id'];
+                            $type = $user['type_id'];
 
                             /* unschön
                             if($type == '5' || $type == '4'){
@@ -281,7 +284,7 @@ class UsersController extends AppController
     public function sendActivationMail($id=null)
     {
         $user = $this->Users->get($id);
-        $link = 'http://ec2-52-28-103-178.eu-central-1.compute.amazonaws.com/users/activate/'.$id.'/'.$user->activation;
+        $link = 'http://ec2-52-28-79-204.eu-central-1.compute.amazonaws.com/users/activate/'.$id.'/'.$user->activation;
         $email = new Email('default');
         $email->from(['noreply@schuelerpaten.de' => 'Schülerpaten'])
             ->to($user->email)
@@ -295,7 +298,7 @@ class UsersController extends AppController
         } else {
             $this->Flash->success('Die Bestätigungsemail wurde versandt');
         }
-        return;
+        return true;
     }
 
     public function sendActivationMailAgain()

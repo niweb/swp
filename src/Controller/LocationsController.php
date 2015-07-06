@@ -58,8 +58,25 @@ class LocationsController extends AppController
             if ($this->request->is('post')) {
                     $location = $this->Locations->patchEntity($location, $this->request->data);
                     if ($this->Locations->save($location)) {
-                            $this->Flash->success('The location has been saved.');
-                            return $this->redirect(['action' => 'index']);
+						$this->loadModel('StatusTexts');
+						$this->loadModel('Status');
+						
+						$status = $this->Status->find('all');
+						foreach($status as $s){
+							$statusText = $this->StatusTexts->newEntity();
+							$statusText->location_id = $location->id;
+							$statusText->status_id = $s->id;
+							
+							if(!$this->StatusTexts->save($statusText)){
+								$this->StatusTexts->deleteAll(['location_id' => $location->id]);
+								$this->Locations->delete($location);
+								$this->Flash->error('Fehler beim genrieren der Status-Nachrichten.');
+								return;
+							}
+						}
+							
+                        $this->Flash->success('The location has been saved.');
+                        return $this->redirect(['action' => 'index']);
                     } else {
                             $this->Flash->error('The location could not be saved. Please, try again.');
                     }

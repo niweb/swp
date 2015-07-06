@@ -92,7 +92,7 @@ td.matchbool {
 }
 
 .true {
-  background-color: #DCE47E;
+  background-color: #aada67;
 }
 
 .true::before{
@@ -100,7 +100,7 @@ td.matchbool {
 }
 
 .false {
-  background-color: #C3232D;
+  background-color: #dd2d38; //#C3232D;
 }
 
 .false::before{
@@ -109,7 +109,6 @@ td.matchbool {
 
 td.matchbool:hover{
   background:#e2e236;
-  width:400px;
 }
 
 td.matchbool span{
@@ -118,11 +117,26 @@ td.matchbool span{
 
 td.matchbool:hover span{
   position: absolute;
-  z-index: 9999;
+  //top: 0px;
+  z-index: 999;
+  display: block;
   width: 300px;
-  border-left: 5px solid #e2e236; //#15848F
-  display: inline-block;
-  padding: 1px;
+  border: 5px solid #e2e236; //#15848F
+  padding: 0px;
+  margin-top: 20px;
+}
+
+td.matchbool span:hover{
+  display:none;
+}
+
+td.matchbool span table{
+    margin: 0px;
+    padding: 0px;
+}
+
+div.match:last-child{
+    margin-bottom: 200px;
 }
 
 .header-help {
@@ -204,6 +218,7 @@ ul.pagination li.active a {
 
 button {
   background: #8D6E65;
+  margin: 5px;
 }
 
 .form button:hover, .form button:focus {
@@ -211,10 +226,24 @@ button {
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.26) !important;
 }
 
+.form button[type="cancel"] {
+  float: right;
+  text-transform: uppercase;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.26);
+}
+
 .form button[type="submit"] {
   float: right;
   text-transform: uppercase;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.26);
+}
+
+.form button[type="cancel"]:hover{
+    background-color: #C3232D;
+}
+
+.form button[type="submit"]:hover{
+    background-color: #DCE47E;
 }
 
 .form .error-message {
@@ -359,12 +388,14 @@ div.warning:before {
   border-radius: 3px;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.24);
   margin-right:0.7rem;
+  padding-top:0.7rem;
 }
 
 .view .numbers {
   background-color: #B7E3EC;
   color: #FFF;
   border-radius: 3px;
+  padding-top:0.7rem;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.24);
   margin-right: 0.7rem;
 }
@@ -373,6 +404,7 @@ div.warning:before {
   border-radius: 3px;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.24);
   margin-right:0.7rem;
+  padding-top:0.7rem;
   background-color:#DCE47E;
   color: #fff;
 }
@@ -381,6 +413,7 @@ div.warning:before {
   border-radius: 3px;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.24);
   margin-right:0.7rem;
+  padding-top:0.7rem;
   background-color: #8D6E65;
   color: #fff;
 }
@@ -398,6 +431,42 @@ div.warning:before {
 .view .texts .columns {
   margin-top:1.2rem;
   border-bottom: 1px solid #eee;
+}
+
+div.register-in a{
+  overflow: visible;
+  -webkit-appearance: button;
+  cursor: pointer;
+  text-transform: uppercase;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.26);
+  border-style:solid;
+  border-width:0px;
+  cursor:pointer;
+  font-family:"Helvetica Neue","Helvetica",Helvetica,Arial,sans-serif;
+  font-weight:normal;
+  line-height:normal;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  position:relative;
+  text-decoration:none;
+  text-align:center;
+  -webkit-appearance:none;
+  -webkit-border-radius:0;
+  display:inline-block;
+  padding-top:0.75rem;
+  padding-right:1rem;
+  padding-bottom:0.75rem;
+  padding-left:1rem;
+  font-size:1rem;
+  background-color:#000000; //#008cba;
+  border-color: #007095;
+  color:#fff;
+  transition:background-color 300ms ease-out
+}
+div.register-in a:hover,
+div.register-in a:focus{
+  background-color:#e2e236; //#007095;
+  color:#000000; //#fff;
 }
 
 

@@ -8,13 +8,17 @@
 <?php endif; ?>
 <div class="partners form large-10 medium-9 columns">
     <?php if($location_name == null): ?>
-    <fieldset>
-        <legend><?=h(__('Become Schülerpate').' in ...')?><legend>
-        <?= $this->Html->link(__('Berlin'), ['controller' => 'Partners', 'action' => 'register', 1]) ?>,
-        <?= $this->Html->link(__('Frankfurt'), ['controller' => 'Partners', 'action' => 'register', 2]) ?>,
-        <?= $this->Html->link(__('Ruhr'), ['controller' => 'Partners', 'action' => 'register', 3]) ?> oder
-        <?= $this->Html->link(__('Braunschweig'), ['controller' => 'Partners', 'action' => 'register', 4]) ?><br>
-    </fieldset>
+        <div class="register-in">
+            <fieldset>
+            <!--<legend><?=h(__('Become Schülerpate').' in ...')?><legend>-->
+            <h4> <?=h(__('Become Schülerpate').' in ...')?> </h4>
+            <?php foreach($all_locations as $loc){
+                echo $this->Html->link(__($loc->name), ['controller' => 'Partners', 'action' => 'register', $loc->id]);
+                //echo '<br>';
+            }
+            ?>
+            </fieldset>
+        </div>
     <?php else: ?>
     <?= $this->Form->create($partner); ?>
     <fieldset>
@@ -90,8 +94,7 @@
             echo $this->Form->label(__('preferred_gender'));
             echo $this->Form->select('preferred_gender', ['' => __('whatever'), 'm' => __('male'), 'f' => __('female')]);
             
-            echo $this->Form->label(__('support_wish'));
-            echo $this->Form->textarea('support_wish');
+			echo $this->Form->input('support_wish', ['type' => 'textarea', 'label' => __('support_wish')]);
             
             echo $this->Form->input('reason_for_decision', ['label' => __('reason_for_decision'), 'required' => true]);            
             echo $this->Form->input('additional_informations', ['label' => __('additional_informations')]);
@@ -100,5 +103,6 @@
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Cancel'), ['type' => 'cancel', 'onclick' => 'window.history.go(-1)']) ?>
     <?= $this->Form->end() ?>
     <?php endif; ?>

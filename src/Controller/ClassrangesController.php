@@ -96,7 +96,12 @@ class ClassrangesController extends AppController
 		$this->request->allowMethod(['post', 'delete']);
 		$classrange = $this->Classranges->get($id);
 		if ($this->Classranges->delete($classrange)) {
-			$this->Flash->success('The classrange has been deleted.');
+                    $this->loadModel('PreferredClassranges');
+                    $this->loadModel('StudentClassranges');
+                    $this->PreferredClassranges->deleteAll(['classrange_id' => $id]);
+                    $this->StudentClassranges->deleteAll(['classrange_id' => $id]);
+                    
+                    $this->Flash->success('The classrange has been deleted.');
 		} else {
 			$this->Flash->error('The classrange could not be deleted. Please, try again.');
 		}

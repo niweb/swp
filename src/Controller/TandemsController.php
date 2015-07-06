@@ -22,7 +22,7 @@ class TandemsController extends AppController
 		}
 		
 		if(in_array($this->request->action, ['reactivate'])){
-			if($type > '3'){
+			if($type > '2'){
 				return true;
 			}
 		}
@@ -34,15 +34,55 @@ class TandemsController extends AppController
 	 *
 	 * @return void
 	 */
-	public function index()
+	public function index($view = null)
 	{	
         $this->paginate = [
-			'contain' => ['Partners.Users', 'Students']
-		];	
-		$location = $this->Auth->user('location_id');
-		$query = $this->Tandems->find()->contain(['Partners.Users'])->where(['Partners.location_id' => $location]);
-		$this->set('tandems', $this->paginate($query));
-		$this->set('_serialize', ['tandems']);
+			'sortWhitelist' => ['Students.first_name', 'Users.first_name', 'activated', 'deactivated'],
+            'contain' => ['Students', 'Partners.Users']
+        ];	
+        
+        switch($view){
+                case 'active':
+                    $condition = ['deactivated IS NULL'];
+                    $active = true;
+                    break;
+                case 'inactive': 
+                    $condition = ['deactivated IS NOT NULL'];
+                    $active = false;
+                    break;
+                default: 
+                    //default is active
+                    $condition = ['deactivated IS NULL'];
+                    $active = true;
+                    break;
+        }
+
+        if($this->Auth->user('type_id') < 5){
+            //wenn user kein admin ist, dann nur die tandems
+            //von seiner location anzeigen
+            $location = $this->Auth->user('location_id');
+            $condition['Partners.location_id'] = $location;
+        }
+        
+        $query = $this->Tandems->find()->contain(['Partners.Users'])->where($condition);
+        $this->set('tandems', $this->paginate($query));
+        $this->set(compact('active'));
+        $this->set('_serialize', ['tandems']);
+        
+        /*$query_active_tandems = $this->Tandems->find()
+                ->contain(['Partners.Users'])
+                ->where(['Partners.location_id' => $location, 'deactivated =' => NULL])
+                ->order(['activated' => 'DESC']);
+        
+        $query_inactive_tandems = $this->Tandems->find()
+                ->contain(['Partners.Users'])
+                ->where(['Partners.location_id' => $location, 'deactivated !=' => NULL])
+                ->order(['deactivated' => 'DESC']);
+        
+        $this->set('active_tandems', $this->paginate($query_active_tandems));
+        $this->set('inactive_tandems', $this->paginate($query_inactive_tandems));
+        $this->set('_serialize', ['active_tandems', 'inactive_tandems']);*/
+        
 	}
 
 	/**
@@ -138,30 +178,30 @@ class TandemsController extends AppController
             $studentID = $tandem->student_id;
             
             //... wird auf weitere tandems überprüft
-            $studentsTandems = $this->Tandems->find('list')->where(['student_id =' => $studentID, 'deactivated =' => NULL]);
-            $studentsCount = count($studentsTandems->toArray());
+            $studentsTandems = $this->Tandems->find('list')->where(['student_id =' => $studentID, 'deactivated IS NULL']);
+            $studentsCount = count($studentsTandems);
             if($studentsCount == 1){
                 //wenn das das einzige ist, setze schüler wieder auf wartend
                 $this->loadModel('Students');
                 $student = $this->Students->get($studentID);
-                $student->student_status_id = '1'; //wartend
+                $student->student_status_id = '3'; //aufgehört
+                $student->waiting = Time::now();
                 $this->Students->save($student);
             }
             
             //genauso der Pate...
             $partnerID = $tandem->partner_id;
            
-            $partnersTandems = $this->Tandems->find('list')->where(['partner_id' => $partnerID, 'deactivated' => NULL]);
+            $partnersTandems = $this->Tandems->find('list')->where(['partner_id' => $partnerID, 'deactivated IS NULL']);
             $partnersCount = count($partnersTandems);
             if($partnersCount == 1){
-                $this->loadModel('Partners');
-                $partner = $this->Partners->get($partnerID);
-                $partner->status_id = '5'; //wartend
-                $this->Partners->save($partner);
+                
+                $partnersController = new PartnersController;
+                $partnersController->setStatus($partnerID, 7);
+                
             }
 
-            $time = time();
-            $tandem->deactivated = $time;
+            $tandem->deactivated = Time::now();
             
             if($this->Tandems->save($tandem)){
                     $this->Flash->success('Tandem deaktiviert!');
@@ -181,12 +221,14 @@ class TandemsController extends AppController
         $student_id=$tandem->student_id;
         $student = $this->Students->get($student_id);
         $student->student_status_id='2'; //(wieder) auf vermittlet setzen
+		$student->waiting = null;
         $studentSaved = $this->Students->save($student);
         
         $this->loadModel('Partners');
         $partner_id = $tandem->partner_id;
         $partner = $this->Partners->get($partner_id);
         $partner->status_id='6'; //(wieder) auf vermittlet setzen
+		$partner->waiting = null;
         $partnerSaved = $this->Partners->save($partner);
 
         if($studentSaved and $partnerSaved and $this->Tandems->save($tandem)){

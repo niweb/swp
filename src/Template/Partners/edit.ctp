@@ -103,7 +103,7 @@
             echo $this->Form->input('reason_for_schuelerpaten', ['value' => $partner->reason_for_schuelerpaten, 'label' => __('reason_for_schuelerpaten')]);
         ?>
     </fieldset>
-    <?= $this->Html->link('Cancel', ['action' => 'view', $partner->id], ['class' => 'button', 'float' => 'right']); ?>
     <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Cancel'), ['type' => 'cancel', 'onclick' => 'window.history.go(-1)']) ?>
     <?= $this->Form->end() ?>
 </div>

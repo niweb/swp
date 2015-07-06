@@ -22,7 +22,7 @@
 			<p><?= h($tandem->activated) ?></p>
 			<?php if($tandem->deactivated) : ?>
 				<h6 class="subheader"><?= __('Deactivated') ?></h6>
-				<p><?= h($tandem->activated) ?></p>
+				<p><?= h($tandem->deactivated) ?></p>
 			<?php endif; ?>
         </div>
         <div class="large-2 columns booleans end">

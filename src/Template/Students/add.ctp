@@ -30,10 +30,11 @@
 			echo $this->Form->input('schooltype_id', ['label' => __('schooltype'), 'options' => $schooltypes]);
 			echo $this->Form->input('classranges', ['label' => __('classranges'), 'options' => $classranges]);
 			echo $this->Form->input('subject1', ['label' => __('subject1'), 'options' => $subjects]);
-			echo $this->Form->input('subject2', ['label' => __('subject2'), 'options' => $subjects]);
-			echo $this->Form->input('subject3', ['label' => __('subject3'), 'options' => $subjects]);
+			echo $this->Form->input('subject2', ['label' => __('subject2'), 'options' => $subjects, 'empty' => true]);
+			echo $this->Form->input('subject3', ['label' => __('subject3'), 'options' => $subjects, 'empty' => true]);
             ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Cancel'), ['type' => 'cancel', 'onclick' => 'window.history.go(-1)']) ?>
     <?= $this->Form->end() ?>
 </div>

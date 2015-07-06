@@ -31,6 +31,9 @@ class UsersTable extends Table
                 $this->belongsTo('Types', [
                     'foreignKey' => 'type_id'
 		]);
+                $this->hasOne('Partners', [
+                    'foreignKey' => 'user_id'
+                ]);
 	}
 
 	/**

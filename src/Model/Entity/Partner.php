@@ -45,5 +45,7 @@ class Partner extends Entity
 		'lng' => true,
 		'status_id' => true,
 		'status_text' => true,
+		'waiting' => true,
+		'contact' => true,
 	];
 }

@@ -15,8 +15,12 @@
             echo $this->Form->input('email', ['label' => __('email')]);
             echo $this->Form->input('password', ['label' => __('password')]);
             echo $this->Form->input('type_id', ['label' => __('Type'), 'options' => $types, 'empty' => false]);
+			if(isset($admin)){
+				echo $this->Form->input('location_id', ['label' => __('Location'), 'options' => $locations, 'empty' => false]);
+			}
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Cancel'), ['type' => 'cancel', 'onclick' => 'window.history.go(-1)']) ?>
     <?= $this->Form->end() ?>
 </div>
