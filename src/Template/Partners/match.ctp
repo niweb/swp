@@ -153,9 +153,9 @@
                                             }?>
                                         </td>
                                         <td>
-                                            <?=$subject_list[$student->student_subject->subject1]?><br>
-                                            <?=$subject_list[$student->student_subject->subject2]?><br>
-                                            <?=$subject_list[$student->student_subject->subject3]?>
+                                            <?=(isset($student->student_subject->subject1)) ? $subject_list[$student->student_subject->subject1] : ''?><br>
+                                            <?=(isset($student->student_subject->subject2)) ? $subject_list[$student->student_subject->subject2] : ''?><br>
+                                            <?=(isset($student->student_subject->subject3)) ? $subject_list[$student->student_subject->subject3] : ''?>
                                         </td>
                                     <tr>
                                 </table>

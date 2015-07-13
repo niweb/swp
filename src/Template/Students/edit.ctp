@@ -36,9 +36,9 @@
             echo $this->Form->input('mobile', ['label' => __('mobile')]);
             echo $this->Form->input('schooltype_id', ['label' => __('schooltype'), 'options' => $schooltypes, 'value' => $default_schooltype->id]);
             echo $this->Form->input('classranges', ['label' => __('classrange'), 'options' => $classranges, 'value' => $default_classrange->classrange_id]);
-            echo $this->Form->input('subject1', ['label' => __('subject1'), 'options' => $subjects, 'value' => $default_subject[1]->id]);
-            echo $this->Form->input('subject2', ['label' => __('subject2'), 'options' => $subjects, 'value' => $default_subject[2]->id]);
-            echo $this->Form->input('subject3', ['label' => __('subject3'), 'options' => $subjects, 'value' => $default_subject[3]->id]);
+            echo $this->Form->input('subject1', ['label' => __('subject1'), 'options' => $subjects, 'value' => $default_subject[1]->id, 'empty' => true]);
+            echo $this->Form->input('subject2', ['label' => __('subject2'), 'options' => $subjects, 'value' => $default_subject[2]->id, 'empty' => true]);
+            echo $this->Form->input('subject3', ['label' => __('subject3'), 'options' => $subjects, 'value' => $default_subject[3]->id, 'empty' => true]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

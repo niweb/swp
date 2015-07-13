@@ -49,10 +49,10 @@ class ClassrangesController extends AppController
 		if ($this->request->is('post')) {
 			$classrange = $this->Classranges->patchEntity($classrange, $this->request->data);
 			if ($this->Classranges->save($classrange)) {
-				$this->Flash->success('The classrange has been saved.');
+				$this->Flash->success(__('The classrange has been saved.'));
 				return $this->redirect(['action' => 'index']);
 			} else {
-				$this->Flash->error('The classrange could not be saved. Please, try again.');
+				$this->Flash->error(__('The classrange could not be saved. Please, try again.'));
 			}
 		}
 		$this->set(compact('classrange'));
@@ -74,10 +74,10 @@ class ClassrangesController extends AppController
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$classrange = $this->Classranges->patchEntity($classrange, $this->request->data);
 			if ($this->Classranges->save($classrange)) {
-				$this->Flash->success('The classrange has been saved.');
+				$this->Flash->success(__('The classrange has been saved.'));
 				return $this->redirect(['action' => 'index']);
 			} else {
-				$this->Flash->error('The classrange could not be saved. Please, try again.');
+				$this->Flash->error(__('The classrange could not be saved. Please, try again.'));
 			}
 		}
 		$this->set(compact('classrange'));
@@ -101,9 +101,9 @@ class ClassrangesController extends AppController
                     $this->PreferredClassranges->deleteAll(['classrange_id' => $id]);
                     $this->StudentClassranges->deleteAll(['classrange_id' => $id]);
                     
-                    $this->Flash->success('The classrange has been deleted.');
+                    $this->Flash->success(__('The classrange has been deleted.'));
 		} else {
-			$this->Flash->error('The classrange could not be deleted. Please, try again.');
+			$this->Flash->error(__('The classrange could not be deleted. Please, try again.'));
 		}
 		return $this->redirect(['action' => 'index']);
 	}

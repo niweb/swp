@@ -149,11 +149,15 @@ class StudentsController extends AppController
 		$this->loadModel('Classranges');
 		$this->loadModel('Subjects');
 		$subject = $this->StudentSubjects->findByStudentId($id)->contain('Subjects')->first();
-		$subject1 = $this->Subjects->get($subject['subject1']);
-		if($subject['subject2'] != NULL)
+		if($subject['subject1'] != NULL){
+			$subject1 = $this->Subjects->get($subject['subject1']);
+                }
+                if($subject['subject2'] != NULL){
 			$subject2 = $this->Subjects->get($subject['subject2']);
-		if($subject['subject3'] != NULL)
+                }
+		if($subject['subject3'] != NULL){
 			$subject3 = $this->Subjects->get($subject['subject3']);
+                }
 		$classrange = $this->StudentClassranges->findByStudentId($id)->contain('Classranges')->first();
 		$this->set(compact('student', 'subject1', 'subject2', 'subject3', 'classrange'));
 		$this->set('_serialize', ['student', 'subject1', 'subject2', 'subject3', 'classrange']);
@@ -202,10 +206,10 @@ class StudentsController extends AppController
 					return $this->redirect(['action' => 'index', 'active']);
 				} else {
 					$this->Student->delete($student);
-					$this->Flash->error('The student could not be saved. Please, try again.');
+					$this->Flash->error(__('The student could not be saved. Please, try again.'));
 				}
 			} else {
-				$this->Flash->error('The student could not be saved. Please, try again.');
+				$this->Flash->error(__('The student could not be saved. Please, try again.'));
 			}
 		}
 		$this->loadModel('Subjects');
@@ -260,10 +264,10 @@ class StudentsController extends AppController
                         
                         //save everything
 			if ($student_saved and $subjects_saved and $classrange_saved) {
-				$this->Flash->success('The student has been saved.');
+				$this->Flash->success(__('The student has been saved.'));
 				return $this->redirect(['action' => 'index', 'active']);
 			} else {
-				$this->Flash->error('The student could not be saved. Please, try again.');
+				$this->Flash->error(__('The student could not be saved. Please, try again.'));
 			}
 		}
                 
@@ -303,25 +307,34 @@ class StudentsController extends AppController
 		$classrange = $this->StudentClassranges->findByStudentId($student->id)->first();
 		if($this->StudentSubjects->delete($subject) && $this->StudentClassranges->delete($classrange)){
 			if ($this->Students->delete($student)) {
-				$this->Flash->success('The student has been deleted.');
+				$this->Flash->success(__('The student has been deleted.'));
 			} else {
-				$this->Flash->error('The student could not be deleted. Please, try again.');
+				$this->Flash->error(__('The student could not be deleted. Please, try again.'));
 			}
 		} else {
-			$this->Flash->error('The student could not be deleted. Please, try again.');
+			$this->Flash->error(__('The student could not be deleted. Please, try again.'));
 		}
 		return $this->redirect($this->referer(['action' => 'index']));
 	}
 	
 	public function deactivate($id = null) {
-		$student = $this->Students->get($id);
-		$student->student_status_id = 3;
-		if($this->Students->save($student)){
-			$this->Flash->success('Der Schüler wurde deaktiviert.');
-		} else {
-			$this->Flash->error('Konnte Schüler nicht deaktivieren.');
-		}
-		return $this->redirect(['action' => 'index', 'active']);
+            $student = $this->Students->get($id,[
+                'contain' => ['Tandems']
+            ]);
+        
+            //alle tandems in denen der schüler steckt werden ebenfalls deaktiviert
+            $tandemsController = new TandemsController;
+            foreach($student->tandems as $tandem){
+                $tandemsController->deactivate($tandem->id);
+            }
+
+            $student->student_status_id = 3;
+            if($this->Students->save($student)){
+                    $this->Flash->success('Der Schüler wurde deaktiviert.');
+            } else {
+                    $this->Flash->error('Konnte Schüler nicht deaktivieren.');
+            }
+            return $this->redirect(['action' => 'index', 'active']);
 	}
 	
 	public function reactivate($id = null) {

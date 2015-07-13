@@ -49,10 +49,10 @@ class TypesController extends AppController
 		if ($this->request->is('post')) {
 			$type = $this->Types->patchEntity($type, $this->request->data);
 			if ($this->Types->save($type)) {
-				$this->Flash->success('The type has been saved.');
+				$this->Flash->success(__('The type has been saved.'));
 				return $this->redirect(['action' => 'index']);
 			} else {
-				$this->Flash->error('The type could not be saved. Please, try again.');
+				$this->Flash->error(__('The type could not be saved. Please, try again.'));
 			}
 		}
 		$this->set(compact('type'));
@@ -74,10 +74,10 @@ class TypesController extends AppController
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$type = $this->Types->patchEntity($type, $this->request->data);
 			if ($this->Types->save($type)) {
-				$this->Flash->success('The type has been saved.');
+				$this->Flash->success(__('The type has been saved.'));
 				return $this->redirect(['action' => 'index']);
 			} else {
-				$this->Flash->error('The type could not be saved. Please, try again.');
+				$this->Flash->error(__('The type could not be saved. Please, try again.'));
 			}
 		}
 		$this->set(compact('type'));
@@ -96,9 +96,9 @@ class TypesController extends AppController
 		$this->request->allowMethod(['post', 'delete']);
 		$type = $this->Types->get($id);
 		if ($this->Types->delete($type)) {
-			$this->Flash->success('The type has been deleted.');
+			$this->Flash->success(__('The type has been deleted.'));
 		} else {
-			$this->Flash->error('The type could not be deleted. Please, try again.');
+			$this->Flash->error(__('The type could not be deleted. Please, try again.'));
 		}
 		return $this->redirect(['action' => 'index']);
 	}

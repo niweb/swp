@@ -143,8 +143,10 @@ class PartnersController extends AppController
                 break;
             default:
                 if($this->Auth->user['type_id']<3){ //matchmaker
+                    $view = 'waiting';
                     $condition = ['status_id =' => 5];
                 } else {
+                    $view = 'active';
                     $condition = ['status_id >=' => 5, 'status_id <=' => 6];
                 }
         }
@@ -157,15 +159,14 @@ class PartnersController extends AppController
             $condition['Users.location_id ='] = $user['location_id'];
             $this->paginate = ['contain' => ['Locations', 'Users', 'Status'], 'order' => ['status_id' => 'asc'], 'sortWhitelist' => ['status_id', 'Users.first_name', 'Users.last_name', 'age', 'sex']];
             $partners = $this->Partners->find('all', ['limit' => 500, 'conditions' => $condition])->contain(['Users', 'Status']);
-            $this->set('partners', $this->paginate($partners));
-            $this->set('_serialize', ['partners']);
         } else {
             //unwichtig weil globadmin eigentlich nie paten sieht
             $this->paginate = ['contain' => ['Locations', 'Users', 'Status']];
             $partners = $this->Partners->find('all')->contain(['Users', 'Status']);
-            $this->set('partners', $this->paginate($partners));
-            $this->set('_serialize', ['partners']);
         }
+        $this->set(compact('view'));
+        $this->set('partners', $this->paginate($partners));
+        $this->set('_serialize', ['partners']);
     }
 
     /**
@@ -299,10 +300,10 @@ class PartnersController extends AppController
                                     }
                             }
 
-                            $this->Flash->success('The partner has been saved.');
+                            $this->Flash->success(__('The partner has been saved.'));
                             return $this->redirect(['action' => 'view', $partner->id]);
                     } else {
-                            $this->Flash->error('The partner could not be saved. Please, try again.');
+                            $this->Flash->error(__('The partner could not be saved. Please, try again.'));
                     }
             }
 
@@ -400,8 +401,14 @@ class PartnersController extends AppController
 
     public function reactivate($id = null){
         $partner = $this->Partners->get($id);
-        $this->setStatus($id,2);
-        //$partner->status_id = 2;
+        if($partner->status_id == 7){
+            //wenn 'aufgehört' ist anzunehmen, dass er wieder warten möchte
+            $this->setStatus($id,5);
+        } else {
+            //wenn abgelehnt, wissen wir nicht an welchem punkt der pate schon war
+            // - deshalb wieder verifiziert
+            $this->setStatus($id,2);
+        }
         if($this->Partners->save($partner)){
             $this->Flash->success('Pate wurde erfolgreich reaktiviert.');
         } else {
@@ -515,10 +522,10 @@ class PartnersController extends AppController
                         $this->Partners->delete($partner);
                         $userTypeTable->delete($userType);
 
-                        $this->Flash->error('Es ist leider etwas schief gelaufen. Bitte versuche es gleich noch einmal. Wenn das Problem weiterhin besteht kontaktiere uns bitte!');
+                        $this->Flash->error('Es ist leider etwas schief gelaufen. Vermutlich wurden im Formular ungültige Angaben gemacht. Bitte kontrolliere dies. Wenn dem nicht so ist und das Problem dennoch weiterhin besteht kontaktiere uns bitte!');
                     }
                 }else {
-                    $this->Flash->error('Es ist leider etwas schief gelaufen. Bitte versuche es gleich noch einmal. Vermutlich bist du bereits unter dieser Email-Adresse bei uns registriert. Wenn dem nicht so ist und das Problem dennoch weiterhin besteht kontaktiere uns bitte!');
+                    $this->Flash->error('Es ist leider etwas schief gelaufen. Vermutlich bist du bereits unter dieser Email-Adresse bei uns registriert. Bitte versuche es gleich noch einmal. Wenn dem nicht so ist und das Problem dennoch weiterhin besteht kontaktiere uns bitte!');
                 }
             } 
 
@@ -693,8 +700,8 @@ class PartnersController extends AppController
             
             //$partner->status_id=6;
             $this->setStatus($partnerId,6);
-			$partner->status_text = null;
-			$this->Partners->save($partner);
+            $partner->status_text = null;
+            $this->Partners->save($partner);
             
             $this->loadModel('Students');
             $studentTable = TableRegistry::get('Students');
@@ -708,6 +715,7 @@ class PartnersController extends AppController
             $tandem = $tandemTable->newEntity();
             $tandem->partner_id = $partnerId;
             $tandem->student_id = $studentId;
+            $tandem->activated = Time::now();
             $tandemTable->save($tandem);
             
             $this->Flash->success(h($partnerName . ' und ' . $studentName . ' sind nun ein Tandem!'));

@@ -4,7 +4,9 @@
         <li class="back-button"><?= $this->Html->link(__('back'), $this->request->referer()) ?></li>
         <?php if(isset($locationAdmin) or isset($admin)): ?>
             <li><?= $this->Html->link(__('Edit User'), ['action' => 'edit', $user->id]) ?> </li>
-            <li><?= $this->Form->postLink(__('Delete User'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?> </li>
+            <!--man soll sich nicht selber löschen können-->
+            <li><?= ($user->id == $authUser['id']) ? '' :
+            $this->Form->postLink(__('Delete User'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?> </li>
             <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?> </li>
         <?php else: ?>
             <li> <?=__('No Actions')?></li>
@@ -25,9 +27,9 @@
             <p><?= h($user->type->name) ?></p>
             <!--p><!?= h($type->name) ?></p-->
             <?php if(isset($admin)): ?>
-				<h6 class="subheader"><?= __('Location') ?></h6>
-				<p><?= h($user->location->name) ?></p>
-			<?php endif; ?>
+                    <h6 class="subheader"><?= __('Location') ?></h6>
+                    <p><?= h($user->location->name) ?></p>
+            <?php endif; ?>
         </div>
             
         <div class="large-2 columns dates end">

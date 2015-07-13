@@ -1,4 +1,6 @@
-<h1>Bestätigungsmail erneut senden</h1>
+<?php $this->assign('title', 'Bestätigungsmail erneut senden'); ?>
+<br>
+<h3>Bestätigungsmail erneut senden</h3>
 <?= $this->Form->create() ?>
 <?= $this->Form->input('email', ['label' => 'E-Mail']) ?>
     <?= $this->Form->button(__('Submit')) ?>

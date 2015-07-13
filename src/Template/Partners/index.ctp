@@ -53,7 +53,7 @@
                         <?php if(($partner->status_id > 1) AND ($partner->status_id < 7)) : ?>
                             <?= $this->Form->postLink(__('Deactivate'), ['action' => 'deactivate', $partner->id], ['confirm' => __('Are you sure you want to deactivate {0}?', h($partner->user->first_name.' '.$partner->user->last_name))]) ?>
                             <br>
-                        <?php elseif(!($partner->status_id = 1)): ?>
+                        <?php elseif($partner->status_id >= 7): ?>
                             <?php if(isset($locationAdmin) or isset($admin)) : ?>
                                 <?= $this->Form->postLink(__('Reactivate'), ['action' => 'reactivate', $partner->id], ['confirm' => __('Are you sure you want to reactivate {0}?', h($partner->user->first_name.' '.$partner->user->last_name))]) ?>
                                 <br>
@@ -78,6 +78,6 @@
             </ul>
             <p><?= $this->Paginator->counter() ?></p>
         </div>
-    <?php else: echo '<br>'.__('no {0} to display', __('Partners'));
+    <?php else: echo '<br>'.__('no {0} to display', __('{0} Partners', __($view)));
     endif; ?>
 </div>

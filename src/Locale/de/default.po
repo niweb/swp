@@ -69,7 +69,7 @@ msgid "Degree Course"
 msgstr "Studiengang"
 
 msgid "Street"
-msgstr "Straȥ"
+msgstr "Straße"
 
 msgid "House Number"
 msgstr "Hausnummer"
@@ -100,6 +100,9 @@ msgstr "Nein"
 
 msgid "no"
 msgstr "Nein"
+
+msgid "Permission denied"
+msgstr "Zugriff verweigert"
 
 
 #, Buttons und Überschriften
@@ -164,6 +167,9 @@ msgstr "Die Schulart wurde gespeichert."
 msgid "The subject has been saved"
 msgstr "Das Fach wurde gespeichert."
 
+msgid "The student has been saved."
+msgstr "Der Schüer wurde gespeichert."
+
 msgid "The student has been deleted."
 msgstr "Der Schüer wurde gelöscht."
 
@@ -197,11 +203,11 @@ msgstr "Willst du wirklich {0} löschen?"
 msgid "Are you sure you want to delete # {0}?"
 msgstr "Willst du wirklich #{0} löschen?"
 
-msgid "Are you sure you want to deactivate # {0}?"
-msgstr "Willst du wirklich #{0} deaktivieren?"
+msgid "Are you sure you want to deactivate {0}?"
+msgstr "Willst du wirklich {0} deaktivieren?"
 
-msgid "Are you sure you want to reactivate # {0}?"
-msgstr "Willst du wirklich #{0} reaktivieren?"
+msgid "Are you sure you want to reactivate {0}?"
+msgstr "Willst du wirklich {0} reaktivieren?"
 
 msgid "dont_delete_{0}"
 msgstr "Achtung! Wird ein {0} gelöscht kommt es zu Datenverlusten. Bitte führen sie diese Funktion nur aus wenn sie sich ganz sicher sind."
@@ -244,6 +250,24 @@ msgstr "Alle wartenden und vermittelten Paten anzeigen"
 msgid "List quit and denied Partners"
 msgstr "Alle ehemaligen Paten anzeigen"
 
+msgid "{0} Partners"
+msgstr "{0} Paten"
+
+msgid "all"
+msgstr "alle"
+
+msgid "verified"
+msgstr "verifizierten"
+
+msgid "waiting"
+msgstr "wartenden"
+
+msgid "active"
+msgstr "aktiven"
+
+msgid "inactive"
+msgstr "ehemaligen"
+
 msgid "Edit Partner"
 msgstr "Paten bearbeiten"
 
@@ -273,6 +297,9 @@ msgstr "Der Pate wurde gespeichert."
 
 msgid "The partner has been deleted."
 msgstr "Der Pate wurde gelöscht."
+
+msgid "The partner could not be saved. Please, try again."
+msgstr "Der Pate konnte leider nicht gespeichert werden. Bitte probiere es später noch einmal."
 
 #, Schüler
 msgid "List Students"
@@ -530,6 +557,15 @@ msgstr "Status-Notiz"
 msgid "Add Status Note"
 msgstr "Status-Notiz hinzufügen"
 
+msgid "Edit Status Note"
+msgstr "Status-Notiz ändern"
+
+msgid "The status note has been saved."
+msgstr "Die Status-Notiz wurde gespeichert."
+
+msgid "The status note could not be saved. Please, try again."
+msgstr "Die Status-Notiz konnte leider nicht gespeichert werden."
+
 #, Subject
 msgid "Subject"
 msgstr "Schulfach"
@@ -566,6 +602,9 @@ msgstr "Dieses Schulfach anzeigen"
 
 msgid "The subject has been saved."
 msgstr "Das Schulfach wurde gespeichert."
+
+msgid "The subject could not be saved. Please, try again."
+msgstr "Das Schulfach konnte leider nicht gespeichert werden."
 
 msgid "The subject has been deleted."
 msgstr "Das Schulfach wurde gelöscht."
@@ -674,6 +713,9 @@ msgstr "Passwort"
 msgid "Password"
 msgstr "Passwort"
 
+msgid "Reset Password"
+msgstr "Passwort zurücksetzen"
+
 #, Geschlechtsoptionen
 msgid "Sex"
 msgstr "Geschlecht"
@@ -781,7 +823,7 @@ msgid "teach_time"
 msgstr "Wie viel Zeit (in Minuten) möchtest du in der Woche fürs Unterrichten investieren? (mindestens 90)"
 
 msgid "extra_time"
-msgstr "Wie viel Zeit (in Minuten) möchtest du im Monat zusaetzlich für Seminare oder Veranstaltungen gemeinsam mit deiner/m PatenschülerIn investieren?"
+msgstr "Wie viel Zeit (in Minuten) möchtest du im Monat zusätzlich für Seminare oder Veranstaltungen gemeinsam mit deiner/m PatenschülerIn investieren?"
 
 msgid "spend_time"
 msgstr "Wie lange bist du in nächster Zeit verfügbar? (mindestens ein Jahr)"

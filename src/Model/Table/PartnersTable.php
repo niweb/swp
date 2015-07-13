@@ -82,7 +82,7 @@ class PartnersTable extends Table
 		->allowEmpty('job');
 
 		$validator
-		->add('street', 'string',['rule' => 'alphaNumeric'])
+		//->add('street', 'string',['rule' => ['custom', '/([\w.-]+ )+[\w+.-]/']])
 		->requirePresence('street', 'create')
 		->notEmpty('street');
 
@@ -105,7 +105,7 @@ class PartnersTable extends Table
 		->notEmpty('city');
 
 		$validator
-		->add('mobile', 'valid', ['rule' => 'numeric', 'message' => 'Die Nummer muss eine Zahl sein'])
+		->add('mobile', 'valid', ['rule' => 'numeric', 'message' => 'Die Mobilfunknummer muss eine Zahl sein'])
 		->requirePresence('mobile', 'create')
 		->notEmpty('mobile');
 
@@ -116,7 +116,7 @@ class PartnersTable extends Table
 		->add('teach_time', 'valid', ['rule' => 'numeric'])
 		->add('teach_time', 'validValue', [
                     'rule' => ['range',90,10080],
-                    'message' => 'Du musst mindestens 90 Minuten Zeit in der Woche haben.',
+                    'message' => 'Du musst mindestens 90 Minuten in der Woche Zeit haben.',
                     ])
 		->requirePresence('teach_time', 'create')
 		->notEmpty('teach_time');
@@ -127,7 +127,6 @@ class PartnersTable extends Table
 		->notEmpty('extra_time');
 
 		$validator
-		->add('spend_time', 'range', ['rule' => ['range', 0, 10080], 'message' => 'Ungültiger Wert'])
 		->requirePresence('spend_time', 'create')
 		->notEmpty('spend_time');
 

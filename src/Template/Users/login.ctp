@@ -1,3 +1,5 @@
+<?php $this->assign('title', 'Login'); ?>
+<br>
 <h1>Login</h1>
 <?= $this->Form->create() ?>
 <?= $this->Form->input('email', ['label' => __('email')]) ?>

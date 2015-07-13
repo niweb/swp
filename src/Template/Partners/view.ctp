@@ -5,17 +5,17 @@
         <li class="back-button"><?= $this->Html->link(__('back'), $this->request->referer()) ?></li>
         
         <!-- alle außer pate dürfen vermittlen --->    
-        <?php if (!(isset($authPartner)) AND ($partner->status_id == 5)): ?>
+        <?php if (!(isset($authPartner)) AND (($partner->status_id == 5) OR ($partner->status_id == 6))): ?>
             <li><?= $this->Html->link(__('Match Partner'), ['action' => 'match', $partner->id]) ?> </li>    
         <?php endif; ?>
         
         <?php if(isset($vermittler) or isset($locationAdmin) or isset($admin)) : ?>
         <!--- matchmaker darf nicht bearbeiten -->
             <li><?= $this->Html->link(__('Edit Partner'), ['action' => 'edit', $partner->id]) ?> </li>    
-            <?php if($partner->status_id < 7) : ?>
+            <?php if(($partner->status_id < 7) and ($partner->status_id != 1)) : ?>
             <!-- falls aufgehört oder abgelehnt reaktivieren, sonst deaktivieren --->
                 <li><?= $this->Form->postLink(__('Deactivate'), ['action' => 'deactivate', $partner->id], ['confirm' => __('Are you sure you want to deactivate {0}?', h($partner->user->first_name.' '.$partner->user->last_name))]) ?></li>
-            <?php else : ?>
+            <?php elseif($partner->status_id >= 7) : ?>
                 <?php if(isset($locationAdmin) or isset($admin)) : ?>
                     <!--nur standort admin und global admin dürfen reaktivieren und löschen-->
                 <li><?= $this->Form->postLink(__('Reactivate'), ['action' => 'reactivate', $partner->id], ['confirm' => __('Are you sure you want to reactivate {0}?', h($partner->user->first_name.' '.$partner->user->last_name))]) ?></li>

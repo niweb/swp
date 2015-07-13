@@ -76,10 +76,10 @@ class StatusTextsController extends AppController
             $statusText = $this->StatusTexts->patchEntity($statusText, $this->request->data);
 			$statusText->location_id = $this->Auth->user('location_id');
             if ($this->StatusTexts->save($statusText)) {
-                $this->Flash->success('The status text has been saved.');
+                $this->Flash->success(__('The status text has been saved.'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error('The status text could not be saved. Please, try again.');
+                $this->Flash->error(__('The status text could not be saved. Please, try again.'));
             }
         }
         $status = $this->StatusTexts->Status->find('list', ['limit' => 200]);
@@ -102,10 +102,10 @@ class StatusTextsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $statusText = $this->StatusTexts->patchEntity($statusText, $this->request->data);
             if ($this->StatusTexts->save($statusText)) {
-                $this->Flash->success('The status text has been saved.');
+                $this->Flash->success(__('The status text has been saved.'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error('The status text could not be saved. Please, try again.');
+                $this->Flash->error(__('The status text could not be saved. Please, try again.'));
             }
         }
         $status = $this->StatusTexts->Status->find('list', ['limit' => 200]);
@@ -125,9 +125,9 @@ class StatusTextsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $statusText = $this->StatusTexts->get($id);
         if ($this->StatusTexts->delete($statusText)) {
-            $this->Flash->success('The status text has been deleted.');
+            $this->Flash->success(__('The status text has been deleted.'));
         } else {
-            $this->Flash->error('The status text could not be deleted. Please, try again.');
+            $this->Flash->error(__('The status text could not be deleted. Please, try again.'));
         }
         return $this->redirect(['action' => 'index']);
     }

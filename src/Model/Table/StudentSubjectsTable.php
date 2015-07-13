@@ -53,7 +53,7 @@ class StudentSubjectsTable extends Table
 		$validator	
 			->add('subject1', 'custom', ['rule' => ['!equalTo', 'subject2']])
 			->requirePresence('subject1', 'create')
-			->notEmpty('subject1');
+			->allowEmpty('subject1');
 		
 		$validator	
 			->add('subject2', 'custom', ['rule' => ['!equalTo', 'subject3']])

@@ -1,3 +1,4 @@
+<?php $this->assign('title', __('Become Schülerpate')); ?>
 <?php if(isset($authUser)): ?>
 <div class="actions columns large-2 medium-3">
     <h3><?= __('Actions') ?></h3>

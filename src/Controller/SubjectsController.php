@@ -39,10 +39,9 @@ class SubjectsController extends AppController
 	 */
 	public function index()
 	{
-		$this->paginate = [
-            'contain' => ['Locations']
-		];
-		$this->set('subjects', $this->paginate($this->Subjects));
+            $subjects = $this->Subjects->find('all', ['conditions' => ['location_id' => $this->Auth->user('location_id')]]);
+            
+		$this->set('subjects', $this->paginate($subjects));
 		$this->set('_serialize', ['subjects']);
 	}
 
@@ -74,10 +73,10 @@ class SubjectsController extends AppController
 			$subject = $this->Subjects->patchEntity($subject, $this->request->data);
 			$subject->location_id = $this->Auth->user('location_id');
 			if ($this->Subjects->save($subject)) {
-				$this->Flash->success('The subject has been saved.');
+				$this->Flash->success(__('The subject has been saved.'));
 				return $this->redirect(['action' => 'index']);
 			} else {
-				$this->Flash->error('The subject could not be saved. Please, try again.');
+				$this->Flash->error(__('The subject could not be saved. Please, try again.'));
 			}
 		}
 		$this->set(compact('subject'));
@@ -99,10 +98,10 @@ class SubjectsController extends AppController
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$subject = $this->Subjects->patchEntity($subject, $this->request->data);
 			if ($this->Subjects->save($subject)) {
-				$this->Flash->success('The subject has been saved.');
+				$this->Flash->success(__('The subject has been saved.'));
 				return $this->redirect(['action' => 'index']);
 			} else {
-				$this->Flash->error('The subject could not be saved. Please, try again.');
+				$this->Flash->error(__('The subject could not be saved. Please, try again.'));
 			}
 		}
 		$this->set(compact('subject'));
@@ -124,11 +123,37 @@ class SubjectsController extends AppController
                     $this->loadModel('PreferredSubjects');
                     $this->loadModel('StudentSubjects');
                     $this->PreferredSubjects->deleteAll(['subject_id' => $id]);
-                    $this->StudentSubjects->deleteAll(['subject_id' => $id]);
+                    $studentSubjects = $this->StudentSubjects->find('all')->where(['OR' => ['subject1 =' => $id, 'subject2 =' => $id, 'subject3 =' => $id]]);
+                    foreach($studentSubjects as $studentSubject){
+                        if($studentSubject->subject1 == $id){
+                            $studentSubject->subject1 = NULL;
+                        }
+                        if($studentSubject->subject2 == $id){
+                            $studentSubject->subject2 = NULL;
+                        }
+                        if($studentSubject->subject3 == $id){
+                            $studentSubject->subject3 = NULL;
+                        }
+                        $this->StudentSubjects->save($studentSubject);
+                    }
                     
-                    $this->Flash->success('The subject has been deleted.');
+                    /*$delSubj[1] = $this->StudentSubjects->find('all')->where(['subject1 =' => $id]);
+                    $delSubj[2] = $this->StudentSubjects->find('all')->where(['subject2 =' => $id]);
+                    $delSubj[3] = $this->StudentSubjects->find('all')->where(['subject3 =' => $id]);
+                    foreach($delSubj as $key => $studentSubjects){
+                        foreach($studentSubjects as $studentSubject){
+                            switch($key){
+                                case(1): $studentSubject->subject1 = NULL; break;
+                                case(2): $studentSubject->subject2 = NULL; break;
+                                case(3): $studentSubject->subject3 = NULL; break;
+                            }
+                            $this->StudentSubjects->save($studentSubject);
+                        }
+                    }*/
+                    
+                    $this->Flash->success(__('The subject has been deleted.'));
 		} else {
-			$this->Flash->error('The subject could not be deleted. Please, try again.');
+			$this->Flash->error(__('The subject could not be deleted. Please, try again.'));
 		}
 		return $this->redirect(['action' => 'index']);
 	}

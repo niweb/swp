@@ -76,10 +76,10 @@ class SchooltypesController extends AppController
 			$schooltype = $this->Schooltypes->patchEntity($schooltype, $this->request->data);
 			$schooltype->location_id = $this->Auth->user('location_id');
 			if ($this->Schooltypes->save($schooltype)) {
-				$this->Flash->success('The schooltype has been saved.');
+				$this->Flash->success(__('The schooltype has been saved.'));
 				return $this->redirect(['action' => 'index']);
 			} else {
-				$this->Flash->error('The schooltype could not be saved. Please, try again.');
+				$this->Flash->error(__('The schooltype could not be saved. Please, try again.'));
 			}
 		}
 		$locations = $this->Schooltypes->Locations->find('list', ['limit' => 200]);
@@ -102,10 +102,10 @@ class SchooltypesController extends AppController
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$schooltype = $this->Schooltypes->patchEntity($schooltype, $this->request->data);
 			if ($this->Schooltypes->save($schooltype)) {
-				$this->Flash->success('The schooltype has been saved.');
+				$this->Flash->success(__('The schooltype has been saved.'));
 				return $this->redirect(['action' => 'index']);
 			} else {
-				$this->Flash->error('The schooltype could not be saved. Please, try again.');
+				$this->Flash->error(__('The schooltype could not be saved. Please, try again.'));
 			}
 		}
 		$locations = $this->Schooltypes->Locations->find('list', ['limit' => 200]);
@@ -130,9 +130,9 @@ class SchooltypesController extends AppController
                     $this->PreferredSchooltypes->deleteAll(['schooltype_id' => $id]);
                     $this->StudentSchooltypes->deleteAll(['schooltype_id' => $id]);
                     
-			$this->Flash->success('The schooltype has been deleted.');
+			$this->Flash->success(__('The schooltype has been deleted.'));
 		} else {
-			$this->Flash->error('The schooltype could not be deleted. Please, try again.');
+			$this->Flash->error(__('The schooltype could not be deleted. Please, try again.'));
 		}
 		return $this->redirect(['action' => 'index']);
 	}

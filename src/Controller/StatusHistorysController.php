@@ -78,10 +78,10 @@ class StatusHistorysController extends AppController
             $statusHistory->timestamp = time();
             $statusHistory = $this->StatusHistorys->patchEntity($statusHistory, $this->request->data);
             if ($this->StatusHistorys->save($statusHistory)) {
-                $this->Flash->success('The status history has been saved.');
+                $this->Flash->success(__('The status history has been saved.'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error('The status history could not be saved. Please, try again.');
+                $this->Flash->error(__('The status history could not be saved. Please, try again.'));
             }
         }
 		
@@ -107,10 +107,10 @@ class StatusHistorysController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $statusHistory = $this->StatusHistorys->patchEntity($statusHistory, $this->request->data);
             if ($this->StatusHistorys->save($statusHistory)) {
-                $this->Flash->success('The status history has been saved.');
+                $this->Flash->success(__('The status history has been saved.'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error('The status history could not be saved. Please, try again.');
+                $this->Flash->error(__('The status history could not be saved. Please, try again.'));
             }
         }
         $partners = $this->StatusHistorys->Partners->find('list', ['limit' => 200]);
@@ -131,9 +131,9 @@ class StatusHistorysController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $statusHistory = $this->StatusHistorys->get($id);
         if ($this->StatusHistorys->delete($statusHistory)) {
-            $this->Flash->success('The status history has been deleted.');
+            $this->Flash->success(__('The status history has been deleted.'));
         } else {
-            $this->Flash->error('The status history could not be deleted. Please, try again.');
+            $this->Flash->error(__('The status history could not be deleted. Please, try again.'));
         }
         return $this->redirect(['action' => 'index']);
     }
@@ -147,10 +147,10 @@ class StatusHistorysController extends AppController
             $statusHistory = $this->StatusHistorys->get($id);
             $statusHistory->text = $this->request->data['text'];
             if ($this->StatusHistorys->save($statusHistory)) {
-                $this->Flash->success('The status note has been saved.');
+                $this->Flash->success(__('The status note has been saved.'));
                 return $this->redirect(['controller'=>'Partners','action' => 'view', $statusHistory->partner_id]);
             } else {
-                $this->Flash->error('The status note could not be saved. Please, try again.');
+                $this->Flash->error(__('The status note could not be saved. Please, try again.'));
             }
         }
         $this->set(compact('statusHistory'));
