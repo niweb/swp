@@ -79,7 +79,7 @@ class UsersController extends AppController
         }
         
         $this->paginate = ['contain' => ['Locations', 'Types']];
-        $users = $this->Users->find('all', ['limit' => 200, 'empty' => false, 'conditions' => $conditions, 'contain' => 'Partners']);
+        $users = $this->Users->find('all', ['limit' => 200, 'empty' => false, 'order' => ['type_id' => 'desc', 'Users.location_id' => 'asc'], 'conditions' => $conditions, 'contain' => 'Partners']);
         $this->set('users', $this->paginate($users));
         $this->set('_serialize', ['users']);
     }
@@ -114,37 +114,39 @@ class UsersController extends AppController
             $this->loadModel('UserHasTypes');
             $user = $this->Users->newEntity();
             $userType = $this->UserHasTypes->newEntity();
-            if ($this->request->is('post')) {
-                    $user = $this->Users->patchEntity($user, $this->request->data);
-                    $user->activation = NULL;
-                    if(!(isset($admin))){
-                        //wenn standortadmin das formular befüllt, wird
-                        //automatisch sein standort als standort des neuen users genommen
-                        $user->location_id = $this->Auth->user('location_id');
-                    }
-                    if($this->request->data['type_id'] == 5){
-                        //es wird ein globaler admin erstellt, also wird seine
-                        //location_id auf NULL gesetzt
-                        $user->location_id = NULL;
-                    }
-                    if ($this->Users->save($user)) {
-                        $userType->user_id = $user->id;
-                        $userType->type_id = $this->request->data['type_id'];
-                        if($this->UserHasTypes->save($userType)) {
-                            $this->loadModel('Types');
-                            $type_name = $this->Types->get($user->type_id)->name;
-                            $this->Flash->success(__('New {0} created', $type_name));
-                            return $this->redirect(['controller' => 'Users', 'action' => 'index']);
-                        } else {
-                            $this->Users->delete($user);
-                            $this->Flash->error(__('The user could not be saved. Please, try again.'));
-                        }
-                    } else {
-                            $this->Flash->error(__('The user could not be saved. Please, try again.'));
-                    }
-            }
+            
             $authUser = $this->Auth->user();
             $type = $authUser['type_id'];
+            
+            if ($this->request->is('post')) {
+                $user = $this->Users->patchEntity($user, $this->request->data);
+                $user->activation = NULL;
+                if($type < 5){
+                    //wenn standortadmin das formular befüllt, wird
+                    //automatisch sein standort als standort des neuen users genommen
+                    $user->location_id = $this->Auth->user('location_id');
+                }
+                if($this->request->data['type_id'] == 5){
+                    //es wird ein globaler admin erstellt, also wird seine
+                    //location_id auf NULL gesetzt
+                    $user->location_id = NULL;
+                }
+                if ($this->Users->save($user)) {
+                    $userType->user_id = $user->id;
+                    $userType->type_id = $this->request->data['type_id'];
+                    if($this->UserHasTypes->save($userType)) {
+                        $this->loadModel('Types');
+                        $type_name = $this->Types->get($user->type_id)->name;
+                        $this->Flash->success(__('New {0} created', $type_name));
+                        return $this->redirect(['controller' => 'Users', 'action' => 'index']);
+                    } else {
+                        $this->Users->delete($user);
+                        $this->Flash->error(__('The user could not be saved. Please, try again.'));
+                    }
+                } else {
+                        $this->Flash->error(__('The user could not be saved. Please, try again.'));
+                }
+            }
             switch($type){
                 case(4):
                     $typeConditions = ['id <' => '4', 'id !=' => '1']; //standortadmin darf keine standort admins oder global admins erstellen
@@ -251,11 +253,7 @@ class UsersController extends AppController
                     if ($user) {
                             $this->Auth->setUser($user);
                             $type = $user['type_id'];
-
-                            /* unschön
-                            if($type == '5' || $type == '4'){
-                                    return $this->redirect($this->Auth->redirectUrl(['controller' => 'Users', 'action' => 'index']));
-                            }*/				
+			
                             if($this->Auth->user('activation') == NULL) {
                                 $partner = $this->Partners->findByUserId($this->Auth->user('id'))->first();
                                 if ($partner != null) { //user ist partner

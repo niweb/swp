@@ -12,11 +12,9 @@ class LocationsController extends AppController
 {
     
     public function isAuthorized($user) {
-        $this->loadModel('UserHasTypes');
-                $type = $this->UserHasTypes->findByUserId($user['id'])->first()['type_id'];
-                if($type == '5'){ //nur global-admin darf locations sehen und verwalten
-                    return true;
-                }
+        if($user['type_id'] == '5'){ //nur global-admin darf locations sehen und verwalten
+            return true;
+        }
     }
 
     /**
@@ -56,30 +54,30 @@ class LocationsController extends AppController
     {
             $location = $this->Locations->newEntity();
             if ($this->request->is('post')) {
-                    $location = $this->Locations->patchEntity($location, $this->request->data);
-                    if ($this->Locations->save($location)) {
-						$this->loadModel('StatusTexts');
-						$this->loadModel('Status');
-						
-						$status = $this->Status->find('all');
-						foreach($status as $s){
-							$statusText = $this->StatusTexts->newEntity();
-							$statusText->location_id = $location->id;
-							$statusText->status_id = $s->id;
-							
-							if(!$this->StatusTexts->save($statusText)){
-								$this->StatusTexts->deleteAll(['location_id' => $location->id]);
-								$this->Locations->delete($location);
-								$this->Flash->error('Fehler beim genrieren der Status-Nachrichten.');
-								return;
-							}
-						}
-							
-                        $this->Flash->success(__('The location has been saved.'));
-                        return $this->redirect(['action' => 'index']);
-                    } else {
-                            $this->Flash->error(__('The location could not be saved. Please, try again.'));
+                $location = $this->Locations->patchEntity($location, $this->request->data);
+                if ($this->Locations->save($location)) {
+                    $this->loadModel('StatusTexts');
+                    $this->loadModel('Status');
+
+                    $status = $this->Status->find('all');
+                    foreach($status as $s){
+                        $statusText = $this->StatusTexts->newEntity();
+                        $statusText->location_id = $location->id;
+                        $statusText->status_id = $s->id;
+
+                        if(!$this->StatusTexts->save($statusText)){
+                                $this->StatusTexts->deleteAll(['location_id' => $location->id]);
+                                $this->Locations->delete($location);
+                                $this->Flash->error('Fehler beim genrieren der Status-Nachrichten.');
+                                return;
+                        }
                     }
+
+                    $this->Flash->success(__('The location has been saved.'));
+                    return $this->redirect(['action' => 'index']);
+                } else {
+                        $this->Flash->error(__('The location could not be saved. Please, try again.'));
+                }
             }
             $this->set(compact('location'));
             $this->set('_serialize', ['location']);
@@ -94,20 +92,20 @@ class LocationsController extends AppController
      */
     public function edit($id = null)
     {
-            $location = $this->Locations->get($id, [
-        'contain' => []
-            ]);
-            if ($this->request->is(['patch', 'post', 'put'])) {
-                    $location = $this->Locations->patchEntity($location, $this->request->data);
-                    if ($this->Locations->save($location)) {
-                            $this->Flash->success(__('The location has been saved.'));
-                            return $this->redirect(['action' => 'index']);
-                    } else {
-                            $this->Flash->error(__('The location could not be saved. Please, try again.'));
-                    }
+        $location = $this->Locations->get($id, [
+            'contain' => []
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $location = $this->Locations->patchEntity($location, $this->request->data);
+            if ($this->Locations->save($location)) {
+                $this->Flash->success(__('The location has been saved.'));
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__('The location could not be saved. Please, try again.'));
             }
-            $this->set(compact('location'));
-            $this->set('_serialize', ['location']);
+        }
+        $this->set(compact('location'));
+        $this->set('_serialize', ['location']);
     }
 
     /**

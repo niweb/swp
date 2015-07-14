@@ -26,7 +26,7 @@
             <h6 class="subheader"><?= __('Type') ?></h6>
             <p><?= h($user->type->name) ?></p>
             <!--p><!?= h($type->name) ?></p-->
-            <?php if(isset($admin)): ?>
+            <?php if(isset($admin) AND ($user['location_id'] != NULL)): ?>
                     <h6 class="subheader"><?= __('Location') ?></h6>
                     <p><?= h($user->location->name) ?></p>
             <?php endif; ?>

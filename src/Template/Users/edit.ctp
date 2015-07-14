@@ -5,7 +5,7 @@
         <li><?= $this->Form->postLink(
                 __('Delete'),
                 ['action' => 'delete', $user->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]
+                ['confirm' => __('Are you sure you want to delete {0}?', h($user->first_name.' '.$user->last_name))]
             )
         ?></li>
         <li><?= $this->Html->link(__('View User'), ['action' => 'view', $user->id]) ?></li>
@@ -17,8 +17,8 @@
     <fieldset>
         <legend><?= __('Edit User') ?></legend>
         <?php
-			echo $this->Form->input('first_name');
-			echo $this->Form->input('last_name');
+            echo $this->Form->input('first_name');
+            echo $this->Form->input('last_name');
             echo $this->Form->input('email');
         ?>
     </fieldset>
